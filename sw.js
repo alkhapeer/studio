@@ -30,6 +30,9 @@ const RUNTIME_ASSETS = [
   './trendUserGuide.html',
   './fields-guide.html',
   './product-pitch.html',
+  './fields-guide-ar.html',
+  './product-pitch-ar.html',
+   
 ];
 
 /* =========================================================
