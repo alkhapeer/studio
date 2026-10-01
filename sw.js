@@ -24,14 +24,12 @@ const CORE_ASSETS = [
 
 /* Optional assets — cached on first successful fetch */
 const RUNTIME_ASSETS = [
-  './Trend%20Studio.html',
+  './TrendStudio.html',
   './trends_maker.html',
-  './user-guide.html.html',
-  './دليل%20استخدام%20صانع%20الترند.html',
+  './user-guide.html',
+  './trendUserGuide.html',
   './fields-guide.html',
-  './fields-guide-ar.html',
   './product-pitch.html',
-  './product-pitch-ar.html'
 ];
 
 /* =========================================================
