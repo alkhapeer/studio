@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>دليل المجالات — استوديو التريندات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { direction: rtl; }
+body {
+  font-family: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+  background: #d1d5db;
+  color: #1a1c2b;
+  line-height: 1.85;
+  font-size: 10.5pt;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 210mm;
+  height: 297mm;
+  margin: 10px auto;
+  padding: 20mm 18mm 18mm;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.page:last-child { page-break-after: auto; }
+
+.print-bar {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  background: #1a1c2b; color: #fff;
+  padding: 12px 24px; border-radius: 12px;
+  display: flex; gap: 14px; align-items: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 999;
+  font-size: 13px;
+}
+.print-bar button {
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  color: #fff; border: none; padding: 9px 20px;
+  border-radius: 8px; font-weight: 700; cursor: pointer;
+  font-family: inherit; font-size: 13px;
+}
+.print-bar button:hover { filter: brightness(1.15); }
+@media print {
+  body { background: #fff; }
+  .page { margin: 0; box-shadow: none; }
+  .print-bar { display: none !important; }
+}
+
+/* ====================== الأغلفة ====================== */
+.cover {
+  padding: 0;
+  background: linear-gradient(160deg, #0c4a6e 0%, #0369a1 40%, #06b6d4 75%, #67e8f9 100%);
+  color: #fff;
+  position: relative;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50mm; left: -50mm;
+  width: 120mm; height: 120mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -30mm; right: -30mm;
+  width: 90mm; height: 90mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,217,61,0.25), transparent 70%);
+}
+.cover-inner {
+  position: relative;
+  height: 100%;
+  padding: 30mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1;
+}
+.cover-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 100px;
+  font-size: 10pt;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  align-self: flex-start;
+  backdrop-filter: blur(10px);
+}
+.cover-icon {
+  font-size: 80pt;
+  line-height: 1;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+}
+.cover h1 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 50pt;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  letter-spacing: -1.5px;
+}
+.cover .subtitle {
+  font-size: 16pt;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.95);
+  max-width: 130mm;
+}
+.cover-footer {
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10pt;
+  color: rgba(255,255,255,0.9);
+}
+
+/* ====================== عناوين ====================== */
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e7ef;
+  margin-bottom: 18px;
+  font-size: 9pt;
+  color: #9ba0b8;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+}
+.page-head .brand { color: #0369a1; font-weight: 700; }
+
+.sec-kicker {
+  font-size: 9.5pt;
+  font-weight: 800;
+  color: #06b6d4;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+h2.sec-title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 24pt;
+  font-weight: 800;
+  color: #1a1c2b;
+  line-height: 1.25;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid #06b6d4;
+  display: inline-block;
+  padding-left: 40px;
+}
+h3.sub {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14pt;
+  font-weight: 700;
+  color: #0c4a6e;
+  margin: 18px 0 10px;
+  padding-right: 14px;
+  border-right: 4px solid #06b6d4;
+  line-height: 1.4;
+}
+
+p { margin-bottom: 10px; color: #3a3d52; }
+.lead {
+  font-size: 12pt;
+  color: #4a4d63;
+  line-height: 1.9;
+  margin-bottom: 16px;
+}
+b, strong { color: #1a1c2b; font-weight: 700; }
+
+/* ====================== الفهرس ====================== */
+.toc { margin-top: 12px; }
+.toc-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 4px;
+  border-bottom: 1px dashed #d0d4e0;
+  font-size: 10.8pt;
+}
+.toc-num {
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800;
+  font-size: 11pt;
+  flex-shrink: 0;
+  margin-left: 14px;
+  box-shadow: 0 4px 10px rgba(6,182,212,0.3);
+}
+.toc-title { flex: 1; font-weight: 600; color: #1a1c2b; }
+.toc-pg {
+  font-weight: 700;
+  color: #0369a1;
+  font-size: 10pt;
+  background: #e0f2fe;
+  padding: 3px 11px;
+  border-radius: 6px;
+}
+
+/* ====================== صناديق ====================== */
+.box {
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin: 14px 0;
+  border-right: 4px solid #06b6d4;
+  background: #ecfeff;
+  font-size: 10.5pt;
+  line-height: 1.75;
+}
+.box.tip { background: #ecfdf5; border-right-color: #10b981; }
+.box.warn { background: #fffbeb; border-right-color: #f59e0b; }
+.box.alert { background: #fef2f2; border-right-color: #ef4444; }
+.box.dark {
+  background: linear-gradient(135deg, #0c4a6e, #0369a1);
+  color: #fff;
+  border-right-color: #67e8f9;
+}
+.box.dark strong { color: #67e8f9; display: block; margin-bottom: 4px; }
+.box.dark p { color: rgba(255,255,255,0.92); margin: 0; }
+.box strong { display: block; margin-bottom: 4px; font-size: 11pt; }
+.box p { margin: 0; font-size: 10.5pt; }
+
+/* ====================== قوائم ====================== */
+ul.dots { list-style: none; margin: 10px 0; }
+ul.dots > li {
+  position: relative;
+  padding-right: 24px;
+  margin-bottom: 8px;
+  font-size: 10.8pt;
+  line-height: 1.75;
+  color: #3a3d52;
+}
+ul.dots > li::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 9px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #06b6d4;
+}
+ul.check > li::before {
+  content: '✓';
+  background: none;
+  color: #10b981;
+  font-weight: 900;
+  font-size: 13pt;
+  top: -1px;
+  width: auto; height: auto;
+}
+ul.warn > li::before {
+  content: '!';
+  background: none;
+  color: #f59e0b;
+  font-weight: 900;
+  font-size: 14pt;
+  top: 0;
+  width: auto; height: auto;
+}
+
+/* ====================== جداول ====================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 10.3pt;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e5e7ef;
+}
+table th {
+  background: linear-gradient(135deg, #0c4a6e, #06b6d4);
+  color: #fff;
+  padding: 11px 12px;
+  text-align: right;
+  font-weight: 700;
+  font-size: 10.5pt;
+}
+table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7ef;
+  color: #3a3d52;
+  vertical-align: top;
+}
+table tr:last-child td { border-bottom: none; }
+table tr:nth-child(even) td { background: #f8fafc; }
+
+/* ====================== بطاقة مجال ====================== */
+.field-card {
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 14px 0;
+  background: #f8fafc;
+  border: 1px solid #e5e7ef;
+  position: relative;
+  overflow: hidden;
+}
+.field-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 6px; height: 100%;
+  background: linear-gradient(180deg, #06b6d4, #0ea5e9);
+}
+.field-card.green::before { background: linear-gradient(180deg, #10b981, #059669); }
+.field-card.orange::before { background: linear-gradient(180deg, #f59e0b, #ef4444); }
+.field-card.purple::before { background: linear-gradient(180deg, #a855f7, #7c3aed); }
+
+.field-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.field-ico {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  display: grid; place-items: center;
+  font-size: 20pt;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(6,182,212,0.3);
+}
+.field-card.green .field-ico { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 16px rgba(16,185,129,0.3); }
+.field-card.orange .field-ico { background: linear-gradient(135deg, #f59e0b, #ef4444); box-shadow: 0 6px 16px rgba(245,158,11,0.3); }
+.field-card.purple .field-ico { background: linear-gradient(135deg, #a855f7, #7c3aed); box-shadow: 0 6px 16px rgba(168,85,247,0.3); }
+
+.field-title {
+  flex: 1;
+}
+.field-title h4 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14pt;
+  font-weight: 800;
+  color: #0c4a6e;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+.field-card.green .field-title h4 { color: #065f46; }
+.field-card.orange .field-title h4 { color: #7c2d12; }
+.field-card.purple .field-title h4 { color: #4c1d95; }
+
+.field-meta {
+  display: flex;
+  gap: 8px;
+  font-size: 9pt;
+  color: #64748b;
+  font-weight: 600;
+}
+.field-meta span {
+  background: #fff;
+  padding: 2px 10px;
+  border-radius: 100px;
+  border: 1px solid #e5e7ef;
+}
+
+.field-body { font-size: 10.5pt; line-height: 1.75; color: #3a3d52; }
+.field-body p { margin-bottom: 8px; }
+
+/* ====================== شبكة إحصاءات ====================== */
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  margin: 16px 0;
+}
+.stat {
+  text-align: center;
+  padding: 14px 8px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #e0f2fe, #cffafe);
+  border: 1px solid #67e8f9;
+}
+.stat .num {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 24pt;
+  font-weight: 900;
+  color: #0369a1;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat .lbl {
+  font-size: 9.5pt;
+  color: #075985;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* ====================== الخاتمة ====================== */
+.thanks {
+  padding: 0;
+  background: linear-gradient(160deg, #0c4a6e 0%, #0369a1 55%, #06b6d4 100%);
+  color: #fff;
+}
+.thanks-inner {
+  height: 100%;
+  padding: 40mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.thanks-icon {
+  font-size: 80pt;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+.thanks h2 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 34pt;
+  font-weight: 900;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+.thanks p {
+  font-size: 14pt;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.7;
+  max-width: 130mm;
+  margin-bottom: 30px;
+}
+.thanks .contact {
+  padding: 20px 34px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 14px;
+  font-size: 12pt;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+}
+
+.pg-num {
+  position: absolute;
+  bottom: 8mm;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9pt;
+  color: #9ba0b8;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* شريط القرار السريع */
+.decision-bar {
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin: 14px 0;
+  background: linear-gradient(135deg, #ecfeff, #cffafe);
+  border: 2px solid #06b6d4;
+  font-size: 10.5pt;
+  line-height: 1.75;
+}
+.decision-bar b { color: #0c4a6e; display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  📊 اضغط <b>Ctrl+P</b> ثم اختر <b>Save as PDF</b> — مع تفعيل <b>Background graphics</b>
+  <button onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+</div>
+
+<!-- ==============================================
+     صفحة 1: الغلاف
+     ============================================== -->
+<div class="page cover">
+  <div class="cover-inner">
+    <div>
+      <span class="cover-badge">دليل المجالات · الإصدار 1.0</span>
+    </div>
+    <div>
+      <div class="cover-icon">📊</div>
+      <h1>أين تستخدم<br>استوديو التريندات؟</h1>
+      <p class="subtitle">
+        دليل مرتّب لكل المجالات التي تتفوق فيها الأداة — من الريلز إلى الكويزات، ومن التقارير إلى الدروس القصيرة.
+      </p>
+    </div>
+    <div class="cover-footer">
+      <span>استوديو التريندات · صانع فيديوهات احترافي في المتصفح</span>
+      <span>2025</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================================
+     صفحة 2: الفهرس
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">استوديو التريندات</span>
+    <span>دليل المجالات</span>
+  </div>
+
+  <span class="sec-kicker">الفهرس</span>
+  <h2 class="sec-title">محتويات الدليل</h2>
+  <p class="lead">
+    هذا الدليل يجيب على سؤال واحد: <b>أين أستخدم هذه الأداة؟</b> رتّبنا المجالات حسب الأولوية والملاءمة،
+    مع توضيح نقاط القوة والقيود لكل مجال.
+  </p>
+
+  <div class="toc">
+    <div class="toc-row">
+      <div class="toc-num">1</div>
+      <div class="toc-title">مقدمة ومنهجية التصنيف</div>
+      <div class="toc-pg">ص 3</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">2</div>
+      <div class="toc-title">المجالات المثالية (5 مجالات)</div>
+      <div class="toc-pg">ص 4–5</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">3</div>
+      <div class="toc-title">المجالات الممكنة بتحفّظات (3 مجالات)</div>
+      <div class="toc-pg">ص 6–7</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">4</div>
+      <div class="toc-title">المجالات غير المناسبة (وقتها البديل)</div>
+      <div class="toc-pg">ص 8</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">5</div>
+      <div class="toc-title">جدول القرار السريع</div>
+      <div class="toc-pg">ص 9</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">6</div>
+      <div class="toc-title">توصيات الإنتاج لكل مجال</div>
+      <div class="toc-pg">ص 10</div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <strong>💡 كيف تقرأ هذا الدليل؟</strong>
+    <p>كل مجال مقسّم إلى ثلاث فئات: <b>مثالي</b> (استخدم الأداة فوراً)، <b>ممكن بتحفّظات</b> (استخدمها مع وعي بالقيود)، <b>غير مناسب</b> (استخدم بديلاً أفضل). اختر مجالك وابدأ.</p>
+  </div>
+
+  <div class="pg-num">— 2 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 3: المقدمة والمنهجية
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 1</span>
+    <span>مقدمة ومنهجية</span>
+  </div>
+
+  <span class="sec-kicker">01 · المقدمة</span>
+  <h2 class="sec-title">منهجية التصنيف</h2>
+
+  <p class="lead">
+    ليست كل المجالات متساوية. بعضها تتفوق فيه الأداة بلا منافس، وبعضها ممكن مع قيود يجب معرفتها،
+    وبعضها الآخر تحتاج فيه إلى أدوات مختلفة تماماً. هذا التصنيف مبني على ثلاثة معايير:
+  </p>
+
+  <h3 class="sub">المعايير الثلاثة للتصنيف</h3>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="num">1</div>
+      <div class="lbl">ملاءمة البنية</div>
+    </div>
+    <div class="stat">
+      <div class="num">2</div>
+      <div class="lbl">المدة والذاكرة</div>
+    </div>
+    <div class="stat">
+      <div class="num">3</div>
+      <div class="lbl">نوع التفاعل</div>
+    </div>
+    <div class="stat">
+      <div class="num">4</div>
+      <div class="lbl">جودة النتيجة</div>
+    </div>
+  </div>
+
+  <h3 class="sub">1) ملاءمة البنية</h3>
+  <p>
+    الأداة مبنية على فكرة «المشاهد المتتالية». كل مجال يتحلّل إلى 3–15 فكرة قصيرة = <b>مثالي</b>.
+    المجالات التي تحتاج تدفّقاً غير خطي أو تفاعلاً = <b>غير مناسبة</b>.
+  </p>
+
+  <h3 class="sub">2) المدة والذاكرة</h3>
+  <p>
+    الأداة ترسم كل إطار في المتصفح قبل ترميزه. المدة المثالية: <b>15 ثانية إلى 3 دقائق</b>.
+    المدة الممكنة: <b>3 إلى 10 دقائق</b>. أطول من ذلك: استخدم أداة مونتاج احترافية.
+  </p>
+
+  <h3 class="sub">3) نوع التفاعل</h3>
+  <p>
+    الأداة تنتج فيديو <b>خطّي</b> (يُشاهد فقط). أي مجال يحتاج نقراً أو إجابة أو درجات = <b>غير مناسب</b>.
+  </p>
+
+  <h3 class="sub">4) جودة النتيجة</h3>
+  <p>
+    الأداة تُنتج 1080p أو 4K مع خطوط عربية واضحة. المجالات التي تحتاج جرافيك معقّداً أو طبقات متعددة = <b>ممكنة بتحفّظات</b>.
+  </p>
+
+  <div class="box dark">
+    <strong>🎯 القاعدة الذهبية</strong>
+    <p>إذا كان مجالك يتحلّل إلى «فكرة واحدة + 4 عناصر نصية + صورة + صوت» في كل مشهد، فالأداة مثالية لك. كل ما زاد عن ذلك يُنقل لأداة أخرى.</p>
+  </div>
+
+  <div class="pg-num">— 3 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 4: المجالات المثالية 1
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 2</span>
+    <span>المجالات المثالية</span>
+  </div>
+
+  <span class="sec-kicker">02 · المجالات المثالية</span>
+  <h2 class="sec-title">حيث تتفوق الأداة بلا منافس</h2>
+
+  <!-- المجال 1 -->
+  <div class="field-card">
+    <div class="field-head">
+      <div class="field-ico">🎬</div>
+      <div class="field-title">
+        <h4>ريلز / تيك توك / شورتس</h4>
+        <div class="field-meta">
+          <span>15–90 ثانية</span>
+          <span>2–6 مشاهد</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p>هذا هو المجال الذي صُمّمت له الأداة. كل فكرة تُصبح مشهداً قصيراً بخطاف قوي، نص، صورة، وصوت. المدة المثالية 15–45 ثانية لتحقيق أعلى نسبة إكمال مشاهدة.</p>
+      <p><b>البنية النموذجية:</b> مشهد 1 (الخطاف) → مشهد 2–4 (المحتوى) → مشهد 5 (CTA).</p>
+      <p><b>لماذا مثالي:</b> نسبة العرض 9:16 جاهزة، الخلفيات المتحركة مناسبة، الصوت لكل مشهد، التصدير السريع.</p>
+    </div>
+  </div>
+
+  <!-- المجال 2 -->
+  <div class="field-card green">
+    <div class="field-head">
+      <div class="field-ico">🛍️</div>
+      <div class="field-title">
+        <h4>إعلانات المنتجات القصيرة</h4>
+        <div class="field-meta">
+          <span>20–40 ثانية</span>
+          <span>3–4 مشاهد</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p>هيكل كلاسيكي: مشكلة → حل → مميزات → CTA. مع صورة المنتج في المنتصف، وموسيقى خلفية 25% + صوت تعليق 100%.</p>
+      <p><b>لماذا مثالي:</b> خيار «استبدال نص بصورة» يُظهر المنتج تلقائياً بعد عنوانه، مما يجعل الإعلان احترافياً دون مونتاج.</p>
+    </div>
+  </div>
+
+  <!-- المجال 3 -->
+  <div class="field-card purple">
+    <div class="field-head">
+      <div class="field-ico">📰</div>
+      <div class="field-title">
+        <h4>ملخصات الأخبار والتريندات</h4>
+        <div class="field-meta">
+          <span>40–90 ثانية</span>
+          <span>5–8 مشاهد</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p>كل خبر = مشهد مستقل. العنوان في المقدمة، التفاصيل بعده، ثم CTA «تابعنا للتريند القادم». مثالي للصفحات الإخبارية وحسابات التريندات.</p>
+      <p><b>لماذا مثالي:</b> إمكانية إضافة 10 مشاهد بسهولة، ترتيبها بالسحب، وتطبيق خلفية موحّدة على كل المشاهد بضغطة.</p>
+    </div>
+  </div>
+
+  <div class="pg-num">— 4 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 5: المجالات المثالية 2
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 2</span>
+    <span>المجالات المثالية</span>
+  </div>
+
+  <!-- المجال 4 -->
+  <div class="field-card orange">
+    <div class="field-head">
+      <div class="field-ico">💡</div>
+      <div class="field-title">
+        <h4>نصائح سريعة (Micro-Learning)</h4>
+        <div class="field-meta">
+          <span>30–90 ثانية</span>
+          <span>3–5 مشاهد</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p>«5 نصائح في 60 ثانية» — كل نصيحة مشهد. مثالي للتعليم المصغّر، التدريب السريع، والمحتوى التربوي. الجملة القصيرة + الرقم + الحل = وصفة مثالية.</p>
+      <p><b>لماذا مثالي:</b> كل نصيحة لها خلفيتها ولونها، والانتقالات السريعة تحافظ على التركيز. النص الكبير يقرأ بسهولة على شاشة الهاتف.</p>
+    </div>
+  </div>
+
+  <!-- المجال 5 -->
+  <div class="field-card">
+    <div class="field-head">
+      <div class="field-ico">🎉</div>
+      <div class="field-title">
+        <h4>إعلانات المناسبات والتهاني</h4>
+        <div class="field-meta">
+          <span>10–25 ثانية</span>
+          <span>2–3 مشاهد</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p>رمضان، العيد، اليوم الوطني، تهنئة نجاح. استخدم صورة المقدمة كشعار، ثم مشهد التهنئة، ثم الخاتمة.</p>
+      <p><b>لماذا مثالي:</b> صورة المقدمة والخاتمة المستقلتان تجعلان الفيديو يبدو كأنه صُنع باحتراف، في أقل من 5 دقائق.</p>
+    </div>
+  </div>
+
+  <div class="decision-bar">
+    <b>✅ خلاصة المجالات المثالية</b>
+    ريلز — إعلانات المنتجات — ملخصات الأخبار — نصائح سريعة — تهاني المناسبات.
+    <br>كلها تتحلّل إلى «فكرة واحدة لكل مشهد» وتحتاج 15–90 ثانية. الأداة أسرع بديل في السوق لها.
+  </div>
+
+  <div class="pg-num">— 5 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 6: المجالات الممكنة 1
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 3</span>
+    <span>ممكنة بتحفّظات</span>
+  </div>
+
+  <span class="sec-kicker">03 · المجالات الممكنة</span>
+  <h2 class="sec-title">حيث تحتاج وعياً بالقيود</h2>
+
+  <!-- المجال 6 -->
+  <div class="field-card orange">
+    <div class="field-head">
+      <div class="field-ico">🧠</div>
+      <div class="field-title">
+        <h4>الاختبارات والكويزات (فيديو خطّي)</h4>
+        <div class="field-meta">
+          <span>10 ثوانٍ لكل سؤال</span>
+          <span>مشهد لكل سؤال</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p><b>ممكنة كفيديو خطّي، لا كأداة تقييم تفاعلية.</b> كل سؤال = مشهد:</p>
+      <ul class="dots">
+        <li><b>مشهد السؤال:</b> خطاف = «السؤال 1» + العنوان = السؤال + المدة = وقت التفكير (مثلاً 10 ث).</li>
+        <li><b>مشهد الجواب:</b> خطاف = «الإجابة» + العنوان = الجواب الصحيح + خلفية خضراء.</li>
+      </ul>
+      <p><b>القيود:</b> المشاهد لا يقبل نقرات، لا يُصحّح الإجابات، لا يحسب الدرجات. صالح لمسابقات السوشيال ميديا، لا للاختبارات الرسمية.</p>
+      <p><b>البديل للتقييم الرسمي:</b> Google Forms، Typeform، Quizizz، Moodle.</p>
+    </div>
+  </div>
+
+  <!-- المجال 7 -->
+  <div class="field-card orange">
+    <div class="field-head">
+      <div class="field-ico">📈</div>
+      <div class="field-title">
+        <h4>مقياس نبض التميز (تقارير KPI)</h4>
+        <div class="field-meta">
+          <span>60–120 ثانية</span>
+          <span>5–10 مشاهد</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p><b>ممكنة لعرض النتائج النهائية، لا كأداة قياس تفاعلية.</b> استخدامات صحيحة:</p>
+      <ul class="dots">
+        <li>تكريم موظف متميز: صورة + اسمه + إنجازه + موسيقى فخرية.</li>
+        <li>فيديو افتتاحي لحفل جوائز سنوي.</li>
+        <li>تقرير أداء شهري بشكل سينمائي (5 مؤشرات = 5 مشاهد).</li>
+      </ul>
+      <p><b>القيود:</b> لا تجمع بيانات، لا تحسب مؤشرات، لا تُقارن حسب مُدخل المستخدم.</p>
+      <p><b>البديل للقياس الفعلي:</b> Power BI، Google Data Studio، Excel.</p>
+      <p><b>الوصفة المثالية:</b> استخدم أداة استبيان للجمع، ثم استوديو التريندات لعرض النتيجة كفيديو احترافي.</p>
+    </div>
+  </div>
+
+  <div class="pg-num">— 6 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 7: المجالات الممكنة 2
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 3</span>
+    <span>ممكنة بتحفّظات</span>
+  </div>
+
+  <!-- المجال 8 -->
+  <div class="field-card orange">
+    <div class="field-head">
+      <div class="field-ico">⏱️</div>
+      <div class="field-title">
+        <h4>فيديوهات 3–10 دقائق</h4>
+        <div class="field-meta">
+          <span>3–10 دقائق</span>
+          <span>10–40 مشهداً</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p><b>ممكنة تقنياً، لكن مع ثلاثة قيود يجب معرفتها:</b></p>
+
+      <table style="margin-top:8px">
+        <thead>
+          <tr>
+            <th>القيد</th>
+            <th>التفصيل</th>
+            <th>الحل العملي</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>الذاكرة</td>
+            <td>10 دقائق × 30 إطار/ث = 18,000 إطار مرسوم في الذاكرة قبل الترميز</td>
+            <td>اجعل 3–5 دقائق حداً آمناً</td>
+          </tr>
+          <tr>
+            <td>استقرار التبويب</td>
+            <td>يجب أن يبقى التبويب نشطاً طوال التصدير</td>
+            <td>لا تبدّل التبويبات، وأبقِ الشاحن موصولاً</td>
+          </tr>
+          <tr>
+            <td>جودة 4K</td>
+            <td>4K × 10 دقائق على جهاز ضعيف = إطارات مسقطة</td>
+            <td>1080p للفيديوهات الطويلة، 4K للقصيرة</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><b>الأنسب لهذا المجال:</b> دروس تعليمية، ملخصات اجتماعات، وحدات تدريب، بودكاست مصوّر.</p>
+      <p><b>توصية عملية:</b> قسّم الفيديو الطويل إلى <b>فصول</b> (3–5 مشاهد لكل فصل)، وصدّر كل فصل على حدة، ثم ادمجها بأي أداة مونتاج بسيطة.</p>
+    </div>
+  </div>
+
+  <div class="decision-bar">
+    <b>⚠️ خلاصة المجالات الممكنة</b>
+    الكويزات الخطّية — تقارير التميّز — الفيديوهات الطويلة (3–10 د).
+    <br>كلها ممكنة، لكن انتبه للقيود: لا تفاعل، لا قياس، ولا مدة طويلة مع 4K.
+  </div>
+
+  <div class="pg-num">— 7 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 8: المجالات غير المناسبة
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 4</span>
+    <span>غير مناسبة</span>
+  </div>
+
+  <span class="sec-kicker">04 · المجالات غير المناسبة</span>
+  <h2 class="sec-title">ما لا تصلح له الأداة</h2>
+
+  <p class="lead">
+    الصراحة مع العميل أفضل من وعود لا تُنفّذ. هذه المجالات تحتاج أدوات مختلفة تماماً، ونوجّهك للبديل الأنسب.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>المجال</th>
+        <th>لماذا غير مناسب</th>
+        <th>البديل المقترح</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>اختبار تفاعلي بدرجات</td>
+        <td>لا يقبل إجابات، لا يصحح، لا يحسب درجات</td>
+        <td>Google Forms / Typeform / Quizizz</td>
+      </tr>
+      <tr>
+        <td>لوحة تحكم ديناميكية</td>
+        <td>لا تعرض بيانات متغيرة حسب المستخدم</td>
+        <td>Power BI / Looker Studio</td>
+      </tr>
+      <tr>
+        <td>مونتاج معقّد</td>
+        <td>لا يدعم Keyframes، طبقات متعددة، ماسكات</td>
+        <td>Premiere / DaVinci / CapCut</td>
+      </tr>
+      <tr>
+        <td>فيديو أطول من 10 دقائق</td>
+        <td>الذاكرة وضغط المتصفح يمنعان الإكمال</td>
+        <td>تقسيم إلى فصول + دمج خارجي</td>
+      </tr>
+      <tr>
+        <td>3D / موشن جرافيك متقدم</td>
+        <td>لا يدعم Meshes, Particles ثلاثية الأبعاد</td>
+        <td>After Effects / Blender</td>
+      </tr>
+      <tr>
+        <td>بث مباشر</td>
+        <td>الأداة تنتج ملفاً مسجلاً، لا بثاً</td>
+        <td>OBS Studio / Streamlabs</td>
+      </tr>
+      <tr>
+        <td>تسجيل اجتماع</td>
+        <td>لا يسجّل الكاميرا أو الشاشة</td>
+        <td>Zoom / Loom / OBS</td>
+      </tr>
+      <tr>
+        <td>استيراد فيديو وتحريره</td>
+        <td>لا يقصّ فيديو موجوداً، بل يبني من مشاهد</td>
+        <td>CapCut / Premiere</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box warn">
+    <strong>💬 رسالة للعميل</strong>
+    <p>الأداة ليست بديلاً عن كل أدوات الإنتاج، بل بديل عن <b>بطء الإنتاج اليومي للريلز</b>. حين تحتاج شيئاً آخر، وجّهنا نرشدك للأداة الصحيحة.</p>
+  </div>
+
+  <div class="pg-num">— 8 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 9: جدول القرار السريع
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 5</span>
+    <span>جدول القرار</span>
+  </div>
+
+  <span class="sec-kicker">05 · جدول القرار السريع</span>
+  <h2 class="sec-title">هل الأداة مناسبة لهدفك؟</h2>
+
+  <p class="lead">
+    ابحث عن هدفك في الجدول، وستجد الإجابة المباشرة والبديل الأنسب إن لم تكن الأداة مناسبة.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>إذا كان هدفك…</th>
+        <th>المناسب؟</th>
+        <th>البديل الأنسب</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ريلز / تيك توك / شورتس</td>
+        <td>✅ مثالي</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>إعلان منتج قصير</td>
+        <td>✅ مثالي</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>ملخص أخبار أو تريندات</td>
+        <td>✅ مثالي</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>نصائح سريعة / Micro-learning</td>
+        <td>✅ مثالي</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>تهاني المناسبات</td>
+        <td>✅ مثالي</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>كويز فيديو خطّي للسوشيال</td>
+        <td>✅ مثالي</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>كويز تفاعلي بدرجات</td>
+        <td>❌ غير مناسب</td>
+        <td>Google Forms / Quizizz</td>
+      </tr>
+      <tr>
+        <td>تقرير تميّز كفيديو عرض</td>
+        <td>⚠️ ممكن</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>مقياس تميّز تفاعلي</td>
+        <td>❌ غير مناسب</td>
+        <td>Power BI / Looker</td>
+      </tr>
+      <tr>
+        <td>درس 3–5 دقائق</td>
+        <td>✅ مثالي</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>درس 10+ دقائق</td>
+        <td>⚠️ ممكن</td>
+        <td>تقسيم إلى فصول + دمج</td>
+      </tr>
+      <tr>
+        <td>فيلم وثائقي 20+ دقيقة</td>
+        <td>❌ غير مناسب</td>
+        <td>Premiere / DaVinci</td>
+      </tr>
+      <tr>
+        <td>3D / موشن جرافيك</td>
+        <td>❌ غير مناسب</td>
+        <td>After Effects / Blender</td>
+      </tr>
+      <tr>
+        <td>بث مباشر</td>
+        <td>❌ غير مناسب</td>
+        <td>OBS Studio</td>
+      </tr>
+      <tr>
+        <td>تحرير فيديو موجود</td>
+        <td>❌ غير مناسب</td>
+        <td>CapCut / Premiere</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pg-num">— 9 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 10: توصيات الإنتاج
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 6</span>
+    <span>توصيات الإنتاج</span>
+  </div>
+
+  <span class="sec-kicker">06 · التوصيات</span>
+  <h2 class="sec-title">إعدادات الإنتاج لكل مجال</h2>
+
+  <p class="lead">
+    جدول واحد يجمع كل توصيات الإنتاج: المدة، عدد المشاهد، الجودة، ونوع الانتقال — لكل مجال.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>المجال</th>
+        <th>المدة</th>
+        <th>المشاهد</th>
+        <th>الجودة</th>
+        <th>الانتقال</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ريلز إعلاني سريع</td>
+        <td>15–25 ث</td>
+        <td>2–3</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+      <tr>
+        <td>ريلز تريند يومي</td>
+        <td>20–40 ث</td>
+        <td>3–5</td>
+        <td>1080p</td>
+        <td>slide</td>
+      </tr>
+      <tr>
+        <td>إعلان منتج</td>
+        <td>25–45 ث</td>
+        <td>3–4</td>
+        <td>1080p</td>
+        <td>zoom</td>
+      </tr>
+      <tr>
+        <td>ملخص أخبار</td>
+        <td>40–90 ث</td>
+        <td>5–8</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+      <tr>
+        <td>نصائح سريعة</td>
+        <td>30–60 ث</td>
+        <td>3–5</td>
+        <td>1080p</td>
+        <td>slideUp</td>
+      </tr>
+      <tr>
+        <td>درس مصغّر</td>
+        <td>45–90 ث</td>
+        <td>4–6</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+      <tr>
+        <td>درس متوسط</td>
+        <td>3–5 د</td>
+        <td>10–20</td>
+        <td>1080p</td>
+        <td>wipe</td>
+      </tr>
+      <tr>
+        <td>تقرير تميّز</td>
+        <td>60–120 ث</td>
+        <td>5–10</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+      <tr>
+        <td>كويز سؤال وجواب</td>
+        <td>10 ث/سؤال</td>
+        <td>2/سؤال</td>
+        <td>1080p</td>
+        <td>zoom</td>
+      </tr>
+      <tr>
+        <td>تهنئة مناسبة</td>
+        <td>10–20 ث</td>
+        <td>2–3</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+      <tr>
+        <td>عرض عقاري</td>
+        <td>30–50 ث</td>
+        <td>4–6</td>
+        <td>1080p</td>
+        <td>slide</td>
+      </tr>
+      <tr>
+        <td>شهادة عميل</td>
+        <td>20–30 ث</td>
+        <td>2–3</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box dark">
+    <strong>🏆 القاعدة الشاملة</strong>
+    <p>ابدأ دائماً بـ 1080p. ارتقِ إلى 4K فقط عند الحاجة لعرض على شاشة كبيرة أو مهرجان. المدة المثالية لأي فيديو تسويقي هي <b>15 إلى 45 ثانية</b> — كل ما زاد عن ذلك يحتاج مبرراً قوياً.</p>
+  </div>
+
+  <div class="pg-num">— 10 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 11: الخاتمة
+     ============================================== -->
+<div class="page thanks">
+  <div class="thanks-inner">
+    <div class="thanks-icon">🎯</div>
+    <h2>وجدت مجالك؟</h2>
+    <p>افتح الأداة، وطبّق التوصيات المناسبة لمجالك — وستُنتج أول فيديو احترافي خلال دقائق.</p>
+    <div class="contact">
+      للدعم والاستفسارات<br>
+      <b style="color:#ffd93d; font-size:14pt; letter-spacing:1px;">info@hero1.vip</b>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
