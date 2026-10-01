@@ -31,7 +31,7 @@ const RUNTIME_ASSETS = [
   './fields-guide.html',
   './product-pitch.html',
   './fields-guide-ar.html',
-  './product-pitch-ar.html',
+  './product-pitch-ar.html'
    
 ];
 
