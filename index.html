@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0c14">
+<meta name="description" content="Trend Studio — Professional video maker in your browser. Create Reels, TikToks and Shorts in minutes. No downloads, no sign-up, no uploads.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Trend Studio">
+<meta name="mobile-web-app-capable" content="yes">
+
+<title>Trend Studio — Professional Video Maker</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<style>
+:root{
+  --bg:#0b0c14;
+  --bg2:#12131f;
+  --bg3:#1a1c2b;
+  --line:#252840;
+  --txt:#e8e9f3;
+  --dim:#8b8fa8;
+  --acc:#7c5cff;
+  --acc2:#ffd93d;
+  --ok:#22c55e;
+  --danger:#ef4444;
+  --radius:16px;
+  --nav-h:64px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+a{color:inherit;text-decoration:none}
+
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:#2e3150;border-radius:8px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ============ Layout ============ */
+.wrap{
+  max-width:860px;
+  margin:0 auto;
+  padding:0 20px;
+}
+
+/* ============ Header ============ */
+header.top{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(11,12,20,.82);
+  backdrop-filter:saturate(180%) blur(18px);
+  -webkit-backdrop-filter:saturate(180%) blur(18px);
+  border-bottom:1px solid var(--line);
+}
+.top-inner{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  height:60px;
+  max-width:860px;
+  margin:0 auto;
+  padding:0 20px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+  font-size:17px;
+  letter-spacing:-.2px;
+}
+.brand img{width:32px;height:32px;border-radius:9px;display:block}
+.brand span{
+  background:linear-gradient(90deg,#a78bfa,#ffd93d);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.top-spacer{flex:1}
+.top-btn{
+  padding:8px 14px;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:700;
+  background:var(--bg3);
+  border:1px solid var(--line);
+  transition:.15s;
+}
+.top-btn:hover{background:#242840;border-color:#3a3f60}
+.top-btn.primary{
+  background:linear-gradient(135deg,#7c5cff,#a855f7);
+  border:none;
+  color:#fff;
+}
+.top-btn.primary:hover{filter:brightness(1.15)}
+
+/* ============ Views ============ */
+.view{display:none;animation:fadeIn .35s ease}
+.view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ============ Hero ============ */
+.hero{
+  text-align:center;
+  padding:48px 0 24px;
+  position:relative;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  top:-40px;left:50%;
+  transform:translateX(-50%);
+  width:340px;height:340px;
+  background:radial-gradient(circle,rgba(124,92,255,.28),transparent 65%);
+  pointer-events:none;
+  z-index:-1;
+}
+.hero-icon{
+  width:112px;height:112px;
+  border-radius:26px;
+  margin:0 auto 22px;
+  display:block;
+  box-shadow:0 24px 60px rgba(124,92,255,.35),0 0 0 1px rgba(255,255,255,.06);
+}
+.hero h1{
+  font-size:38px;
+  font-weight:900;
+  letter-spacing:-1px;
+  line-height:1.15;
+  margin-bottom:14px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(90deg,#a78bfa,#ffd93d);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.hero p{
+  font-size:16.5px;
+  color:var(--dim);
+  max-width:520px;
+  margin:0 auto 28px;
+  line-height:1.65;
+}
+
+/* ============ Buttons ============ */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:14px 26px;
+  border-radius:13px;
+  font-weight:700;
+  font-size:15px;
+  transition:.18s;
+  border:1px solid var(--line);
+  background:var(--bg3);
+  white-space:nowrap;
+}
+.btn:hover{background:#242840;border-color:#3a3f60;transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.primary{
+  background:linear-gradient(135deg,#7c5cff,#a855f7);
+  border:none;
+  color:#fff;
+  box-shadow:0 10px 28px rgba(124,92,255,.4);
+}
+.btn.primary:hover{filter:brightness(1.12);box-shadow:0 14px 34px rgba(124,92,255,.5)}
+.btn.ghost{background:transparent;border:1px solid var(--line)}
+.btn.full{width:100%}
+.btn svg{width:18px;height:18px;flex-shrink:0}
+
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  justify-content:center;
+  margin-bottom:14px;
+}
+.install-status{
+  font-size:13px;
+  color:var(--dim);
+  min-height:20px;
+}
+.install-status.ok{color:var(--ok)}
+
+/* ============ Sections ============ */
+section.block{
+  padding:36px 0;
+  border-top:1px solid var(--line);
+}
+.sec-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:6px;
+}
+.sec-head .kicker{
+  font-size:11.5px;
+  font-weight:800;
+  letter-spacing:1.6px;
+  text-transform:uppercase;
+  color:var(--acc);
+}
+h2.sec-title{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:-.5px;
+  margin-bottom:8px;
+}
+p.sec-sub{
+  color:var(--dim);
+  font-size:15px;
+  margin-bottom:24px;
+  max-width:560px;
+}
+
+/* ============ Language Cards ============ */
+.lang-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+@media(max-width:560px){.lang-grid{grid-template-columns:1fr}}
+.lang-card{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:20px;
+  border-radius:var(--radius);
+  background:linear-gradient(160deg,#161829,#111220);
+  border:1px solid var(--line);
+  transition:.2s;
+  cursor:pointer;
+  text-align:left;
+  position:relative;
+  overflow:hidden;
+}
+.lang-card::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 100% 0%,rgba(124,92,255,.18),transparent 55%);
+  opacity:0;
+  transition:.25s;
+  pointer-events:none;
+}
+.lang-card:hover{
+  transform:translateY(-3px);
+  border-color:var(--acc);
+  box-shadow:0 16px 40px rgba(124,92,255,.22);
+}
+.lang-card:hover::after{opacity:1}
+.lang-card .flag{
+  width:52px;height:52px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#7c5cff,#a855f7);
+  display:grid;place-items:center;
+  font-size:24px;
+  font-weight:900;
+  flex-shrink:0;
+  box-shadow:0 8px 20px rgba(124,92,255,.35);
+}
+.lang-card.ar .flag{
+  background:linear-gradient(135deg,#ffd93d,#f59e0b);
+  color:#1a1c2b;
+  box-shadow:0 8px 20px rgba(255,217,61,.28);
+}
+.lang-card .info{flex:1;min-width:0;position:relative;z-index:1}
+.lang-card .info b{
+  display:block;
+  font-size:16.5px;
+  font-weight:800;
+  margin-bottom:2px;
+}
+.lang-card .info small{
+  display:block;
+  font-size:13px;
+  color:var(--dim);
+  line-height:1.4;
+}
+.lang-card .arrow{
+  color:var(--dim);
+  font-size:20px;
+  transition:.2s;
+  position:relative;
+  z-index:1;
+}
+.lang-card:hover .arrow{color:var(--acc);transform:translateX(4px)}
+.lang-card.ar .arrow{transform:scaleX(-1)}
+.lang-card.ar:hover .arrow{transform:scaleX(-1) translateX(4px)}
+
+/* ============ Steps / Instructions ============ */
+.tabs{
+  display:flex;
+  gap:6px;
+  background:var(--bg3);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:4px;
+  margin-bottom:18px;
+  overflow-x:auto;
+}
+.tabs button{
+  flex:1;
+  padding:9px 12px;
+  border-radius:9px;
+  font-size:13px;
+  font-weight:700;
+  color:var(--dim);
+  white-space:nowrap;
+  transition:.15s;
+}
+.tabs button.active{background:var(--acc);color:#fff}
+.tabs button:hover:not(.active){color:var(--txt);background:#22253a}
+
+.panel{display:none}
+.panel.active{display:block;animation:fadeIn .3s ease}
+
+ol.steps{
+  list-style:none;
+  counter-reset:s;
+  margin:0;
+}
+ol.steps>li{
+  counter-increment:s;
+  position:relative;
+  padding-left:46px;
+  padding-bottom:18px;
+  font-size:14.5px;
+  line-height:1.7;
+  color:#c8cad9;
+}
+ol.steps>li::before{
+  content:counter(s);
+  position:absolute;
+  left:0;top:0;
+  width:32px;height:32px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#7c5cff,#a855f7);
+  color:#fff;
+  font-weight:800;
+  font-size:14px;
+  display:grid;place-items:center;
+  box-shadow:0 4px 12px rgba(124,92,255,.3);
+}
+ol.steps>li:last-child{padding-bottom:0}
+ol.steps>li b{color:var(--txt);font-weight:700}
+ol.steps>li::after{
+  content:'';
+  position:absolute;
+  left:15px;
+  top:34px;
+  bottom:-4px;
+  width:2px;
+  background:linear-gradient(180deg,var(--line),transparent);
+}
+ol.steps>li:last-child::after{display:none}
+
+kbd{
+  display:inline-block;
+  background:#1e2136;
+  border:1px solid var(--line);
+  border-bottom-width:2px;
+  padding:1px 8px;
+  border-radius:6px;
+  font-size:12.5px;
+  font-weight:700;
+  color:var(--acc2);
+  font-family:inherit;
+  white-space:nowrap;
+}
+
+/* RTL block */
+[dir="rtl"].rtl-block ol.steps>li{
+  padding-left:0;
+  padding-right:46px;
+}
+[dir="rtl"].rtl-block ol.steps>li::before{left:auto;right:0}
+[dir="rtl"].rtl-block ol.steps>li::after{left:auto;right:15px}
+
+/* ============ Notice ============ */
+.notice{
+  display:flex;
+  gap:13px;
+  padding:16px 18px;
+  border-radius:14px;
+  background:#141626;
+  border:1px solid var(--line);
+  border-left:3px solid var(--acc);
+  font-size:14px;
+  line-height:1.65;
+  color:#c0c2d4;
+  margin-top:20px;
+}
+.notice .ico{font-size:20px;line-height:1;flex-shrink:0}
+.notice b{color:var(--txt);display:block;margin-bottom:2px}
+.notice.warn{border-left-color:var(--acc2)}
+.notice.ok{border-left-color:var(--ok)}
+
+/* ============ Guides ============ */
+.guide-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+@media(max-width:560px){.guide-grid{grid-template-columns:1fr}}
+.guide-card{
+  display:flex;
+  gap:14px;
+  padding:18px;
+  border-radius:14px;
+  background:var(--bg2);
+  border:1px solid var(--line);
+  transition:.2s;
+  cursor:pointer;
+}
+.guide-card:hover{
+  transform:translateY(-2px);
+  border-color:var(--acc);
+  background:#171930;
+  box-shadow:0 12px 30px rgba(124,92,255,.18);
+}
+.guide-card .g-ico{
+  width:44px;height:44px;
+  border-radius:12px;
+  display:grid;place-items:center;
+  font-size:20px;
+  flex-shrink:0;
+  background:linear-gradient(135deg,#7c5cff,#a855f7);
+  box-shadow:0 6px 16px rgba(124,92,255,.3);
+}
+.guide-card .g-info{flex:1;min-width:0}
+.guide-card .g-info b{
+  display:block;
+  font-size:14.5px;
+  font-weight:800;
+  margin-bottom:3px;
+  line-height:1.35;
+}
+.guide-card .g-info small{
+  display:block;
+  font-size:12.5px;
+  color:var(--dim);
+  line-height:1.5;
+}
+.guide-card .g-lang{
+  display:inline-block;
+  font-size:10px;
+  font-weight:800;
+  padding:2px 8px;
+  border-radius:6px;
+  background:#232742;
+  color:var(--dim);
+  margin-top:7px;
+  letter-spacing:.4px;
+}
+.guide-card .g-lang.ar{background:#2c2416;color:var(--acc2)}
+
+/* ============ Feature list ============ */
+.features{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:6px;
+}
+@media(max-width:560px){.features{grid-template-columns:1fr}}
+.feat{
+  display:flex;
+  gap:11px;
+  padding:14px;
+  border-radius:12px;
+  background:var(--bg2);
+  border:1px solid var(--line);
+  font-size:13.5px;
+  line-height:1.5;
+  color:#c0c2d4;
+}
+.feat .fi{font-size:17px;flex-shrink:0;line-height:1.2}
+.feat b{color:var(--txt);font-weight:700}
+
+/* ============ Footer ============ */
+footer{
+  padding:32px 0 40px;
+  text-align:center;
+  color:var(--dim);
+  font-size:13px;
+  border-top:1px solid var(--line);
+  margin-top:20px;
+}
+footer .contact{
+  display:inline-block;
+  margin-top:8px;
+  padding:8px 16px;
+  border-radius:10px;
+  background:var(--bg3);
+  border:1px solid var(--line);
+  font-weight:700;
+  color:var(--acc2);
+  font-size:13px;
+}
+
+/* ============ Bottom Nav ============ */
+.bottom-nav{
+  position:fixed;
+  left:0;right:0;bottom:0;
+  height:calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+  background:rgba(13,14,23,.94);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-top:1px solid var(--line);
+  display:flex;
+  z-index:100;
+}
+.bottom-nav a{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  font-size:11px;
+  font-weight:700;
+  color:var(--dim);
+  transition:.15s;
+  position:relative;
+  letter-spacing:.2px;
+}
+.bottom-nav a svg{
+  width:22px;height:22px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:.15s;
+}
+.bottom-nav a.active{color:var(--acc)}
+.bottom-nav a.active svg{stroke:var(--acc)}
+.bottom-nav a.active::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:32px;height:3px;
+  background:var(--acc);
+  border-radius:0 0 4px 4px;
+}
+.bottom-nav a:active{background:rgba(124,92,255,.08)}
+
+/* ============ Toast ============ */
+.toast{
+  position:fixed;
+  bottom:calc(var(--nav-h) + 20px + env(safe-area-inset-bottom, 0px));
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:#1e2136;
+  border:1px solid var(--line);
+  padding:12px 22px;
+  border-radius:12px;
+  font-size:13.5px;
+  font-weight:600;
+  z-index:1000;
+  transition:.3s cubic-bezier(.2,.8,.3,1);
+  box-shadow:0 14px 40px rgba(0,0,0,.6);
+  opacity:0;
+  pointer-events:none;
+  max-width:90vw;
+  text-align:center;
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ============ iOS install hint banner ============ */
+.ios-hint{
+  display:none;
+  position:fixed;
+  bottom:calc(var(--nav-h) + 16px + env(safe-area-inset-bottom, 0px));
+  left:16px;right:16px;
+  background:linear-gradient(135deg,#1e2136,#181a2c);
+  border:1px solid var(--acc);
+  border-radius:14px;
+  padding:14px 16px;
+  z-index:99;
+  box-shadow:0 16px 44px rgba(0,0,0,.6);
+  animation:slideUp .4s cubic-bezier(.2,.8,.3,1);
+  align-items:center;
+  gap:12px;
+}
+.ios-hint.show{display:flex}
+@keyframes slideUp{from{transform:translateY(120%);opacity:0}to{transform:none;opacity:1}}
+.ios-hint .ico{font-size:22px;flex-shrink:0}
+.ios-hint .txt{flex:1;font-size:13px;line-height:1.5;color:#c8cad9}
+.ios-hint .txt b{color:var(--txt);display:block;margin-bottom:2px}
+.ios-hint button{
+  color:var(--dim);
+  font-size:20px;
+  padding:4px 8px;
+  border-radius:8px;
+}
+.ios-hint button:hover{background:#242840;color:var(--txt)}
+
+/* ============ Responsive ============ */
+@media(max-width:600px){
+  .hero h1{font-size:31px}
+  .hero-icon{width:92px;height:92px;border-radius:22px}
+  h2.sec-title{font-size:21px}
+  .brand span{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="#home" data-nav="home">
+      <img src="icon.svg" alt="Trend Studio">
+      <span>Trend Studio</span>
+    </a>
+    <div class="top-spacer"></div>
+    <button class="top-btn primary" id="topInstallBtn" style="display:none">⬇ Install</button>
+  </div>
+</header>
+
+<!-- ============================================================
+     VIEW: HOME
+     ============================================================ -->
+<main id="view-home" class="view active">
+  <div class="wrap">
+
+    <!-- HERO -->
+    <div class="hero">
+      <img class="hero-icon" src="icon.svg" alt="Trend Studio app icon">
+      <h1>Make <em>viral videos</em><br>in your browser</h1>
+      <p>
+        Trend Studio is a professional video maker that runs entirely on your device.
+        Create Reels, TikToks and Shorts in minutes — no editing software, no sign-up, no uploads.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn primary" id="installBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>
+          </svg>
+          Install App
+        </button>
+        <button class="btn ghost" id="howToBtn">📖 How to install</button>
+      </div>
+      <div class="install-status" id="installStatus"></div>
+    </div>
+
+    <!-- FEATURES -->
+    <section class="block">
+      <div class="sec-head"><span class="kicker">Why Trend Studio</span></div>
+      <h2 class="sec-title">Everything you need, nothing you don't</h2>
+      <p class="sec-sub">Built for creators who want to publish fast — with professional quality.</p>
+
+      <div class="features">
+        <div class="feat"><span class="fi">🎬</span><div><b>Unlimited scenes</b> — add, reorder and customize every idea.</div></div>
+        <div class="feat"><span class="fi">🎨</span><div><b>12 animated backgrounds</b> — aurora, neon, particles and more.</div></div>
+        <div class="feat"><span class="fi">✨</span><div><b>Cinematic effects</b> — 10 visual effects and 6 transitions.</div></div>
+        <div class="feat"><span class="fi">🎵</span><div><b>Audio per scene</b> — plus a music track for the whole video.</div></div>
+        <div class="feat"><span class="fi">📐</span><div><b>3 aspect ratios</b> — 9:16, 16:9 and 1:1 in one click.</div></div>
+        <div class="feat"><span class="fi">🚀</span><div><b>1080p & 4K export</b> — MP4 file ready to upload.</div></div>
+        <div class="feat"><span class="fi">🔒</span><div><b>100% private</b> — nothing leaves your device.</div></div>
+        <div class="feat"><span class="fi">⚡</span><div><b>No learning curve</b> — 10 minutes is enough.</div></div>
+      </div>
+    </section>
+
+    <!-- LANGUAGE SELECTION -->
+    <section class="block" id="language">
+      <div class="sec-head"><span class="kicker">Choose your language</span></div>
+      <h2 class="sec-title">اختر اللغة · Select language</h2>
+      <p class="sec-sub">
+        Open the video maker in your preferred language. Both versions have identical features.
+      </p>
+
+      <div class="lang-grid">
+        <a class="lang-card" href="Trend%20Studio.html">
+          <div class="flag">EN</div>
+          <div class="info">
+            <b>English</b>
+            <small>Trend Studio — Video maker (LTR)</small>
+          </div>
+          <div class="arrow">→</div>
+        </a>
+
+        <a class="lang-card ar" href="trends_maker.html" dir="rtl">
+          <div class="flag">ع</div>
+          <div class="info" style="text-align:right">
+            <b>العربية</b>
+            <small>استوديو التريندات — صانع الفيديو (RTL)</small>
+          </div>
+          <div class="arrow">→</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- INSTALL INSTRUCTIONS -->
+    <section class="block" id="how-to">
+      <div class="sec-head"><span class="kicker">Manual installation</span></div>
+      <h2 class="sec-title">How to install the app</h2>
+      <p class="sec-sub">
+        If the install button doesn't appear, follow the steps below for your device.
+        Instructions are available in English and Arabic.
+      </p>
+
+      <!-- Language tabs -->
+      <div class="tabs" id="langTabs">
+        <button class="active" data-lang="en">🇬🇧 English</button>
+        <button data-lang="ar">🇸🇦 العربية</button>
+      </div>
+
+      <!-- ============ ENGLISH ============ -->
+      <div class="panel active" id="panel-en">
+        <!-- Platform tabs -->
+        <div class="tabs" id="platformTabsEn" style="margin-bottom:20px">
+          <button class="active" data-os="android">🤖 Android</button>
+          <button data-os="ios">🍎 iPhone / iPad</button>
+          <button data-os="desktop">💻 Desktop</button>
+        </div>
+
+        <!-- Android -->
+        <div class="panel active" data-os-panel="android" data-lang-panel="en">
+          <ol class="steps">
+            <li>Open this website in <b>Google Chrome</b> on your Android device.</li>
+            <li>Tap the <b>three‑dot menu</b> ⋮ in the top‑right corner of the browser.</li>
+            <li>Select <b>“Install app”</b> or <b>“Add to Home screen”</b>.</li>
+            <li>Confirm by tapping <b>“Install”</b>.</li>
+            <li>The Trend Studio icon will appear on your home screen — open it like any app.</li>
+          </ol>
+        </div>
+
+        <!-- iOS -->
+        <div class="panel" data-os-panel="ios" data-lang-panel="en">
+          <ol class="steps">
+            <li>Open this website in <b>Safari</b> on your iPhone or iPad.</li>
+            <li>Tap the <b>Share</b> button <kbd>⤴</kbd> at the bottom of the screen.</li>
+            <li>Scroll down and select <b>“Add to Home Screen”</b>.</li>
+            <li>Give the app a name (or keep <b>Trend Studio</b>) and tap <b>“Add”</b>.</li>
+            <li>The app icon will appear on your home screen — open it like any app.</li>
+          </ol>
+          <div class="notice warn">
+            <span class="ico">⚠️</span>
+            <div><b>Important</b>Installation on iPhone and iPad is only possible through Safari. Other browsers do not support adding to the home screen.</div>
+          </div>
+        </div>
+
+        <!-- Desktop -->
+        <div class="panel" data-os-panel="desktop" data-lang-panel="en">
+          <ol class="steps">
+            <li>Open this website in <b>Chrome</b>, <b>Edge</b> or <b>Brave</b> on your computer.</li>
+            <li>Look for the <b>install icon</b> ⊕ in the address bar (right side).</li>
+            <li>Click it, then confirm by clicking <b>“Install”</b>.</li>
+            <li>The app will open in its own window and appear in your applications list.</li>
+          </ol>
+          <div class="notice">
+            <span class="ico">💡</span>
+            <div><b>Can't see the install icon?</b>Open the browser menu ⋮ → <b>“Install Trend Studio”</b> or <b>“Apps” → “Install this site as an app”</b>.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ ARABIC ============ -->
+      <div class="panel" id="panel-ar">
+        <div dir="rtl" class="rtl-block">
+          <!-- Platform tabs -->
+          <div class="tabs" id="platformTabsAr" style="margin-bottom:20px">
+            <button class="active" data-os="android">🤖 أندرويد</button>
+            <button data-os="ios">🍎 آيفون / آيباد</button>
+            <button data-os="desktop">💻 كمبيوتر</button>
+          </div>
+
+          <!-- Android -->
+          <div class="panel active" data-os-panel="android" data-lang-panel="ar">
+            <ol class="steps">
+              <li>افتح هذا الموقع في متصفح <b>Google Chrome</b> على جهاز الأندرويد.</li>
+              <li>اضغط على <b>قائمة النقاط الثلاث</b> ⋮ في أعلى يمين المتصفح.</li>
+              <li>اختر <b>«تثبيت التطبيق»</b> أو <b>«إضافة إلى الشاشة الرئيسية»</b>.</li>
+              <li>أكّد بالضغط على <b>«تثبيت»</b>.</li>
+              <li>ستظهر أيقونة استوديو التريندات على شاشتك الرئيسية — افتحها كأي تطبيق آخر.</li>
+            </ol>
+          </div>
+
+          <!-- iOS -->
+          <div class="panel" data-os-panel="ios" data-lang-panel="ar">
+            <ol class="steps">
+              <li>افتح هذا الموقع في متصفح <b>Safari</b> على الآيفون أو الآيباد.</li>
+              <li>اضغط على زر <b>المشاركة</b> <kbd>⤴</kbd> في أسفل الشاشة.</li>
+              <li>انزل للأسفل واختر <b>«إضافة إلى الشاشة الرئيسية»</b>.</li>
+              <li>أعطِ التطبيق اسماً (أو اترك <b>Trend Studio</b>) ثم اضغط <b>«إضافة»</b>.</li>
+              <li>ستظهر أيقونة التطبيق على شاشتك الرئيسية — افتحها كأي تطبيق آخر.</li>
+            </ol>
+            <div class="notice warn">
+              <span class="ico">⚠️</span>
+              <div><b>مهم</b>التثبيت على الآيفون والآيباد ممكن فقط عبر متصفح Safari. المتصفحات الأخرى لا تدعم الإضافة إلى الشاشة الرئيسية.</div>
+            </div>
+          </div>
+
+          <!-- Desktop -->
+          <div class="panel" data-os-panel="desktop" data-lang-panel="ar">
+            <ol class="steps">
+              <li>افتح هذا الموقع في متصفح <b>Chrome</b> أو <b>Edge</b> أو <b>Brave</b> على جهاز الكمبيوتر.</li>
+              <li>ابحث عن <b>أيقونة التثبيت</b> ⊕ في شريط العنوان (على اليمين).</li>
+              <li>اضغط عليها، ثم أكّد بالضغط على <b>«تثبيت»</b>.</li>
+              <li>سيفتح التطبيق في نافذة مستقلة ويظهر في قائمة تطبيقاتك.</li>
+            </ol>
+            <div class="notice">
+              <span class="ico">💡</span>
+              <div><b>لا ترى أيقونة التثبيت؟</b>افتح قائمة المتصفح ⋮ ← <b>«تثبيت Trend Studio»</b> أو <b>«التطبيقات» ← «تثبيت هذا الموقع كتطبيق»</b>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice ok" style="margin-top:24px">
+        <span class="ico">✅</span>
+        <div>
+          <b>No download required</b>
+          Once installed, the app works offline and updates itself automatically. No app store, no file downloads.
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>Trend Studio — Professional video maker in your browser</div>
+      <div class="contact">info@hero1.vip</div>
+    </footer>
+
+  </div>
+</main>
+
+<!-- ============================================================
+     VIEW: GUIDES
+     ============================================================ -->
+<main id="view-guides" class="view">
+  <div class="wrap" style="padding-top:32px">
+
+    <div class="sec-head"><span class="kicker">Documentation</span></div>
+    <h2 class="sec-title">User Guides</h2>
+    <p class="sec-sub">
+      Everything you need to master Trend Studio — from your first video to advanced techniques.
+      Available in both English and Arabic.
+    </p>
+
+    <div class="guide-grid">
+      <a class="guide-card" href="user-guide.html.html">
+        <div class="g-ico">📘</div>
+        <div class="g-info">
+          <b>User Guide</b>
+          <small>From idea to final video in 5 minutes. Complete walkthrough of every feature.</small>
+          <span class="g-lang">ENGLISH</span>
+        </div>
+      </a>
+
+      <a class="guide-card" href="دليل%20استخدام%20صانع%20الترند.html">
+        <div class="g-ico">📘</div>
+        <div class="g-info">
+          <b>دليل الاستخدام</b>
+          <small>من الفكرة إلى الفيديو النهائي في 5 دقائق. شرح كامل لكل ميزة.</small>
+          <span class="g-lang ar">العربية</span>
+        </div>
+      </a>
+
+      <a class="guide-card" href="fields-guide.html">
+        <div class="g-ico">📊</div>
+        <div class="g-info">
+          <b>Fields & Use Cases</b>
+          <small>Where to use Trend Studio — ideal fields, possible with caveats, and alternatives.</small>
+          <span class="g-lang">ENGLISH</span>
+        </div>
+      </a>
+
+      <a class="guide-card" href="fields-guide-ar.html">
+        <div class="g-ico">📊</div>
+        <div class="g-info">
+          <b>دليل المجالات</b>
+          <small>أين تستخدم الأداة — المجالات المثالية، الممكنة بتحفّظات، والبدائل.</small>
+          <span class="g-lang ar">العربية</span>
+        </div>
+      </a>
+
+      <a class="guide-card" href="product-pitch.html">
+        <div class="g-ico">💼</div>
+        <div class="g-info">
+          <b>Product Overview</b>
+          <small>Features, comparison, pricing and real use cases — for business decisions.</small>
+          <span class="g-lang">ENGLISH</span>
+        </div>
+      </a>
+
+      <a class="guide-card" href="product-pitch-ar.html">
+        <div class="g-ico">💼</div>
+        <div class="g-info">
+          <b>عرض المنتج</b>
+          <small>المميزات، المقارنة، التسعير، وحالات الاستخدام — لقرارات العمل.</small>
+          <span class="g-lang ar">العربية</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="notice" style="margin-top:28px">
+      <span class="ico">💡</span>
+      <div>
+        <b>Tip</b>
+        All guides are printable. Open any guide and press <kbd>Ctrl</kbd> + <kbd>P</kbd> (or <kbd>⌘</kbd> + <kbd>P</kbd> on Mac) to save it as a PDF.
+      </div>
+    </div>
+
+    <footer>
+      <div>Trend Studio — Professional video maker in your browser</div>
+      <div class="contact">info@hero1.vip</div>
+    </footer>
+
+  </div>
+</main>
+
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="bottom-nav">
+  <a href="#home" data-nav="home" class="active">
+    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2h-4v-7h-6v7H5a2 2 0 0 1-2-2Z"/></svg>
+    <span>Home</span>
+  </a>
+  <a href="#guides" data-nav="guides">
+    <svg viewBox="0 0 24 24"><path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3Z"/><path d="M18 20a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3"/><path d="M8 9h6M8 13h6"/></svg>
+    <span>Guides</span>
+  </a>
+  <a href="https://app.hero1.vip/#about" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+    <span>About Us</span>
+  </a>
+</nav>
+
+<!-- ================= iOS HINT ================= -->
+<div class="ios-hint" id="iosHint">
+  <span class="ico">📲</span>
+  <div class="txt">
+    <b>Install on iPhone / iPad</b>
+    Tap <b>Share ⤴</b> then <b>“Add to Home Screen”</b>.
+  </div>
+  <button id="iosHintClose" aria-label="Close">✕</button>
+</div>
+
+<!-- ================= TOAST ================= -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   Helpers
+   ========================================================= */
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+function toast(msg, ms = 2600){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), ms);
+}
+
+/* =========================================================
+   View switching (Home / Guides)
+   ========================================================= */
+function showView(name){
+  $$('.view').forEach(v => v.classList.remove('active'));
+  const el = $('#view-' + name);
+  if (el) el.classList.add('active');
+
+  $$('.bottom-nav a[data-nav]').forEach(a => {
+    a.classList.toggle('active', a.dataset.nav === name);
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+$$('[data-nav]').forEach(el => {
+  el.addEventListener('click', e => {
+    const name = el.dataset.nav;
+    if (name){
+      e.preventDefault();
+      showView(name);
+      history.replaceState(null, '', '#' + name);
+    }
+  });
+});
+
+/* Restore view from hash */
+(function restoreView(){
+  const h = location.hash.replace('#','');
+  if (h === 'guides') showView('guides');
+})();
+
+/* "How to install" button scrolls to instructions */
+$('#howToBtn').addEventListener('click', () => {
+  const el = $('#how-to');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+/* =========================================================
+   Language tabs (EN / AR) in install instructions
+   ========================================================= */
+$('#langTabs').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  const lang = btn.dataset.lang;
+
+  $$('#langTabs button').forEach(b => b.classList.toggle('active', b === btn));
+  $$('[data-lang-panel]').forEach(p => {
+    p.classList.toggle('active', p.dataset.langPanel === lang);
+  });
+});
+
+/* =========================================================
+   Platform tabs (Android / iOS / Desktop) — EN + AR
+   ========================================================= */
+function bindPlatformTabs(tabsId){
+  const tabs = $(tabsId);
+  if (!tabs) return;
+  tabs.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const os = btn.dataset.os;
+    const lang = tabsId.includes('Ar') ? 'ar' : 'en';
+
+    tabs.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn));
+    $$(`[data-os-panel][data-lang-panel="${lang}"]`).forEach(p => {
+      p.classList.toggle('active', p.dataset.osPanel === os);
+    });
+  });
+}
+bindPlatformTabs('#platformTabsEn');
+bindPlatformTabs('#platformTabsAr');
+
+/* =========================================================
+   PWA — Service Worker registration
+   ========================================================= */
+if ('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(err => {
+      console.warn('Service worker registration failed:', err);
+    });
+  });
+}
+
+/* =========================================================
+   PWA — Install prompt (Android / Desktop)
+   ========================================================= */
+let deferredPrompt = null;
+const installBtn     = $('#installBtn');
+const topInstallBtn  = $('#topInstallBtn');
+const installStatus  = $('#installStatus');
+
+const isStandalone =
+  window.matchMedia('(display-mode: standalone)').matches ||
+  window.navigator.standalone === true;
+
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+/* Already installed */
+if (isStandalone){
+  installStatus.textContent = '✅ App is already installed.';
+  installStatus.classList.add('ok');
+  installBtn.textContent = 'Open App';
+  installBtn.onclick = () => showView('home');
+}
+
+/* Capture the install prompt */
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  installBtn.style.display = '';
+  topInstallBtn.style.display = '';
+  installStatus.textContent = 'Ready to install — tap the button above.';
+  installStatus.classList.remove('ok');
+});
+
+/* Install button click */
+async function triggerInstall(){
+  if (deferredPrompt){
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+    if (choice.outcome === 'accepted'){
+      installStatus.textContent = '✅ Installing…';
+      installStatus.classList.add('ok');
+      toast('Installing Trend Studio…');
+    } else {
+      toast('Installation cancelled');
+    }
+    deferredPrompt = null;
+    return;
+  }
+
+  /* No prompt available — show manual instructions */
+  if (isIOS){
+    $('#iosHint').classList.add('show');
+    setTimeout(() => $('#iosHint').classList.remove('show'), 9000);
+  } else {
+    toast('Use your browser menu to install this app');
+  }
+  $('#how-to').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+installBtn.addEventListener('click', triggerInstall);
+topInstallBtn.addEventListener('click', triggerInstall);
+
+/* Detected installation */
+window.addEventListener('appinstalled', () => {
+  installStatus.textContent = '✅ App installed successfully!';
+  installStatus.classList.add('ok');
+  installBtn.style.display = 'none';
+  topInstallBtn.style.display = 'none';
+  toast('✅ Trend Studio installed');
+});
+
+/* =========================================================
+   iOS hint banner
+   ========================================================= */
+if (isIOS && !isStandalone){
+  setTimeout(() => {
+    $('#iosHint').classList.add('show');
+  }, 3200);
+}
+$('#iosHintClose').addEventListener('click', () => {
+  $('#iosHint').classList.remove('show');
+});
+
+/* =========================================================
+   Hide install buttons on iOS unless we already captured a prompt
+   ========================================================= */
+if (isIOS && !isStandalone){
+  /* Keep install button visible — it triggers the hint banner */
+  installBtn.style.display = '';
+}
+
+/* =========================================================
+   Keyboard shortcuts
+   ========================================================= */
+window.addEventListener('keydown', e => {
+  if (e.target.matches('input, textarea, select')) return;
+  if (e.key === '1') showView('home');
+  if (e.key === '2') showView('guides');
+});
+</script>
+
+</body>
+</html>
