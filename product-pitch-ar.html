@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>عرض مميزات استوديو التريندات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { direction: rtl; }
+body {
+  font-family: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+  background: #d1d5db;
+  color: #1a1c2b;
+  line-height: 1.85;
+  font-size: 10.5pt;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 210mm;
+  height: 297mm;
+  margin: 10px auto;
+  padding: 20mm 18mm 18mm;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.page:last-child { page-break-after: auto; }
+
+.print-bar {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  background: #1a1c2b; color: #fff;
+  padding: 12px 24px; border-radius: 12px;
+  display: flex; gap: 14px; align-items: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 999;
+  font-size: 13px;
+}
+.print-bar button {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #fff; border: none; padding: 9px 20px;
+  border-radius: 8px; font-weight: 700; cursor: pointer;
+  font-family: inherit; font-size: 13px;
+}
+.print-bar button:hover { filter: brightness(1.15); }
+@media print {
+  body { background: #fff; }
+  .page { margin: 0; box-shadow: none; }
+  .print-bar { display: none !important; }
+}
+
+/* ====================== الأغلفة ====================== */
+.cover {
+  padding: 0;
+  background: linear-gradient(160deg, #0f172a 0%, #7c2d12 40%, #f59e0b 75%, #ef4444 100%);
+  color: #fff;
+  position: relative;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50mm; right: -50mm;
+  width: 120mm; height: 120mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -30mm; left: -30mm;
+  width: 80mm; height: 80mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,217,61,0.25), transparent 70%);
+}
+.cover-inner {
+  position: relative;
+  height: 100%;
+  padding: 30mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1;
+}
+.cover-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 100px;
+  font-size: 10pt;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  align-self: flex-start;
+  backdrop-filter: blur(10px);
+}
+.cover-icon {
+  font-size: 80pt;
+  line-height: 1;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+}
+.cover h1 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 50pt;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  letter-spacing: -1.5px;
+}
+.cover .subtitle {
+  font-size: 16pt;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.95);
+  max-width: 130mm;
+}
+.cover-footer {
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10pt;
+  color: rgba(255,255,255,0.9);
+}
+
+/* ====================== عناوين ====================== */
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e7ef;
+  margin-bottom: 18px;
+  font-size: 9pt;
+  color: #9ba0b8;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+}
+.page-head .brand { color: #f59e0b; font-weight: 700; }
+
+.sec-kicker {
+  font-size: 9.5pt;
+  font-weight: 800;
+  color: #ef4444;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+h2.sec-title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 24pt;
+  font-weight: 800;
+  color: #1a1c2b;
+  line-height: 1.25;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid #f59e0b;
+  display: inline-block;
+  padding-left: 40px;
+}
+h3.sub {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14pt;
+  font-weight: 700;
+  color: #7c2d12;
+  margin: 18px 0 10px;
+  padding-right: 14px;
+  border-right: 4px solid #f59e0b;
+  line-height: 1.4;
+}
+
+p { margin-bottom: 10px; color: #3a3d52; }
+.lead {
+  font-size: 12pt;
+  color: #4a4d63;
+  line-height: 1.9;
+  margin-bottom: 16px;
+}
+b, strong { color: #1a1c2b; font-weight: 700; }
+
+/* ====================== الصناديق ====================== */
+.box {
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin: 14px 0;
+  border-right: 4px solid #f59e0b;
+  background: #fff7ed;
+  font-size: 10.5pt;
+  line-height: 1.75;
+}
+.box.tip { background: #ecfdf5; border-right-color: #10b981; }
+.box.warn { background: #fef2f2; border-right-color: #ef4444; }
+.box.dark {
+  background: linear-gradient(135deg, #1e1b4b, #4c1d95);
+  color: #fff;
+  border-right-color: #ffd93d;
+}
+.box.dark strong { color: #ffd93d; display: block; margin-bottom: 4px; }
+.box.dark p { color: rgba(255,255,255,0.9); margin: 0; }
+.box strong { display: block; margin-bottom: 4px; font-size: 11pt; }
+.box p { margin: 0; font-size: 10.5pt; }
+
+/* ====================== قوائم ====================== */
+ul.dots { list-style: none; margin: 10px 0; }
+ul.dots > li {
+  position: relative;
+  padding-right: 24px;
+  margin-bottom: 8px;
+  font-size: 10.8pt;
+  line-height: 1.75;
+  color: #3a3d52;
+}
+ul.dots > li::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 9px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #f59e0b;
+}
+ul.check > li::before {
+  content: '✓';
+  background: none;
+  color: #10b981;
+  font-weight: 900;
+  font-size: 13pt;
+  top: -1px;
+  width: auto; height: auto;
+}
+ul.x > li::before {
+  content: '✕';
+  background: none;
+  color: #ef4444;
+  font-weight: 900;
+  font-size: 12pt;
+  top: 0;
+  width: auto; height: auto;
+}
+
+/* ====================== جداول ====================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 10.5pt;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e5e7ef;
+}
+table th {
+  background: linear-gradient(135deg, #7c2d12, #f59e0b);
+  color: #fff;
+  padding: 11px 14px;
+  text-align: right;
+  font-weight: 700;
+  font-size: 10.5pt;
+}
+table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e5e7ef;
+  color: #3a3d52;
+  vertical-align: top;
+}
+table tr:last-child td { border-bottom: none; }
+table tr:nth-child(even) td { background: #fafafa; }
+
+/* ====================== المميزات ====================== */
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+.feature {
+  padding: 14px;
+  background: #fafafa;
+  border-radius: 10px;
+  border: 1px solid #e5e7ef;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.feature .ico {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  display: grid; place-items: center;
+  font-size: 18pt;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(245,158,11,0.3);
+}
+.feature .txt { flex: 1; min-width: 0; }
+.feature b {
+  display: block;
+  font-size: 11.5pt;
+  color: #1a1c2b;
+  margin-bottom: 3px;
+  font-family: 'Tajawal', sans-serif;
+}
+.feature p {
+  font-size: 10pt;
+  color: #5a5d73;
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* ====================== الإحصاءات ====================== */
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  margin: 16px 0;
+}
+.stat {
+  text-align: center;
+  padding: 14px 8px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fef3c7, #fed7aa);
+  border: 1px solid #fbbf24;
+}
+.stat .num {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 26pt;
+  font-weight: 900;
+  color: #7c2d12;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat .lbl {
+  font-size: 9.5pt;
+  color: #92400e;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* ====================== التسعير ====================== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+.price-card {
+  border: 2px solid #e5e7ef;
+  border-radius: 12px;
+  padding: 18px 14px;
+  text-align: center;
+  position: relative;
+  background: #fff;
+}
+.price-card.hot {
+  border-color: #f59e0b;
+  background: linear-gradient(180deg, #fffbeb, #fff);
+  box-shadow: 0 10px 30px rgba(245,158,11,0.2);
+  transform: scale(1.03);
+}
+.price-card.hot::before {
+  content: 'الأكثر شيوعاً';
+  position: absolute;
+  top: -12px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #fff;
+  font-size: 9pt;
+  font-weight: 800;
+  padding: 4px 14px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.price-card .plan {
+  font-size: 11pt;
+  color: #7c2d12;
+  font-weight: 800;
+  margin-bottom: 8px;
+  font-family: 'Tajawal', sans-serif;
+}
+.price-card .amount {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 32pt;
+  font-weight: 900;
+  color: #1a1c2b;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.price-card .amount small {
+  font-size: 10pt;
+  color: #9ba0b8;
+  font-weight: 500;
+}
+.price-card ul {
+  list-style: none;
+  margin-top: 12px;
+  text-align: right;
+}
+.price-card ul li {
+  font-size: 9.5pt;
+  color: #4a4d63;
+  margin-bottom: 6px;
+  padding-right: 18px;
+  position: relative;
+  line-height: 1.5;
+}
+.price-card ul li::before {
+  content: '✓';
+  position: absolute;
+  right: 0; top: 0;
+  color: #10b981;
+  font-weight: 900;
+  font-size: 10pt;
+}
+
+/* ====================== الخطوة ====================== */
+.kbd {
+  display: inline-block;
+  background: #1a1c2b;
+  color: #ffd93d;
+  padding: 2px 9px;
+  border-radius: 5px;
+  font-family: 'IBM Plex Sans Arabic', monospace;
+  font-size: 9.5pt;
+  font-weight: 700;
+}
+
+/* ====================== الشكر ====================== */
+.thanks {
+  padding: 0;
+  background: linear-gradient(160deg, #0f172a 0%, #7c2d12 55%, #f59e0b 100%);
+  color: #fff;
+}
+.thanks-inner {
+  height: 100%;
+  padding: 40mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.thanks-icon {
+  font-size: 80pt;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+.thanks h2 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 34pt;
+  font-weight: 900;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+.thanks p {
+  font-size: 14pt;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.7;
+  max-width: 130mm;
+  margin-bottom: 30px;
+}
+.thanks .contact {
+  padding: 20px 34px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 14px;
+  font-size: 12pt;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+}
+
+.pg-num {
+  position: absolute;
+  bottom: 8mm;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9pt;
+  color: #9ba0b8;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* شعار شخصية كبيرة */
+.hero-number {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 60pt;
+  font-weight: 900;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+  display: block;
+  margin-bottom: 6px;
+}
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  💼 اضغط <b>Ctrl+P</b> ثم اختر <b>Save as PDF</b> — مع تفعيل <b>Background graphics</b>
+  <button onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+</div>
+
+<!-- ==============================================
+     صفحة 1: الغلاف
+     ============================================== -->
+<div class="page cover">
+  <div class="cover-inner">
+    <div>
+      <span class="cover-badge">عرض المنتج · 2025</span>
+    </div>
+    <div>
+      <div class="cover-icon">💼</div>
+      <h1>استوديو<br>التريندات</h1>
+      <p class="subtitle">
+        الحل الكامل لصناعة الريلز والتيك توك والشورتس بجودة احترافية — بدون برامج مونتاج، بدون تسجيل، وبدون رفع ملفات.
+      </p>
+    </div>
+    <div class="cover-footer">
+      <span>صانع فيديوهات احترافي في المتصفح</span>
+      <span>الإصدار 1.0</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================================
+     صفحة 2: المشكلة
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">المشكلة</span>
+    <span>عرض المنتج</span>
+  </div>
+
+  <span class="sec-kicker">01 · المشكلة</span>
+  <h2 class="sec-title">لماذا يعاني صنّاع المحتوى؟</h2>
+
+  <p class="lead">
+    إنتاج ريلز احترافي واحد يستغرق من صانع المحتوى العادي ساعتين على الأقل: فتح برنامج مونتاج، ضبط المقاسات، إضافة النصوص، ضبط الصوت، تصدير، ثم إعادة الكرّة بسبب خطأ بسيط. هذا بطيء، مكلف، ويحتاج خبرة تقنية.
+  </p>
+
+  <h3 class="sub">الألم الحقيقي</h3>
+  <ul class="dots x">
+    <li>برامج المونتاج معقّدة وتحتاج تعلّماً طويلاً.</li>
+    <li>القوالب الجاهزة محدودة وغير قابلة للتخصيص.</li>
+    <li>الإنتاج البطيء يعني إنتاجاً أقل وفرص انتشار أقل.</li>
+    <li>الاعتماد على مصممين خارجيين يرفع التكلفة ويبطئ الوتيرة.</li>
+    <li>أدوات الويب الحالية ترفع ملفاتك لسيرفراتها — قلق على الخصوصية.</li>
+  </ul>
+
+  <div class="box warn">
+    <strong>💸 تكلفة التأخير</strong>
+    <p>صانع المحتوى الجدّي يحتاج نشر 5–10 ريلز أسبوعياً. مع الأدوات التقليدية، هذا يعني 15–20 ساعة عمل أسبوعياً — أي نصف دوام كامل، فقط في المونتاج.</p>
+  </div>
+
+  <h3 class="sub">حجم السوق</h3>
+  <div class="stats">
+    <div class="stat">
+      <div class="num">+50M</div>
+      <div class="lbl">صانع محتوى نشط عالمياً</div>
+    </div>
+    <div class="stat">
+      <div class="num">300%</div>
+      <div class="lbl">نمو سوق الفيديو القصير خلال 3 سنوات</div>
+    </div>
+    <div class="stat">
+      <div class="num">85%</div>
+      <div class="lbl">من المحتوى على السوشيال فيديو</div>
+    </div>
+    <div class="stat">
+      <div class="num">2 ساعة</div>
+      <div class="lbl">متوسط زمن إنتاج ريلز واحد</div>
+    </div>
+  </div>
+
+  <div class="pg-num">— 2 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 3: الحل
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">الحل</span>
+    <span>عرض المنتج</span>
+  </div>
+
+  <span class="sec-kicker">02 · الحل</span>
+  <h2 class="sec-title">ما هي الأداة؟</h2>
+
+  <p class="lead">
+    <b>استوديو التريندات</b> هو تطبيق ويب يعمل داخل متصفحك مباشرة. تكتب النص، تختار الخلفية والمؤثر، تضيف الصوت، وتضغط تصدير — فتحصل على فيديو احترافي بجودة 1080p أو 4K خلال ثوانٍ.
+  </p>
+
+  <h3 class="sub">الفكرة الأساسية في سطر واحد</h3>
+  <div class="box dark">
+    <strong>🎯</strong>
+    <p>كل فكرة = مشهد مستقل له خلفيته ونصه وصوته. تجمع المشاهد بالتتابع لتحصل على فيديو نهائي — بسيط كبناء مكعبات الليجو.</p>
+  </div>
+
+  <h3 class="sub">ماذا يحدث فعلياً؟</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>الوقت</th>
+        <th>الخطوة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>الدقيقة 1</td>
+        <td>تفتح الأداة في المتصفح — لا تنزيل ولا تسجيل.</td>
+      </tr>
+      <tr>
+        <td>الدقيقة 2</td>
+        <td>تكتب نصوص مشهدك الأول (خطاف + عنوان + وصف + CTA).</td>
+      </tr>
+      <tr>
+        <td>الدقيقة 3</td>
+        <td>تختار الخلفية المتحركة والمؤثر البصري.</td>
+      </tr>
+      <tr>
+        <td>الدقيقة 4</td>
+        <td>تضيف صورة وصوتاً، تضبط التوقيتات.</td>
+      </tr>
+      <tr>
+        <td>الدقيقة 5</td>
+        <td>تضغط تصدير، وترفع الفيديو على تيك توك أو إنستجرام.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box tip">
+    <strong>✅ النتيجة</strong>
+    <p>فيديو ريلز بجودة احترافية، بدون أي برنامج مونتاج، وبدون أي رفع لملفاتك على أي سيرفر خارجي. كل شيء يحدث داخل جهازك.</p>
+  </div>
+
+  <div class="pg-num">— 3 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 4: المميزات
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">المميزات</span>
+    <span>عرض المنتج</span>
+  </div>
+
+  <span class="sec-kicker">03 · المميزات</span>
+  <h2 class="sec-title">ثمانية أسباب تجعله الأفضل</h2>
+
+  <div class="feature-grid">
+    <div class="feature">
+      <div class="ico">🎬</div>
+      <div class="txt">
+        <b>1) مشاهد غير محدودة</b>
+        <p>أضف ما شئت من المشاهد واسحبها لإعادة ترتيبها. كل مشهد = فكرة مستقلة بخلفيتها وصوتها ونصوصها.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">🖼</div>
+      <div class="txt">
+        <b>2) 12 خلفية متحركة</b>
+        <p>شفق، جزيئات، نيون، أمواج، شبكة، بوكيه — كلها متحركة برمجياً بأداء عالٍ دون فيديوهات ثقيلة.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">✨</div>
+      <div class="txt">
+        <b>3) مؤثرات سينمائية</b>
+        <p>10 مؤثرات على الخلفية + 6 انتقالات بين المشاهد، كلها قابلة للتخصيص لكل مشهد على حدة.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">🖋️</div>
+      <div class="txt">
+        <b>4) نصوص عربية احترافية</b>
+        <p>خطوط كبيرة واضحة، تحكم كامل في وقت الظهور والاختفاء وحركة الدخول لكل نص من الأربعة.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">🎵</div>
+      <div class="txt">
+        <b>5) صوت لكل مشهد + موسيقى</b>
+        <p>ملف صوتي لكل مشهد (يتكرر تلقائياً لملء المدة)، أو موسيقى خلفية واحدة، أو الاثنان معاً.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">📐</div>
+      <div class="txt">
+        <b>6) ثلاث نسب عرض</b>
+        <p>9:16 للريلز، 16:9 ليوتيوب، 1:1 لإنستجرام. تبديل فوري دون إعادة بناء المشاهد.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">🚀</div>
+      <div class="txt">
+        <b>7) تصدير 1080p و 4K</b>
+        <p>ملف MP4 (أو WebM) بجودة عالية جاهز للرفع المباشر، دون رفع لسيرفرات خارجية.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">🔒</div>
+      <div class="txt">
+        <b>8) خصوصية كاملة</b>
+        <p>كل شيء يعمل داخل متصفحك. لا رفع للملفات، لا تسجيل حساب، لا تتبع. مشروعك ملكك وحدك.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <strong>💎 لمسة إضافية</strong>
+    <p>صورة مقدمة (شعار قناتك) وصورة خاتمة (تابعنا) لكل مشروع — بمفتاح تشغيل واحد ومدة قابلة للضبط.</p>
+  </div>
+
+  <div class="pg-num">— 4 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 5: الجمهور المستهدف
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">الجمهور</span>
+    <span>عرض المنتج</span>
+  </div>
+
+  <span class="sec-kicker">04 · الجمهور المستهدف</span>
+  <h2 class="sec-title">لمن هذه الأداة؟</h2>
+
+  <h3 class="sub">1) صانعو المحتوى المستقلّون</h3>
+  <p>
+    يحتاجون إنتاج 3–10 ريلز أسبوعياً بسرعة. الأداة تقلّص زمن الإنتاج من ساعتين إلى 10 دقائق للفيديو الواحد.
+  </p>
+
+  <h3 class="sub">2) أصحاب المشاريع الصغيرة</h3>
+  <p>
+    لا يملكون ميزانية لمصممين. يصنعون إعلاناتهم ومحتواهم بأنفسهم بجودة احترافية تليق بمنتجاتهم.
+  </p>
+
+  <h3 class="sub">3) المسوّقون الرقميون</h3>
+  <p>
+    يصنعون حملات متعددة الاختبارات (A/B) بعشرات النسخ من نفس الفيديو بألوان ونصوص مختلفة — كلها بجهد دقائق.
+  </p>
+
+  <h3 class="sub">4) الوكالات التسويقية</h3>
+  <p>
+    ينتجون محتوى لعملائهم بسرعة، ويسلّمون الملف النهائي. فرصة لتوسيع الخدمات دون توظيف مصممين إضافيين.
+  </p>
+
+  <h3 class="sub">5) المعلّمون والمدربون</h3>
+  <p>
+    يصنعون دروساً مصغّرة (Micro-learning) أو ملخصات دورات، بمدة 30–90 ثانية للدرس.
+  </p>
+
+  <h3 class="sub">6) فرق التسويق الداخلي</h3>
+  <p>
+    تنشر الشركات محتوى منتظماً على سوشيال ميديا دون الاعتماد على قسم الإبداع البطيء.
+  </p>
+
+  <div class="box dark">
+    <strong>📊 حجم الفرصة</strong>
+    <p>سوق الفيديو القصير نما بنسبة 300% خلال 3 سنوات، وملايين من صنّاع المحتوى العرب يبحثون عن أدوات تسريع الإنتاج بلغة عربية أصيلة.</p>
+  </div>
+
+  <div class="pg-num">— 5 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 6: المقارنة
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">المقارنة</span>
+    <span>عرض المنتج</span>
+  </div>
+
+  <span class="sec-kicker">05 · لماذا نحن؟</span>
+  <h2 class="sec-title">الفرق بيننا وبين البدائل</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>المعيار</th>
+        <th>استوديو التريندات</th>
+        <th>Canva</th>
+        <th>CapCut</th>
+        <th>Premiere</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>يحتاج تنزيل</td>
+        <td>❌ لا</td>
+        <td>❌ لا</td>
+        <td>✅ نعم</td>
+        <td>✅ نعم</td>
+      </tr>
+      <tr>
+        <td>يحتاج تسجيل حساب</td>
+        <td>❌ لا</td>
+        <td>✅ نعم</td>
+        <td>✅ نعم</td>
+        <td>❌ لا</td>
+      </tr>
+      <tr>
+        <td>يعمل بدون إنترنت</td>
+        <td>✅ نعم</td>
+        <td>❌ لا</td>
+        <td>✅ نعم</td>
+        <td>✅ نعم</td>
+      </tr>
+      <tr>
+        <td>مصمَّم للعربية RTL</td>
+        <td>✅ نعم</td>
+        <td>⚠️ جزئياً</td>
+        <td>⚠️ جزئياً</td>
+        <td>❌ لا</td>
+      </tr>
+      <tr>
+        <td>مشاهد قابلة للتخصيص</td>
+        <td>✅ نعم</td>
+        <td>❌ لا</td>
+        <td>✅ نعم</td>
+        <td>✅ نعم</td>
+      </tr>
+      <tr>
+        <td>وقت التعلّم</td>
+        <td>10 دقائق</td>
+        <td>ساعة</td>
+        <td>3 ساعات</td>
+        <td>20+ ساعة</td>
+      </tr>
+      <tr>
+        <td>الخصوصية (لا رفع)</td>
+        <td>✅ 100%</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>مناسب للمبتدئين</td>
+        <td>✅ ممتاز</td>
+        <td>✅ جيد</td>
+        <td>⚠️ متوسط</td>
+        <td>❌ صعب</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">ميزتنا الفريدة</h3>
+  <ul class="dots check">
+    <li>لا يحتاج تنزيلاً ولا حساباً — افتح واستخدم مباشرة.</li>
+    <li>مصمّم من الأساس للخط العربي واتجاه RTL.</li>
+    <li>يعمل كلياً داخل المتصفح — خصوصية مطلقة.</li>
+    <li>منحنى تعلّم مسطّح — 10 دقائق كافية للإتقان.</li>
+    <li>مشاهد قابلة للتخصيص بالكامل دون تعقيد المونتاج.</li>
+  </ul>
+
+  <div class="pg-num">— 6 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 7: التسعير
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">التسعير</span>
+    <span>عرض المنتج</span>
+  </div>
+
+  <span class="sec-kicker">06 · النماذج التجارية</span>
+  <h2 class="sec-title">ثلاث حزم تناسب كل احتياج</h2>
+  <p class="lead">
+    يمكنك تبنّي أي من هذه الحزم، أو تعديلها بما يناسب جمهورك المستهدف.
+  </p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="plan">مجاني</div>
+      <div class="amount">0<small> $</small></div>
+      <ul>
+        <li>تصدير 1080p</li>
+        <li>علامة مائية صغيرة</li>
+        <li>مشاهد غير محدودة</li>
+        <li>12 خلفية جاهزة</li>
+      </ul>
+    </div>
+    <div class="price-card hot">
+      <div class="plan">برو</div>
+      <div class="amount">19<small> $/شهر</small></div>
+      <ul>
+        <li>تصدير 4K</li>
+        <li>بدون علامة مائية</li>
+        <li>مكتبة خلفيات موسّعة</li>
+        <li>دعم ذو أولوية</li>
+        <li>موسيقى بلا حدود</li>
+      </ul>
+    </div>
+    <div class="price-card">
+      <div class="plan">فريق</div>
+      <div class="amount">79<small> $/شهر</small></div>
+      <ul>
+        <li>5 مستخدمين</li>
+        <li>حفظ المشاريع سحابياً</li>
+        <li>قوالب مخصّصة</li>
+        <li>شعار الشركة</li>
+        <li>مدير حساب مخصّص</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sub">بديل: ترخيص دائم</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>الترخيص</th>
+        <th>السعر لمرة واحدة</th>
+        <th>مناسب لـ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>شخصي</td>
+        <td>149 دولار</td>
+        <td>صانع محتوى مستقل</td>
+      </tr>
+      <tr>
+        <td>تجاري</td>
+        <td>499 دولار</td>
+        <td>مشروع تجاري واحد</td>
+      </tr>
+      <tr>
+        <td>مؤسسي</td>
+        <td>1,999 دولار</td>
+        <td>شركة أو وكالة (فروع متعددة)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box tip">
+    <strong>💡 استراتيجية مقترحة</strong>
+    <p>ابدأ بحزمة مجانية بعلامة مائية صغيرة لجذب أكبر عدد من المستخدمين، ثم ترتفع التحويلات إلى برو بشكل طبيعي كلما زاد استخدامهم وطلبهم للجودة الأعلى.</p>
+  </div>
+
+  <div class="pg-num">— 7 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 8: حالات الاستخدام
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">حالات الاستخدام</span>
+    <span>عرض المنتج</span>
+  </div>
+
+  <span class="sec-kicker">07 · حالات عملية</span>
+  <h2 class="sec-title">كيف يستخدمها العملاء فعلياً؟</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>الحالة</th>
+        <th>الوصف</th>
+        <th>المدة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ريلز تريند يومي</td>
+        <td>ملخص تريند مع خطاف قوي + CTA</td>
+        <td>15–30 ث</td>
+      </tr>
+      <tr>
+        <td>إعلان منتج</td>
+        <td>مشكلة + حل + دعوة للشراء</td>
+        <td>20–40 ث</td>
+      </tr>
+      <tr>
+        <td>نصيحة سريعة</td>
+        <td>فكرة واحدة + دليل + خاتمة</td>
+        <td>15–25 ث</td>
+      </tr>
+      <tr>
+        <td>ملخص مقال / خبر</td>
+        <td>5–8 مشاهد لعناصر مختلفة</td>
+        <td>40–60 ث</td>
+      </tr>
+      <tr>
+        <td>عرض عقاري</td>
+        <td>صورة الواجهة + الغرف + السعر</td>
+        <td>30–50 ث</td>
+      </tr>
+      <tr>
+        <td>شهادة عميل</td>
+        <td>صورة العميل + جملته + الخدمة</td>
+        <td>20–30 ث</td>
+      </tr>
+      <tr>
+        <td>درس مصغّر</td>
+        <td>سؤال + خطوات + تلخيص</td>
+        <td>45–90 ث</td>
+      </tr>
+      <tr>
+        <td>تهنئة مناسبة</td>
+        <td>خلفية + نص + صورة شعار</td>
+        <td>10–20 ث</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box dark">
+    <strong>📌 مثال واقعي</strong>
+    <p>مطعم صغير يستخدم الأداة لصناعة 3 ريلز أسبوعياً: عرض طبق جديد، عرض خاص، وشهادة عميل. النتيجة: زيادة متابعات بنسبة 40% خلال شهر واحد.</p>
+  </div>
+
+  <div class="pg-num">— 8 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 9: أسئلة العملاء
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">أسئلة العملاء</span>
+    <span>عرض المنتج</span>
+  </div>
+
+  <span class="sec-kicker">08 · الأسئلة الشائعة</span>
+  <h2 class="sec-title">أسئلة يطرحها المشترون</h2>
+
+  <h3 class="sub">هل يعمل على الجوال؟</h3>
+  <p>نعم، يعمل على متصفح الجوال لكن الأداء الأفضل على الحاسوب. للحصول على نتيجة سريعة، استخدم Chrome على لابتوب.</p>
+
+  <h3 class="sub">هل أحتاج إلى إنترنت؟</h3>
+  <p>لأول تحميل فقط. بعدها يمكنك استخدام الأداة دون اتصال طالما لم تُغلق التبويب.</p>
+
+  <h3 class="sub">هل بياناتي محفوظة عندكم؟</h3>
+  <p>لا نرى بياناتك أصلاً. كل شيء يحدث على جهازك. لا رفع، لا تسجيل، لا تتبّع.</p>
+
+  <h3 class="sub">هل يمكنني بيع الفيديوهات التي أصنعها؟</h3>
+  <p>نعم، وبلا قيود. المحتوى الذي تنتجه ملكك بالكامل — يمكنك استخدامه تجارياً.</p>
+
+  <h3 class="sub">هل يمكنني إضافة شعار قناتي؟</h3>
+  <p>نعم، عبر تبويب «مشروع» — يمكنك وضع صورة في المقدمة وأخرى في الخاتمة، مع ضبط المدة لكل منهما.</p>
+
+  <h3 class="sub">ما صيغة الفيديو النهائي؟</h3>
+  <p>MP4 في المتصفحات الحديثة، أو WebM كخيار احتياطي. كلاهما مقبول على كل منصات السوشيال ميديا.</p>
+
+  <h3 class="sub">هل هناك خطة للمؤسسات؟</h3>
+  <p>نعم، مع خصومات للكميات الكبيرة وإمكانية تخصيص الواجهة بشعار الشركة ودمجها مع أنظمة الشركة.</p>
+
+  <h3 class="sub">هل يمكنني تجربة الأداة قبل الشراء؟</h3>
+  <p>نعم، الحزمة المجانية متاحة دائماً — تنتج فيديو 1080p بعلامة مائية صغيرة، لتتأكد من جودة النتيجة قبل الترقية.</p>
+
+  <div class="pg-num">— 9 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 10: الخاتمة
+     ============================================== -->
+<div class="page thanks">
+  <div class="thanks-inner">
+    <div class="thanks-icon">🚀</div>
+    <h2>جاهز للنمو؟</h2>
+    <p>انضم إلى آلاف صنّاع المحتوى الذين يستخدمون استوديو التريندات لإنتاج ريلز احترافي في دقائق — بدلاً من ساعات.</p>
+    <div class="contact">
+      للتواصل التجاري والترخيص<br>
+      <b style="color:#ffd93d; font-size:14pt; letter-spacing:1px;">info@hero1.vip</b>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
