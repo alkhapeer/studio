@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#0f1230"/>
+      <stop offset="1" stop-color="#05060f"/>
+    </linearGradient>
+    
+    <!-- Top bar gradient: orange -> pink -->
+    <linearGradient id="topBar" x1="0" y1="0" x2="1" y2="0.3">
+      <stop offset="0" stop-color="#f59e0b"/>
+      <stop offset="0.3" stop-color="#fbbf24"/>
+      <stop offset="0.55" stop-color="#f472b6"/>
+      <stop offset="1" stop-color="#d946ef"/>
+    </linearGradient>
+    
+    <!-- Stem gradient: purple -> blue -->
+    <linearGradient id="stem" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#a855f7"/>
+      <stop offset="0.5" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+    
+    <!-- Fold shadow -->
+    <linearGradient id="foldDark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.35"/>
+    </linearGradient>
+    
+    <!-- Glow -->
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7c5cff" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#7c5cff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" rx="118" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle glow behind T -->
+  <ellipse cx="256" cy="200" rx="160" ry="140" fill="url(#glow)"/>
+  
+  <!-- ============ CORNER BRACKETS ============ -->
+  <!-- Top-left (yellow/orange) -->
+  <path d="M 138 178 L 138 142 Q 138 128 152 128 L 188 128"
+        stroke="#f59e0b" stroke-width="15" stroke-linecap="round" fill="none"/>
+  
+  <!-- Top-right (pink/magenta) -->
+  <path d="M 324 128 L 360 128 Q 374 128 374 142 L 374 178"
+        stroke="#ec4899" stroke-width="15" stroke-linecap="round" fill="none"/>
+  
+  <!-- Bottom-left (blue) -->
+  <path d="M 138 240 L 138 276 Q 138 290 152 290 L 188 290"
+        stroke="#3b82f6" stroke-width="15" stroke-linecap="round" fill="none"/>
+  
+  <!-- Bottom-right (purple) -->
+  <path d="M 324 290 L 360 290 Q 374 290 374 276 L 374 240"
+        stroke="#a855f7" stroke-width="15" stroke-linecap="round" fill="none"/>
+  
+  <!-- ============ STYLIZED T ============ -->
+  <!-- Top bar left half (orange) -->
+  <path d="M 168 158 L 256 142 L 256 196 L 178 208 Z" fill="url(#topBar)"/>
+  <!-- Top bar right half (pink) -->
+  <path d="M 256 142 L 344 126 L 334 180 L 256 196 Z" fill="url(#topBar)" opacity="0.92"/>
+  
+  <!-- Fold shadow on top bar -->
+  <path d="M 168 158 L 178 208 L 256 196 L 256 142 Z" fill="url(#foldDark)" opacity="0.5"/>
+  
+  <!-- Stem (upper, purple) -->
+  <path d="M 224 194 L 296 182 L 304 248 L 232 260 Z" fill="url(#stem)"/>
+  <!-- Stem (lower, blue) -->
+  <path d="M 232 260 L 304 248 L 312 312 L 240 324 Z" fill="url(#stem)" opacity="0.85"/>
+  
+  <!-- Fold shadow on stem -->
+  <path d="M 232 260 L 304 248 L 304 260 L 232 272 Z" fill="#000" opacity="0.15"/>
+  
+  <!-- ============ TEXT: Trend ============ -->
+  <text x="256" y="412"
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+        font-size="82"
+        font-weight="900"
+        fill="#ffffff"
+        text-anchor="middle"
+        letter-spacing="-2">Trend</text>
+  
+  <!-- ============ TEXT: STUDIO ============ -->
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+     font-size="26"
+     font-weight="800"
+     text-anchor="middle">
+    <text x="256" y="462" letter-spacing="14">
+      <tspan fill="#22d3ee">S</tspan><tspan fill="#38bdf8">T</tspan><tspan fill="#818cf8">U</tspan><tspan fill="#a78bfa">D</tspan><tspan fill="#c084fc">I</tspan><tspan fill="#e879f9">O</tspan>
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>دليل استخدام استوديو التريندات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { direction: rtl; }
+body {
+  font-family: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+  background: #d1d5db;
+  color: #1a1c2b;
+  line-height: 1.85;
+  font-size: 10.5pt;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 210mm;
+  height: 297mm;
+  margin: 10px auto;
+  padding: 20mm 18mm 18mm;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.page:last-child { page-break-after: auto; }
+
+/* أزرار الطباعة (لا تُطبع) */
+.print-bar {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  background: #1a1c2b; color: #fff;
+  padding: 12px 24px; border-radius: 12px;
+  display: flex; gap: 14px; align-items: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 999;
+  font-size: 13px;
+}
+.print-bar button {
+  background: linear-gradient(135deg, #7c5cff, #a855f7);
+  color: #fff; border: none; padding: 9px 20px;
+  border-radius: 8px; font-weight: 700; cursor: pointer;
+  font-family: inherit; font-size: 13px;
+}
+.print-bar button:hover { filter: brightness(1.15); }
+@media print {
+  body { background: #fff; }
+  .page { margin: 0; box-shadow: none; }
+  .print-bar { display: none !important; }
+}
+
+/* ====================== الغلاف ====================== */
+.cover {
+  padding: 0;
+  background: linear-gradient(160deg, #1e1b4b 0%, #4c1d95 40%, #7c5cff 75%, #ec4899 100%);
+  color: #fff;
+}
+.cover-inner {
+  height: 100%;
+  padding: 30mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cover-badge {
+  display: inline-block;
+  padding: 8px 18px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 100px;
+  font-size: 10pt;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  align-self: flex-start;
+}
+.cover-icon {
+  font-size: 72pt;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+.cover h1 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 46pt;
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 18px;
+  letter-spacing: -1px;
+}
+.cover .subtitle {
+  font-size: 15pt;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.92);
+  max-width: 130mm;
+}
+.cover-footer {
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10pt;
+  color: rgba(255,255,255,0.85);
+}
+.cover-footer .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #ffd93d;
+  display: inline-block;
+  margin: 0 10px;
+  vertical-align: middle;
+}
+
+/* ====================== عناوين عامة ====================== */
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e7ef;
+  margin-bottom: 18px;
+  font-size: 9pt;
+  color: #9ba0b8;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+}
+.page-head .brand { color: #7c5cff; font-weight: 700; }
+
+.sec-kicker {
+  font-size: 9.5pt;
+  font-weight: 800;
+  color: #7c5cff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+h2.sec-title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 24pt;
+  font-weight: 800;
+  color: #1a1c2b;
+  line-height: 1.25;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid #7c5cff;
+  display: inline-block;
+  padding-left: 40px;
+}
+h3.sub {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14pt;
+  font-weight: 700;
+  color: #4c1d95;
+  margin: 20px 0 10px;
+  padding-right: 14px;
+  border-right: 4px solid #7c5cff;
+  line-height: 1.4;
+}
+h3.sub:first-of-type { margin-top: 12px; }
+
+p { margin-bottom: 10px; color: #3a3d52; }
+.lead {
+  font-size: 12pt;
+  color: #4a4d63;
+  line-height: 1.9;
+  margin-bottom: 16px;
+}
+b, strong { color: #1a1c2b; font-weight: 700; }
+
+/* ====================== الفهرس ====================== */
+.toc { margin-top: 12px; }
+.toc-row {
+  display: flex;
+  align-items: center;
+  padding: 11px 4px;
+  border-bottom: 1px dashed #d0d4e0;
+  font-size: 11pt;
+}
+.toc-num {
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #7c5cff, #a855f7);
+  color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800;
+  font-size: 11pt;
+  flex-shrink: 0;
+  margin-left: 14px;
+  box-shadow: 0 4px 10px rgba(124,92,255,0.28);
+}
+.toc-title { flex: 1; font-weight: 600; color: #1a1c2b; }
+.toc-pg {
+  font-weight: 700;
+  color: #7c5cff;
+  font-size: 10pt;
+  background: #f3f0ff;
+  padding: 3px 11px;
+  border-radius: 6px;
+}
+
+/* ====================== صناديق ====================== */
+.box {
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin: 14px 0;
+  border-right: 4px solid #7c5cff;
+  background: #f5f3ff;
+  font-size: 10.5pt;
+  line-height: 1.75;
+}
+.box.tip { background: #ecfdf5; border-right-color: #10b981; }
+.box.warn { background: #fff7ed; border-right-color: #f59e0b; }
+.box.alert { background: #fef2f2; border-right-color: #ef4444; }
+.box strong { display: block; margin-bottom: 4px; font-size: 11pt; }
+.box p { margin: 0; font-size: 10.5pt; }
+
+/* ====================== خطوات مرقّمة ====================== */
+ol.steps { list-style: none; counter-reset: s; margin: 12px 0; }
+ol.steps > li {
+  counter-increment: s;
+  position: relative;
+  padding-right: 52px;
+  margin-bottom: 16px;
+  min-height: 40px;
+  font-size: 10.8pt;
+  line-height: 1.8;
+}
+ol.steps > li::before {
+  content: counter(s);
+  position: absolute;
+  right: 0; top: 0;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c5cff, #a855f7);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14pt;
+  display: grid; place-items: center;
+  box-shadow: 0 5px 14px rgba(124,92,255,0.3);
+}
+ol.steps > li strong {
+  display: block;
+  font-size: 12pt;
+  color: #4c1d95;
+  margin-bottom: 2px;
+  font-family: 'Tajawal', sans-serif;
+}
+
+/* ====================== قوائم نقطية ====================== */
+ul.dots { list-style: none; margin: 10px 0; }
+ul.dots > li {
+  position: relative;
+  padding-right: 22px;
+  margin-bottom: 8px;
+  font-size: 10.8pt;
+  line-height: 1.75;
+  color: #3a3d52;
+}
+ul.dots > li::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 9px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #7c5cff;
+}
+ul.check > li::before {
+  content: '✓';
+  background: none;
+  color: #10b981;
+  font-weight: 900;
+  font-size: 13pt;
+  top: -1px;
+  width: auto; height: auto;
+  right: 0;
+}
+
+/* ====================== جداول ====================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 10.5pt;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e5e7ef;
+}
+table th {
+  background: linear-gradient(135deg, #4c1d95, #7c5cff);
+  color: #fff;
+  padding: 11px 14px;
+  text-align: right;
+  font-weight: 700;
+  font-size: 10.5pt;
+}
+table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e5e7ef;
+  color: #3a3d52;
+  vertical-align: top;
+}
+table tr:last-child td { border-bottom: none; }
+table tr:nth-child(even) td { background: #f9fafc; }
+
+/* ====================== KBD ====================== */
+kbd {
+  display: inline-block;
+  background: #1a1c2b;
+  color: #ffd93d;
+  padding: 2px 9px;
+  border-radius: 5px;
+  font-family: 'IBM Plex Sans Arabic', monospace;
+  font-size: 9.5pt;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* ====================== صفحة الشكر ====================== */
+.thanks {
+  padding: 0;
+  background: linear-gradient(160deg, #1e1b4b 0%, #4c1d95 55%, #7c5cff 100%);
+  color: #fff;
+}
+.thanks-inner {
+  height: 100%;
+  padding: 40mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.thanks-icon { font-size: 72pt; margin-bottom: 20px; line-height: 1; }
+.thanks h2 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 32pt;
+  font-weight: 900;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+.thanks p {
+  font-size: 14pt;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.7;
+  max-width: 130mm;
+  margin-bottom: 30px;
+}
+.thanks .contact {
+  padding: 20px 30px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 14px;
+  font-size: 12pt;
+  letter-spacing: 0.5px;
+}
+
+/* شريط تقدم الصفحات */
+.pg-num {
+  position: absolute;
+  bottom: 8mm;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9pt;
+  color: #9ba0b8;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* رسم تخطيطي بسيط */
+.diagram {
+  display: grid;
+  grid-template-columns: 60mm 1fr;
+  gap: 16px;
+  margin: 14px 0;
+  align-items: start;
+}
+.diagram-visual {
+  background: #f5f3ff;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #e0d8ff;
+}
+.diagram-visual .label {
+  display: block;
+  padding: 8px 12px;
+  background: #fff;
+  border: 1.5px solid #7c5cff;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 9.5pt;
+  font-weight: 700;
+  color: #4c1d95;
+  text-align: center;
+}
+.diagram-visual .label.accent {
+  background: #7c5cff;
+  color: #fff;
+  border-color: #7c5cff;
+}
+.diagram-visual .label.muted {
+  border-color: #cbd5e1;
+  color: #64748b;
+  font-weight: 500;
+}
+.diagram-text { font-size: 10.5pt; }
+.diagram-text strong {
+  display: block;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 12pt;
+  color: #4c1d95;
+  margin-bottom: 6px;
+}
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  💡 اضغط <b>Ctrl+P</b> ثم اختر <b>Save as PDF</b> — مع تفعيل <b>Background graphics</b>
+  <button onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+</div>
+
+<!-- ==============================================
+     صفحة 1: الغلاف
+     ============================================== -->
+<div class="page cover">
+  <div class="cover-inner">
+    <div>
+      <span class="cover-badge">دليل رسمي · الإصدار 1.0</span>
+    </div>
+    <div>
+      <div class="cover-icon">📘</div>
+      <h1>دليل استخدام<br>استوديو التريندات</h1>
+      <p class="subtitle">
+        من الفكرة إلى الفيديو في 5 دقائق — بدون برامج مونتاج، بدون تسجيل حساب، وبدون رفع ملفات.
+      </p>
+    </div>
+    <div class="cover-footer">
+      <span>استوديو التريندات · صانع فيديوهات احترافي في المتصفح</span>
+      <span>2025<span class="dot"></span>v1.0</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================================
+     صفحة 2: الفهرس
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">استوديو التريندات</span>
+    <span>دليل الاستخدام</span>
+  </div>
+
+  <span class="sec-kicker">الفهرس</span>
+  <h2 class="sec-title">محتويات الدليل</h2>
+  <p class="lead">
+    رتّبنا هذا الدليل ليأخذك من أول لحظة تفتح فيها الأداة حتى إنتاج فيديو احترافي جاهز للنشر.
+    يمكنك قراءته بالترتيب، أو القفز مباشرة إلى القسم الذي تحتاجه من الفهرس.
+  </p>
+
+  <div class="toc">
+    <div class="toc-row">
+      <div class="toc-num">1</div>
+      <div class="toc-title">مقدمة ومتطلبات التشغيل</div>
+      <div class="toc-pg">ص 3</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">2</div>
+      <div class="toc-title">البدء السريع في 8 خطوات</div>
+      <div class="toc-pg">ص 4–5</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">3</div>
+      <div class="toc-title">جولة سريعة في الواجهة</div>
+      <div class="toc-pg">ص 6</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">4</div>
+      <div class="toc-title">تبويبات «المشهد» و«مشروع»</div>
+      <div class="toc-pg">ص 7</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">5</div>
+      <div class="toc-title">تبويبا «الصورة» و«الخلفية»</div>
+      <div class="toc-pg">ص 8</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">6</div>
+      <div class="toc-title">المؤثرات والنصوص والصوت</div>
+      <div class="toc-pg">ص 9</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">7</div>
+      <div class="toc-title">وصفات جاهزة للريلز الناجحة</div>
+      <div class="toc-pg">ص 10</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">8</div>
+      <div class="toc-title">حل المشاكل الشائعة</div>
+      <div class="toc-pg">ص 11</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">9</div>
+      <div class="toc-title">أسئلة شائعة وخاتمة</div>
+      <div class="toc-pg">ص 12</div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <strong>💡 نصيحة قبل البدء</strong>
+    <p>جهّز موادك مسبقاً — الصور، المقاطع الصوتية، وجمل الخطاف — في مجلد واحد. هذا يوفّر عليك التنقل ذهاباً وإياباً أثناء التصميم، ويسرّع الإنتاج بشكل كبير.</p>
+  </div>
+
+  <div class="pg-num">— 2 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 3: مقدمة ومتطلبات
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 1</span>
+    <span>مقدمة ومتطلبات</span>
+  </div>
+
+  <span class="sec-kicker">01 · المقدمة</span>
+  <h2 class="sec-title">ما هي هذه الأداة؟</h2>
+
+  <p class="lead">
+    استوديو التريندات هو تطبيق ويب يعمل مباشرة داخل متصفحك، يمكّنك من إنتاج فيديوهات ريلز وتيك توك وشورتس
+    بجودة احترافية — عبر تركيب مشاهد قصيرة مدعومة بصور ونصوص وصوت ومؤثرات بصرية، ثم تصدير الفيديو النهائي بنقرة واحدة.
+  </p>
+
+  <h3 class="sub">الفكرة الأساسية</h3>
+  <p>
+    كل فكرة أو تريند = <b>مشهد مستقل</b> له خلفيته الخاصة ونصوصه وصوته.
+    تجمع عدة مشاهد بالتتابع، فينتج فيديو نهائي متكامل. لا تحتاج خبرة في المونتاج — كل شيء عبر واجهة بصرية بسيطة.
+  </p>
+
+  <h3 class="sub">متطلبات التشغيل</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>المتطلب</th>
+        <th>الحد الأدنى</th>
+        <th>الموصى به</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>المتصفح</td>
+        <td>Chrome / Edge / Firefox حديث</td>
+        <td>Chrome 110+ أو Edge 110+</td>
+      </tr>
+      <tr>
+        <td>الذاكرة</td>
+        <td>4 جيجابايت</td>
+        <td>8 جيجابايت أو أكثر</td>
+      </tr>
+      <tr>
+        <td>المعالج</td>
+        <td>ثنائي النواة</td>
+        <td>رباعي النواة أو أعلى</td>
+      </tr>
+      <tr>
+        <td>الشاشة</td>
+        <td>1280 × 720</td>
+        <td>1920 × 1080 أو أعلى</td>
+      </tr>
+      <tr>
+        <td>الاتصال</td>
+        <td>لا يحتاج إنترنت بعد التحميل</td>
+        <td>مستقر للتحميل الأول</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box alert">
+    <strong>⚠️ تنبيه مهم</strong>
+    <p>المعاينة والتصدير يعتمدان على قدرة جهازك. عند تصدير فيديو طويل أو بجودة 4K، أبقِ التبويب نشطاً ولا تبدّل إلى تبويبات أخرى حتى ينتهي التصدير.</p>
+  </div>
+
+  <h3 class="sub">ما لا تحتاجه</h3>
+  <ul class="dots check">
+    <li>لا تسجيل حساب ولا بريد إلكتروني.</li>
+    <li>لا تثبيت أي برنامج مونتاج (Premiere، CapCut، …).</li>
+    <li>لا رفع لملفاتك إلى أي سيرفر خارجي.</li>
+    <li>لا اشتراك شهري للاستخدام الأساسي.</li>
+  </ul>
+
+  <div class="pg-num">— 3 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 4: البدء السريع 1
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 2</span>
+    <span>البدء السريع</span>
+  </div>
+
+  <span class="sec-kicker">02 · البدء السريع</span>
+  <h2 class="sec-title">8 خطوات لإنتاج أول فيديو</h2>
+  <p class="lead">
+    هذه أسرع طريقة للانطلاق. ستنتج فيديو ريلز مدته 15 ثانية خلال 5 دقائق.
+  </p>
+
+  <ol class="steps">
+    <li>
+      <strong>اختر نسبة العرض</strong>
+      من الشريط العلوي اختر <kbd>9:16 ريلز</kbd> لريلز وتيك توك وشورتس،
+      أو <kbd>16:9</kbd> لفيديو يوتيوب، أو <kbd>1:1</kbd> لمنشور إنستجرام.
+    </li>
+    <li>
+      <strong>اختر جودة التصدير</strong>
+      من القائمة المجاورة اختر <kbd>1080p</kbd> (موصى به دائماً)،
+      أو <kbd>4K</kbd> إن كان جهازك قوياً وتريد أعلى جودة.
+    </li>
+    <li>
+      <strong>سمِّ مشروعك</strong>
+      اكتب اسم المشروع في حقل «مشروعي الأول». سيُستخدم هذا الاسم كاسم ملف الفيديو النهائي.
+    </li>
+    <li>
+      <strong>اضبط المشاهد</strong>
+      الأداة تبدأ بثلاثة مشاهد جاهزة. اضغط <kbd>+ إضافة</kbd> لإضافة المزيد،
+      أو اسحب أي مشهد من قائمة اليسار لإعادة ترتيبه. كل مشهد = فكرة واحدة.
+    </li>
+  </ol>
+
+  <div class="box tip">
+    <strong>💡 متى أضيف مشهداً جديداً؟</strong>
+    <p>أضف مشهداً جديداً لكل فكرة مختلفة: تريند منفصل، سؤال منفصل، منتج منفصل، أو فكرة رئيسية مستقلة. لا تخلط فكرتين في مشهد واحد.</p>
+  </div>
+
+  <div class="pg-num">— 4 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 5: البدء السريع 2
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 2</span>
+    <span>البدء السريع</span>
+  </div>
+
+  <ol class="steps" style="counter-reset: s 4">
+    <li>
+      <strong>اكتب محتوى المشهد</strong>
+      من تبويب <kbd>المشهد</kbd> اكتب: الخطاف (جملة تجذب الانتباه)،
+      العنوان، الوصف، والدعوة (CTA). هذه العناصر الأربعة تظهر بترتيب زمني داخل المشهد.
+    </li>
+    <li>
+      <strong>اختر الخلفية والمؤثر</strong>
+      من تبويب <kbd>خلفية</kbd> اختر واحدة من 12 خلفية جاهزة (شفق، جزيئات، نيون…).
+      من تبويب <kbd>مؤثرات</kbd> اختر حركة (تقريب تدريجي، اهتزاز، Glitch).
+    </li>
+    <li>
+      <strong>أضف صورة وصوت (اختياري)</strong>
+      من تبويب <kbd>صورة</kbd> استورد صورة توضيحية وحدّد موضعها.
+      من تبويب <kbd>صوت</kbd> استورد مقطعاً صوتياً — سيتكرر تلقائياً ليملأ مدة المشهد.
+    </li>
+    <li>
+      <strong>عاين وصدّر</strong>
+      اضغط زر التشغيل <kbd>▶</kbd> في الأسفل لمشاهدة المعاينة الفعلية.
+      عند الرضا، اضغط <kbd>⬇ تصدير الفيديو</kbd> أعلى اليمين، وانتظر انتهاء الشريط.
+    </li>
+  </ol>
+
+  <div class="box tip">
+    <strong>🎬 النتيجة المتوقعة</strong>
+    <p>سيُحمَّل ملف MP4 (أو WebM حسب دعم متصفحك) بجودة 1080p، جاهز للرفع مباشرة على تيك توك أو إنستجرام أو يوتيوب شورتس.</p>
+  </div>
+
+  <div class="box warn">
+    <strong>⏱️ كم يستغرق التصدير؟</strong>
+    <p>قاعدة عملية: كل ثانية فيديو تحتاج ثانية إلى ثانيتين للتصدير. فيديو 15 ثانية = 15 إلى 30 ثانية. فيديو دقيقة = دقيقة تقريباً.</p>
+  </div>
+
+  <div class="pg-num">— 5 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 6: جولة في الواجهة
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 3</span>
+    <span>الواجهة</span>
+  </div>
+
+  <span class="sec-kicker">03 · الواجهة</span>
+  <h2 class="sec-title">جولة سريعة في الواجهة</h2>
+  <p class="lead">
+    الواجهة مقسومة إلى أربع مناطق واضحة. تعرَّف عليها مرة واحدة، وستصبح قادراً على التنقل بسرعة.
+  </p>
+
+  <div class="diagram">
+    <div class="diagram-visual">
+      <span class="label accent">الشريط العلوي</span>
+      <span class="label">قائمة المشاهد (يمين)</span>
+      <span class="label muted">المعاينة (الوسط)</span>
+      <span class="label">لوحة الإعدادات (يسار)</span>
+      <span class="label muted">الخط الزمني (أسفل)</span>
+    </div>
+    <div class="diagram-text">
+      <strong>1) الشريط العلوي</strong>
+      <p style="margin-bottom:12px">يحتوي على: اسم المشروع، اختيار نسبة العرض، جودة التصدير، وزر التصدير الرئيسي.</p>
+
+      <strong>2) قائمة المشاهد (يمين)</strong>
+      <p style="margin-bottom:12px">كل المشاهد في قائمة. اضغط على أي مشهد للانتقال إليه، اسحبه لإعادة الترتيب، أو احذفه بزر ✕.</p>
+
+      <strong>3) المعاينة (الوسط)</strong>
+      <p style="margin-bottom:12px">الشاشة التي تعرض الفيديو مباشرة. تتحرك فوراً مع أي تعديل. تحتها أزرار التشغيل والخط الزمني.</p>
+
+      <strong>4) لوحة الإعدادات (يسار)</strong>
+      <p style="margin-bottom:12px">سبعة تبويبات: المشهد، مشروع، صورة، خلفية، مؤثرات، نصوص، صوت.</p>
+
+      <strong>5) الخط الزمني (أسفل)</strong>
+      <p>يعرض تسلسل المشاهد بأطوال نسبية. اضغط على أي جزء للقفز إليه مباشرة.</p>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <strong>⌨️ اختصارات لوحة المفاتيح</strong>
+    <p>اضغط <kbd>Space</kbd> لتشغيل الفيديو أو إيقافه. اضغط <kbd>+ إضافة</kbd> لإضافة مشهد جديد. اسحب أي مشهد لإعادة ترتيبه.</p>
+  </div>
+
+  <div class="pg-num">— 6 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 7: المشهد + مشروع
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 4</span>
+    <span>التبويبات</span>
+  </div>
+
+  <span class="sec-kicker">04 · التبويبات</span>
+  <h2 class="sec-title">تبويبا «المشهد» و«مشروع»</h2>
+
+  <h3 class="sub">تبويب «المشهد» — قلب كل شيء</h3>
+  <p>
+    هنا تكتب المحتوى النصي للمشهد الحالي. الحقول الأربعة تظهر على الشاشة بترتيب زمني محدد سلفاً:
+  </p>
+  <ul class="dots">
+    <li><b>الخطاف:</b> الجملة الأولى التي توقف التمرير — تظهر في أول ثانيتين تقريباً.</li>
+    <li><b>العنوان:</b> العنوان الرئيسي الذي يوضّح الفكرة — يظهر بعد الخطاف مباشرة.</li>
+    <li><b>الوصف:</b> سطر تفصيلي يدعم العنوان — يظهر في منتصف المشهد.</li>
+    <li><b>الدعوة (CTA):</b> «تابعنا» أو «اكتشف المزيد» — تظهر في نهاية المشهد.</li>
+  </ul>
+  <p>
+    من هذا التبويب أيضاً تضبط <b>مدة المشهد</b> بالثواني (من 1 إلى 60 ثانية)
+    و<b>اسم المشهد</b> الذي يظهر في القائمة الجانبية.
+  </p>
+
+  <h3 class="sub">تبويب «مشروع» — لمسة احترافية</h3>
+  <p>هذا التبويب يضيف صورتين مستقلتين تظهران كشاشة كاملة:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>النوع</th>
+        <th>التوقيت</th>
+        <th>متى تستخدمه</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>صورة المقدمة</td>
+        <td>أول ثوانٍ من الفيديو</td>
+        <td>شعار القناة أو علامتك التجارية</td>
+      </tr>
+      <tr>
+        <td>صورة الخاتمة</td>
+        <td>آخر ثوانٍ من الفيديو</td>
+        <td>شعار الحساب أو رابط أو دعوة للمتابعة</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>يمكنك ضبط مدة ظهور كل صورة (0.5 – 8 ثوانٍ)، وتفعيلها أو إيقافها بمفتاح التشغيل.</p>
+
+  <div class="box tip">
+    <strong>💡 مثال عملي</strong>
+    <p>ضع شعار قناتك كمقدمة لمدة 1.5 ثانية، ثم المشاهد، ثم صورة «تابعنا الآن» كخاتمة لمدة 2.5 ثانية. هذا يمنح الفيديو هوية بصرية مميزة.</p>
+  </div>
+
+  <div class="pg-num">— 7 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 8: صورة + خلفية
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 5</span>
+    <span>التبويبات</span>
+  </div>
+
+  <span class="sec-kicker">05 · التبويبات</span>
+  <h2 class="sec-title">تبويبا «الصورة» و«الخلفية»</h2>
+
+  <h3 class="sub">تبويب «صورة» — إضافة صورة توضيحية</h3>
+  <p>يسمح بإظهار صورة داخل المشهد فوق الخلفية وتحت النص. مثالي لـ:</p>
+  <ul class="dots">
+    <li>صورة منتج مع عنوان ووصف.</li>
+    <li>لقطة شاشة أو رسم بياني يدعم الفكرة.</li>
+    <li>صورة شخصية أو شعار عند ذكر اسم.</li>
+  </ul>
+
+  <p><b>خيارات الصورة:</b></p>
+  <table>
+    <thead>
+      <tr>
+        <th>الخيار</th>
+        <th>الوظيفة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>الموضع</td>
+        <td>أعلى / تحت الخطاف / تحت الوصف / أسفل / ملء الشاشة</td>
+      </tr>
+      <tr>
+        <td>حجم الصورة</td>
+        <td>شريط تمرير من 15% إلى 100% — كل موضع له خانة لا تتجاوزها الصورة</td>
+      </tr>
+      <tr>
+        <td>نمط التوقيت</td>
+        <td>كامل المشهد / أول المشهد / آخره / بعد الخطاف / مخصص</td>
+      </tr>
+      <tr>
+        <td>استبدال نص</td>
+        <td>تُعرض الصورة مكان نص معيّن بعد انتهاء مدته</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box warn">
+    <strong>📐 قاعدة منع التداخل</strong>
+    <p>الأداة تحسب تلقائياً أقصى ارتفاع لكل موضع حتى لا تتداخل الصورة مع النصوص. حجم الصورة الفعلي يتكيف تلقائياً مع الخانة المختارة.</p>
+  </div>
+
+  <h3 class="sub">تبويب «خلفية» — 12 خلفية جاهزة + استيراد</h3>
+  <p>الخلفيات قسمان:</p>
+  <ul class="dots">
+    <li><b>متحركة برمجياً (12):</b> شفق، جزيئات، شبكة، أمواج، بوكيه، نيون، تشويش، وأربع تدرجات لونية.</li>
+    <li><b>مستوردة:</b> صورة أو فيديو من جهازك.</li>
+  </ul>
+  <p>يمكنك أيضاً اختيار لون ثابت لأي مشهد، أو تطبيق خلفية المشهد الحالي على كل المشاهد بزر واحد.</p>
+
+  <div class="pg-num">— 8 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 9: مؤثرات + نصوص + صوت
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 6</span>
+    <span>التبويبات</span>
+  </div>
+
+  <span class="sec-kicker">06 · التبويبات</span>
+  <h2 class="sec-title">المؤثرات والنصوص والصوت</h2>
+
+  <h3 class="sub">تبويب «مؤثرات»</h3>
+  <p>مؤثران مستقلان لكل مشهد:</p>
+  <ul class="dots">
+    <li><b>مؤثر الخلفية:</b> تقريب، تبعيد، تحريك يمين/يسار/أعلى، اهتزاز، Glitch، Flash، Blur.</li>
+    <li><b>الانتقال من المشهد السابق:</b> تلاشي، انزلاق، مسح Wipe، تكبير — يظهر في أول 0.6 ثانية من المشهد.</li>
+  </ul>
+
+  <h3 class="sub">تبويب «نصوص» — تحكم دقيق</h3>
+  <p>لكل نص من الأربعة (خطاف، عنوان، وصف، دعوة) خيارات:</p>
+  <ul class="dots">
+    <li>تفعيل أو إخفاء بمفتاح.</li>
+    <li>وقت الظهور والاختفاء بالثواني (يدعم الكسور).</li>
+    <li>حركة الدخول: ظهور تدريجي، انزلاق لأعلى/أسفل، نبضة، تكبير، كتابة تدريجية.</li>
+  </ul>
+
+  <h3 class="sub">تبويب «صوت»</h3>
+  <p>خيارَان مستقلان:</p>
+  <ul class="dots">
+    <li><b>صوت المشهد:</b> ملف مستقل لكل مشهد. <b>يتكرر تلقائياً</b> إن كان أقصر من مدة المشهد.</li>
+    <li><b>موسيقى خلفية للفيديو:</b> ملف واحد يمتد على كل المشاهد.</li>
+  </ul>
+  <p>لكل منهما: مستوى الصوت، Fade In، Fade Out، وكتم.</p>
+
+  <div class="box tip">
+    <strong>🎵 نصيحة صوتية للمحتوى التسويقي</strong>
+    <p>للحصول على مزيج احترافي: موسيقى خلفية عند 25% + صوت تعليق لكل مشهد عند 100%. هذا يمنح الفيديو إيقاعاً احترافياً دون أن تطغى الموسيقى على الصوت.</p>
+  </div>
+
+  <div class="pg-num">— 9 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 10: وصفات جاهزة
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 7</span>
+    <span>وصفات جاهزة</span>
+  </div>
+
+  <span class="sec-kicker">07 · وصفات</span>
+  <h2 class="sec-title">وصفات جاهزة للريلز الناجحة</h2>
+  <p class="lead">
+    ثلاثة هياكل جاهزة يمكنك نسخها مباشرة. كل وصفة مصمّمة لهدف مختلف.
+  </p>
+
+  <h3 class="sub">الوصفة 1 — «تريند اليوم»</h3>
+  <ul class="dots">
+    <li><b>مشهد 1:</b> خطاف «هذا التريند انتشر بشكل جنوني!» + خلفية نيون + صوت حماسي.</li>
+    <li><b>مشهد 2:</b> العنوان «السبب الحقيقي» + صورة توضيحية + مؤثر تقريب.</li>
+    <li><b>مشهد 3:</b> الوصف «3 أسباب لا أحد يتحدث عنها» + انتقال Zoom.</li>
+    <li><b>مشهد 4:</b> CTA «تابعنا للتريند القادم» + خاتمة بشعارك.</li>
+  </ul>
+
+  <h3 class="sub">الوصفة 2 — «نصيحة سريعة»</h3>
+  <ul class="dots">
+    <li><b>مشهد 1:</b> سؤال مباشر «هل تفعل هذا الخطأ؟» + خلفية داكنة + صوت هادئ.</li>
+    <li><b>مشهد 2:</b> النصيحة الأولى مع صورة توضيحية.</li>
+    <li><b>مشهد 3:</b> النصيحة الثانية مع صورة أخرى.</li>
+    <li><b>مشهد 4:</b> CTA «احفظ الفيديو لتعود إليه» + خلفية ذهبية.</li>
+  </ul>
+
+  <h3 class="sub">الوصفة 3 — «إعلان منتج»</h3>
+  <ul class="dots">
+    <li><b>مشهد 1:</b> المشكلة + صورة توضيحية للألم.</li>
+    <li><b>مشهد 2:</b> الحل (منتجك) + صورة المنتج في الوسط.</li>
+    <li><b>مشهد 3:</b> مميزات مختصرة + CTA «اطلب الآن».</li>
+  </ul>
+
+  <div class="box tip">
+    <strong>🎯 قاعدة الخطاف الذهبية</strong>
+    <p>لديك أول ثانيتين فقط. الخطاف الناجح إما سؤال مباشر، أو رقم مفاجئ، أو تحذير، أو فضول. لا تبدأ أبداً بـ«مرحباً» أو «اليوم سنتحدث عن».</p>
+  </div>
+
+  <div class="pg-num">— 10 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 11: حل المشاكل
+     ============================================== -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">القسم 8</span>
+    <span>حل المشاكل</span>
+  </div>
+
+  <span class="sec-kicker">08 · استكشاف الأخطاء</span>
+  <h2 class="sec-title">حل المشاكل الشائعة</h2>
+
+  <h3 class="sub">المعاينة لا تعمل</h3>
+  <ul class="dots">
+    <li>اضغط على أي مكان داخل الصفحة أولاً (لمنح المتصفح إذن تشغيل الصوت).</li>
+    <li>أعد تحميل الصفحة إذا لاحظت جموداً في الفيديو.</li>
+    <li>تأكد أنك لست في تبويب آخر — عرض الرسم يتوقف عند تبديل التبويبات.</li>
+  </ul>
+
+  <h3 class="sub">الصورة لا تظهر</h3>
+  <ul class="dots">
+    <li>تأكد من تفعيل مفتاح «صورة المشهد» ومن اختيار موضع.</li>
+    <li>راجع «نمط التوقيت» — قد تكون الصورة تظهر في وقت لم تصل إليه بعد.</li>
+    <li>إن اخترت «استبدال نص»، تظهر الصورة فقط بعد انتهاء ذلك النص.</li>
+  </ul>
+
+  <h3 class="sub">الصوت لا يُسمع</h3>
+  <ul class="dots">
+    <li>تأكد من رفع مستوى الصوت في التبويب «صوت»، وعدم تفعيل «كتم».</li>
+    <li>اضغط على الصفحة قبل التشغيل (سياسة المتصفحات الحديثة).</li>
+    <li>أثناء التصدير لا يُسمع الصوت في المعاينة — لكنه يُدمج بشكل طبيعي في الفيديو النهائي.</li>
+  </ul>
+
+  <h3 class="sub">التصدير لا يكتمل</h3>
+  <ul class="dots">
+    <li>أبقِ التبويب نشطاً — الرسم يتوقف عند تصغير النافذة.</li>
+    <li>قلّل المدة أو اختر جودة 1080p بدلاً من 4K.</li>
+    <li>أعد تحميل الصفحة إن استمرت المشكلة، ثم أعد المحاولة.</li>
+  </ul>
+
+  <h3 class="sub">الفيديو المُصدَّر بصيغة WebM</h3>
+  <p>هذا يعني أن متصفحك لا يدعم تسجيل MP4 عبر MediaRecorder. الحل: استخدم Chrome أو Edge الحديث. يمكنك أيضاً تحويل WebM إلى MP4 عبر أي أداة تحويل مجانية على الإنترنت.</p>
+
+  <div class="pg-num">— 11 —</div>
+</div>
+
+<!-- ==============================================
+     صفحة 12: خاتمة
+     ============================================== -->
+<div class="page thanks">
+  <div class="thanks-inner">
+    <div class="thanks-icon">🎬</div>
+    <h2>جاهز للبدء؟</h2>
+    <p>افتح الأداة، اختر مشهدك الأول، واصنع فيديو ريلز احترافي في 5 دقائق — بدون أي خبرة سابقة في المونتاج.</p>
+    <div class="contact">
+      للدعم والاستفسارات<br>
+      <b style="color:#ffd93d; font-size:14pt; letter-spacing:1px;">info@hero1.vip</b>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

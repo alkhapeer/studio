@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Trend Studio — Fields & Use Cases Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, "Segoe UI", Tahoma, sans-serif;
+  background: #d1d5db; color: #1a1c2b;
+  line-height: 1.75; font-size: 10.5pt;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.page {
+  width: 210mm; height: 297mm;
+  margin: 10px auto; padding: 20mm 18mm 18mm;
+  background: #fff; position: relative; overflow: hidden;
+  page-break-after: always;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.page:last-child { page-break-after: auto; }
+.print-bar {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  background: #1a1c2b; color: #fff;
+  padding: 12px 24px; border-radius: 12px;
+  display: flex; gap: 14px; align-items: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 999; font-size: 13px;
+}
+.print-bar button {
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  color: #fff; border: none; padding: 9px 20px;
+  border-radius: 8px; font-weight: 700; cursor: pointer;
+  font-family: inherit; font-size: 13px;
+}
+.print-bar button:hover { filter: brightness(1.15); }
+@media print {
+  body { background: #fff; }
+  .page { margin: 0; box-shadow: none; }
+  .print-bar { display: none !important; }
+}
+
+.cover {
+  padding: 0;
+  background: linear-gradient(160deg, #0c4a6e 0%, #0369a1 40%, #06b6d4 75%, #67e8f9 100%);
+  color: #fff; position: relative;
+}
+.cover::before {
+  content: ''; position: absolute; top: -50mm; left: -50mm;
+  width: 120mm; height: 120mm; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
+}
+.cover::after {
+  content: ''; position: absolute; bottom: -30mm; right: -30mm;
+  width: 90mm; height: 90mm; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,217,61,0.25), transparent 70%);
+}
+.cover-inner {
+  position: relative; height: 100%; padding: 30mm 22mm;
+  display: flex; flex-direction: column; justify-content: space-between;
+  z-index: 1;
+}
+.cover-badge {
+  display: inline-block; padding: 8px 20px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 100px; font-size: 10pt; font-weight: 700;
+  letter-spacing: 0.5px; align-self: flex-start;
+}
+.cover-icon {
+  font-size: 80pt; line-height: 1; margin-bottom: 24px;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+}
+.cover h1 {
+  font-size: 50pt; font-weight: 900; line-height: 1.1;
+  margin-bottom: 20px; letter-spacing: -1.5px;
+}
+.cover .subtitle {
+  font-size: 16pt; font-weight: 400; line-height: 1.6;
+  color: rgba(255,255,255,0.95); max-width: 140mm;
+}
+.cover-footer {
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 18px; display: flex; justify-content: space-between;
+  align-items: center; font-size: 10pt; color: rgba(255,255,255,0.9);
+}
+
+.page-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 10px; border-bottom: 1px solid #e5e7ef;
+  margin-bottom: 18px; font-size: 9pt; color: #9ba0b8;
+  letter-spacing: 0.8px; font-weight: 600;
+}
+.page-head .brand { color: #0369a1; font-weight: 700; }
+
+.sec-kicker {
+  font-size: 9.5pt; font-weight: 800; color: #06b6d4;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 6px; display: block;
+}
+h2.sec-title {
+  font-size: 24pt; font-weight: 800; color: #1a1c2b;
+  line-height: 1.25; margin-bottom: 14px;
+  padding-bottom: 12px; border-bottom: 3px solid #06b6d4;
+  display: inline-block; padding-right: 40px;
+}
+h3.sub {
+  font-size: 14pt; font-weight: 700; color: #0c4a6e;
+  margin: 18px 0 10px; padding-left: 14px;
+  border-left: 4px solid #06b6d4; line-height: 1.4;
+}
+
+p { margin-bottom: 10px; color: #3a3d52; }
+.lead {
+  font-size: 12pt; color: #4a4d63;
+  line-height: 1.85; margin-bottom: 16px;
+}
+b, strong { color: #1a1c2b; font-weight: 700; }
+
+.toc { margin-top: 12px; }
+.toc-row {
+  display: flex; align-items: center;
+  padding: 10px 4px; border-bottom: 1px dashed #d0d4e0;
+  font-size: 10.8pt;
+}
+.toc-num {
+  width: 30px; height: 30px; border-radius: 9px;
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  color: #fff; display: grid; place-items: center;
+  font-weight: 800; font-size: 11pt; flex-shrink: 0;
+  margin-right: 14px;
+  box-shadow: 0 4px 10px rgba(6,182,212,0.3);
+}
+.toc-title { flex: 1; font-weight: 600; color: #1a1c2b; }
+.toc-pg {
+  font-weight: 700; color: #0369a1; font-size: 10pt;
+  background: #e0f2fe; padding: 3px 11px; border-radius: 6px;
+}
+
+.box {
+  padding: 14px 18px; border-radius: 10px; margin: 14px 0;
+  border-left: 4px solid #06b6d4;
+  background: #ecfeff; font-size: 10.5pt; line-height: 1.75;
+}
+.box.tip { background: #ecfdf5; border-left-color: #10b981; }
+.box.warn { background: #fffbeb; border-left-color: #f59e0b; }
+.box.alert { background: #fef2f2; border-left-color: #ef4444; }
+.box.dark {
+  background: linear-gradient(135deg, #0c4a6e, #0369a1);
+  color: #fff; border-left-color: #67e8f9;
+}
+.box.dark strong { color: #67e8f9; display: block; margin-bottom: 4px; }
+.box.dark p { color: rgba(255,255,255,0.92); margin: 0; }
+.box strong { display: block; margin-bottom: 4px; font-size: 11pt; }
+.box p { margin: 0; font-size: 10.5pt; }
+
+ul.dots { list-style: none; margin: 10px 0; }
+ul.dots > li {
+  position: relative; padding-left: 24px;
+  margin-bottom: 8px; font-size: 10.8pt;
+  line-height: 1.75; color: #3a3d52;
+}
+ul.dots > li::before {
+  content: ''; position: absolute;
+  left: 0; top: 9px; width: 8px; height: 8px;
+  border-radius: 50%; background: #06b6d4;
+}
+ul.check > li::before {
+  content: '✓'; background: none; color: #10b981;
+  font-weight: 900; font-size: 13pt;
+  top: -1px; width: auto; height: auto;
+}
+ul.warn > li::before {
+  content: '!'; background: none; color: #f59e0b;
+  font-weight: 900; font-size: 14pt;
+  top: 0; width: auto; height: auto;
+}
+
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0;
+  font-size: 10.3pt; border-radius: 10px;
+  overflow: hidden; border: 1px solid #e5e7ef;
+}
+table th {
+  background: linear-gradient(135deg, #0c4a6e, #06b6d4);
+  color: #fff; padding: 11px 12px;
+  text-align: left; font-weight: 700; font-size: 10.5pt;
+}
+table td {
+  padding: 10px 12px; border-bottom: 1px solid #e5e7ef;
+  color: #3a3d52; vertical-align: top;
+}
+table tr:last-child td { border-bottom: none; }
+table tr:nth-child(even) td { background: #f8fafc; }
+
+.field-card {
+  border-radius: 12px; padding: 16px 18px; margin: 14px 0;
+  background: #f8fafc; border: 1px solid #e5e7ef;
+  position: relative; overflow: hidden;
+}
+.field-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 6px; height: 100%;
+  background: linear-gradient(180deg, #06b6d4, #0ea5e9);
+}
+.field-card.green::before { background: linear-gradient(180deg, #10b981, #059669); }
+.field-card.orange::before { background: linear-gradient(180deg, #f59e0b, #ef4444); }
+.field-card.purple::before { background: linear-gradient(180deg, #a855f7, #7c3aed); }
+
+.field-head {
+  display: flex; align-items: center;
+  gap: 12px; margin-bottom: 10px;
+}
+.field-ico {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  display: grid; place-items: center;
+  font-size: 20pt; flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(6,182,212,0.3);
+}
+.field-card.green .field-ico { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 16px rgba(16,185,129,0.3); }
+.field-card.orange .field-ico { background: linear-gradient(135deg, #f59e0b, #ef4444); box-shadow: 0 6px 16px rgba(245,158,11,0.3); }
+.field-card.purple .field-ico { background: linear-gradient(135deg, #a855f7, #7c3aed); box-shadow: 0 6px 16px rgba(168,85,247,0.3); }
+
+.field-title { flex: 1; }
+.field-title h4 {
+  font-size: 14pt; font-weight: 800;
+  color: #0c4a6e; line-height: 1.3; margin-bottom: 2px;
+}
+.field-card.green .field-title h4 { color: #065f46; }
+.field-card.orange .field-title h4 { color: #7c2d12; }
+.field-card.purple .field-title h4 { color: #4c1d95; }
+
+.field-meta {
+  display: flex; gap: 8px;
+  font-size: 9pt; color: #64748b; font-weight: 600;
+}
+.field-meta span {
+  background: #fff; padding: 2px 10px;
+  border-radius: 100px; border: 1px solid #e5e7ef;
+}
+
+.field-body { font-size: 10.5pt; line-height: 1.75; color: #3a3d52; }
+.field-body p { margin-bottom: 8px; }
+
+.stats {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px; margin: 16px 0;
+}
+.stat {
+  text-align: center; padding: 14px 8px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #e0f2fe, #cffafe);
+  border: 1px solid #67e8f9;
+}
+.stat .num {
+  font-size: 24pt; font-weight: 900;
+  color: #0369a1; line-height: 1; margin-bottom: 4px;
+}
+.stat .lbl {
+  font-size: 9.5pt; color: #075985;
+  font-weight: 700; line-height: 1.3;
+}
+
+.thanks {
+  padding: 0;
+  background: linear-gradient(160deg, #0c4a6e 0%, #0369a1 55%, #06b6d4 100%);
+  color: #fff;
+}
+.thanks-inner {
+  height: 100%; padding: 40mm 22mm;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+}
+.thanks-icon { font-size: 80pt; margin-bottom: 20px; line-height: 1; }
+.thanks h2 {
+  font-size: 34pt; font-weight: 900;
+  margin-bottom: 14px; line-height: 1.2;
+}
+.thanks p {
+  font-size: 14pt; color: rgba(255,255,255,0.9);
+  line-height: 1.7; max-width: 140mm; margin-bottom: 30px;
+}
+.thanks .contact {
+  padding: 20px 34px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 14px; font-size: 12pt; letter-spacing: 0.5px;
+}
+
+.pg-num {
+  position: absolute; bottom: 8mm; left: 50%;
+  transform: translateX(-50%); font-size: 9pt;
+  color: #9ba0b8; font-weight: 600; letter-spacing: 1px;
+}
+
+.decision-bar {
+  padding: 14px 18px; border-radius: 10px; margin: 14px 0;
+  background: linear-gradient(135deg, #ecfeff, #cffafe);
+  border: 2px solid #06b6d4;
+  font-size: 10.5pt; line-height: 1.75;
+}
+.decision-bar b { color: #0c4a6e; display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  📊 Press <b>Ctrl+P</b> then choose <b>Save as PDF</b> — with <b>Background graphics</b> enabled.
+  <button onclick="window.print()">🖨️ Print / Save PDF</button>
+</div>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover">
+  <div class="cover-inner">
+    <div>
+      <span class="cover-badge">Fields Guide · Version 1.0</span>
+    </div>
+    <div>
+      <div class="cover-icon">📊</div>
+      <h1>Where to use<br>Trend Studio</h1>
+      <p class="subtitle">
+        A structured guide to every field the tool excels in — from Reels to quizzes, from reports to micro-lessons.
+      </p>
+    </div>
+    <div class="cover-footer">
+      <span>Trend Studio · Professional video maker in your browser</span>
+      <span>2025</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: TOC -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Trend Studio</span>
+    <span>Fields Guide</span>
+  </div>
+
+  <span class="sec-kicker">Contents</span>
+  <h2 class="sec-title">What's inside</h2>
+  <p class="lead">
+    This guide answers one question: <b>Where should I use this tool?</b> Fields are ordered by priority and fit,
+    with an honest assessment of strengths and limitations for each.
+  </p>
+
+  <div class="toc">
+    <div class="toc-row">
+      <div class="toc-num">1</div>
+      <div class="toc-title">Introduction and classification method</div>
+      <div class="toc-pg">p. 3</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">2</div>
+      <div class="toc-title">Ideal fields (5 categories)</div>
+      <div class="toc-pg">p. 4–5</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">3</div>
+      <div class="toc-title">Possible with caveats (3 categories)</div>
+      <div class="toc-pg">p. 6–7</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">4</div>
+      <div class="toc-title">Unsuitable fields (and better alternatives)</div>
+      <div class="toc-pg">p. 8</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">5</div>
+      <div class="toc-title">Quick decision table</div>
+      <div class="toc-pg">p. 9</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">6</div>
+      <div class="toc-title">Production recommendations per field</div>
+      <div class="toc-pg">p. 10</div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <strong>💡 How to read this guide</strong>
+    <p>Each field falls into one of three categories: <b>Ideal</b> (use the tool right away), <b>Possible with caveats</b> (use with awareness of limits), <b>Unsuitable</b> (use a better alternative). Find your field and begin.</p>
+  </div>
+
+  <div class="pg-num">— 2 —</div>
+</div>
+
+<!-- PAGE 3: METHOD -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 1</span>
+    <span>Introduction</span>
+  </div>
+
+  <span class="sec-kicker">01 · Introduction</span>
+  <h2 class="sec-title">Classification method</h2>
+
+  <p class="lead">
+    Not all fields are equal. Some are where the tool shines with no competitor, some are possible with caveats
+    you must know, and others need an entirely different set of tools. This classification is based on four criteria:
+  </p>
+
+  <h3 class="sub">The four criteria</h3>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="num">1</div>
+      <div class="lbl">Structural fit</div>
+    </div>
+    <div class="stat">
+      <div class="num">2</div>
+      <div class="lbl">Duration & memory</div>
+    </div>
+    <div class="stat">
+      <div class="num">3</div>
+      <div class="lbl">Interaction type</div>
+    </div>
+    <div class="stat">
+      <div class="num">4</div>
+      <div class="lbl">Output quality</div>
+    </div>
+  </div>
+
+  <h3 class="sub">1) Structural fit</h3>
+  <p>
+    The tool is built around "sequential scenes." Any field that breaks down into 3–15 short ideas is <b>ideal</b>.
+    Fields that need non-linear flow or interaction are <b>unsuitable</b>.
+  </p>
+
+  <h3 class="sub">2) Duration and memory</h3>
+  <p>
+    The tool renders each frame in the browser before encoding. Ideal duration: <b>15 seconds to 3 minutes</b>.
+    Possible duration: <b>3 to 10 minutes</b>. Longer than that: use professional editing software.
+  </p>
+
+  <h3 class="sub">3) Interaction type</h3>
+  <p>
+    The tool produces <b>linear</b> video (watch-only). Any field requiring clicks, answers, or scoring is <b>unsuitable</b>.
+  </p>
+
+  <h3 class="sub">4) Output quality</h3>
+  <p>
+    The tool outputs 1080p or 4K with clear typography. Fields requiring complex graphics or multiple layers are <b>possible with caveats</b>.
+  </p>
+
+  <div class="box dark">
+    <strong>🎯 The golden rule</strong>
+    <p>If your field breaks into "one idea + 4 text elements + an image + audio" per scene, the tool is ideal. Anything beyond that belongs in a different tool.</p>
+  </div>
+
+  <div class="pg-num">— 3 —</div>
+</div>
+
+<!-- PAGE 4: IDEAL FIELDS 1 -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 2</span>
+    <span>Ideal Fields</span>
+  </div>
+
+  <span class="sec-kicker">02 · Ideal Fields</span>
+  <h2 class="sec-title">Where the tool has no competitor</h2>
+
+  <div class="field-card">
+    <div class="field-head">
+      <div class="field-ico">🎬</div>
+      <div class="field-title">
+        <h4>Reels / TikTok / Shorts</h4>
+        <div class="field-meta">
+          <span>15–90 sec</span>
+          <span>2–6 scenes</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p>This is the field the tool was designed for. Each idea becomes a short scene with a strong hook, text, image, and audio. The ideal duration is 15–45 seconds for the highest completion rate.</p>
+      <p><b>Typical structure:</b> Scene 1 (hook) → Scenes 2–4 (content) → Scene 5 (CTA).</p>
+      <p><b>Why ideal:</b> 9:16 aspect ratio ready, animated backgrounds fit, per-scene audio, fast export.</p>
+    </div>
+  </div>
+
+  <div class="field-card green">
+    <div class="field-head">
+      <div class="field-ico">🛍️</div>
+      <div class="field-title">
+        <h4>Short product ads</h4>
+        <div class="field-meta">
+          <span>20–40 sec</span>
+          <span>3–4 scenes</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p>Classic structure: problem → solution → features → CTA. With the product image in the middle, and background music at 25% + voice-over at 100%.</p>
+      <p><b>Why ideal:</b> The "replace text with image" option shows the product automatically after its title, making the ad professional without editing.</p>
+    </div>
+  </div>
+
+  <div class="field-card purple">
+    <div class="field-head">
+      <div class="field-ico">📰</div>
+      <div class="field-title">
+        <h4>News and trend summaries</h4>
+        <div class="field-meta">
+          <span>40–90 sec</span>
+          <span>5–8 scenes</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p>Each news item = an independent scene. Title first, then details, then a "Follow us for the next trend" CTA. Ideal for news pages and trend accounts.</p>
+      <p><b>Why ideal:</b> Easy to add 10 scenes, drag to reorder them, and apply a unified background to all with one button.</p>
+    </div>
+  </div>
+
+  <div class="pg-num">— 4 —</div>
+</div>
+
+<!-- PAGE 5: IDEAL FIELDS 2 -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 2</span>
+    <span>Ideal Fields</span>
+  </div>
+
+  <div class="field-card orange">
+    <div class="field-head">
+      <div class="field-ico">💡</div>
+      <div class="field-title">
+        <h4>Quick tips (micro-learning)</h4>
+        <div class="field-meta">
+          <span>30–90 sec</span>
+          <span>3–5 scenes</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p>"5 tips in 60 seconds" — one tip per scene. Ideal for micro-education, quick training, and educational content. Short sentence + number + solution = a perfect recipe.</p>
+      <p><b>Why ideal:</b> Each tip has its own background and color, and fast transitions keep attention. Large text reads easily on mobile.</p>
+    </div>
+  </div>
+
+  <div class="field-card">
+    <div class="field-head">
+      <div class="field-ico">🎉</div>
+      <div class="field-title">
+        <h4>Occasion greetings</h4>
+        <div class="field-meta">
+          <span>10–25 sec</span>
+          <span>2–3 scenes</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p>Ramadan, Eid, national days, congratulation messages. Use the intro image as a logo, then a greeting scene, then the outro.</p>
+      <p><b>Why ideal:</b> Independent intro and outro images make the video look professionally produced in under 5 minutes.</p>
+    </div>
+  </div>
+
+  <div class="decision-bar">
+    <b>✅ Ideal fields summary</b>
+    Reels — Product ads — News summaries — Quick tips — Occasion greetings.
+    <br>All break into "one idea per scene" and need 15–90 seconds. The tool is the fastest alternative on the market for them.
+  </div>
+
+  <div class="pg-num">— 5 —</div>
+</div>
+
+<!-- PAGE 6: POSSIBLE WITH CAVEATS 1 -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 3</span>
+    <span>Possible with Caveats</span>
+  </div>
+
+  <span class="sec-kicker">03 · Possible with Caveats</span>
+  <h2 class="sec-title">Where you need to know the limits</h2>
+
+  <div class="field-card orange">
+    <div class="field-head">
+      <div class="field-ico">🧠</div>
+      <div class="field-title">
+        <h4>Quizzes (linear video)</h4>
+        <div class="field-meta">
+          <span>10 sec per question</span>
+          <span>1 scene per question</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p><b>Possible as linear video, not as an interactive assessment tool.</b> Each question = one scene:</p>
+      <ul class="dots">
+        <li><b>Question scene:</b> Hook = "Question 1" + Title = the question + Duration = thinking time (e.g., 10 sec).</li>
+        <li><b>Answer scene:</b> Hook = "Answer" + Title = the correct answer + green background.</li>
+      </ul>
+      <p><b>Limitations:</b> No click input, no auto-scoring, no grade calculation. Suitable for social media challenges, not for formal assessments.</p>
+      <p><b>Alternative for formal assessment:</b> Google Forms, Typeform, Quizizz, Moodle.</p>
+    </div>
+  </div>
+
+  <div class="field-card orange">
+    <div class="field-head">
+      <div class="field-ico">📈</div>
+      <div class="field-title">
+        <h4>Excellence pulse reports (KPI display)</h4>
+        <div class="field-meta">
+          <span>60–120 sec</span>
+          <span>5–10 scenes</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p><b>Possible to present final results, not as an interactive measurement tool.</b> Correct uses:</p>
+      <ul class="dots">
+        <li>Recognize an outstanding employee: photo + name + achievement + celebratory music.</li>
+        <li>Opening video for an annual awards ceremony.</li>
+        <li>Monthly performance report in cinematic form (5 KPIs = 5 scenes).</li>
+      </ul>
+      <p><b>Limitations:</b> Does not collect data, calculate KPIs, or compare based on user input.</p>
+      <p><b>Alternative for actual measurement:</b> Power BI, Google Data Studio, Excel.</p>
+      <p><b>Ideal workflow:</b> Use a survey tool to collect data, then use Trend Studio to present the result as a professional video.</p>
+    </div>
+  </div>
+
+  <div class="pg-num">— 6 —</div>
+</div>
+
+<!-- PAGE 7: POSSIBLE WITH CAVEATS 2 -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 3</span>
+    <span>Possible with Caveats</span>
+  </div>
+
+  <div class="field-card orange">
+    <div class="field-head">
+      <div class="field-ico">⏱️</div>
+      <div class="field-title">
+        <h4>Videos of 3–10 minutes</h4>
+        <div class="field-meta">
+          <span>3–10 min</span>
+          <span>10–40 scenes</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-body">
+      <p><b>Technically possible, but with three limitations you must know:</b></p>
+
+      <table style="margin-top:8px">
+        <thead>
+          <tr>
+            <th>Limitation</th>
+            <th>Detail</th>
+            <th>Practical workaround</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Memory</td>
+            <td>10 min × 30 fps = 18,000 frames drawn in memory before encoding</td>
+            <td>Keep 3–5 minutes as a safe ceiling</td>
+          </tr>
+          <tr>
+            <td>Tab stability</td>
+            <td>The tab must stay active during the entire export</td>
+            <td>Do not switch tabs; keep the charger connected</td>
+          </tr>
+          <tr>
+            <td>4K quality</td>
+            <td>4K × 10 min on a weak device = dropped frames</td>
+            <td>1080p for long videos, 4K for short ones</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><b>Best suited for:</b> Educational lessons, meeting summaries, training modules, filmed podcasts.</p>
+      <p><b>Practical recommendation:</b> Split the long video into <b>chapters</b> (3–5 scenes each), export each chapter separately, then merge them with any simple editing tool.</p>
+    </div>
+  </div>
+
+  <div class="decision-bar">
+    <b>⚠️ Possible fields summary</b>
+    Linear quizzes — Excellence reports — Long videos (3–10 min).
+    <br>All possible, but be aware of the limitations: no interaction, no measurement, no long duration with 4K.
+  </div>
+
+  <div class="pg-num">— 7 —</div>
+</div>
+
+<!-- PAGE 8: UNSUITABLE FIELDS -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 4</span>
+    <span>Unsuitable Fields</span>
+  </div>
+
+  <span class="sec-kicker">04 · Unsuitable Fields</span>
+  <h2 class="sec-title">What this tool is not for</h2>
+
+  <p class="lead">
+    Being honest with customers is better than making promises we cannot keep. These fields require completely
+    different tools, and we point you to the right alternative.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Why unsuitable</th>
+        <th>Suggested alternative</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Interactive graded quiz</td>
+        <td>No answer input, no auto-scoring, no grading</td>
+        <td>Google Forms / Typeform / Quizizz</td>
+      </tr>
+      <tr>
+        <td>Dynamic dashboard</td>
+        <td>Cannot display data that changes per user</td>
+        <td>Power BI / Looker Studio</td>
+      </tr>
+      <tr>
+        <td>Complex editing</td>
+        <td>No keyframes, multi-layer, or masking support</td>
+        <td>Premiere / DaVinci / CapCut</td>
+      </tr>
+      <tr>
+        <td>Videos longer than 10 minutes</td>
+        <td>Memory and browser pressure prevent completion</td>
+        <td>Split into chapters + external merge</td>
+      </tr>
+      <tr>
+        <td>3D / advanced motion graphics</td>
+        <td>No 3D meshes, particles, or physics</td>
+        <td>After Effects / Blender</td>
+      </tr>
+      <tr>
+        <td>Live streaming</td>
+        <td>The tool produces a recorded file, not a stream</td>
+        <td>OBS Studio / Streamlabs</td>
+      </tr>
+      <tr>
+        <td>Meeting recording</td>
+        <td>Does not record camera or screen</td>
+        <td>Zoom / Loom / OBS</td>
+      </tr>
+      <tr>
+        <td>Importing and editing existing video</td>
+        <td>Does not trim existing video — builds from scenes</td>
+        <td>CapCut / Premiere</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box warn">
+    <strong>💬 A message to customers</strong>
+    <p>Trend Studio is not a replacement for every production tool — it is a replacement for the <b>slow daily production of Reels</b>. When you need something else, ask us and we will point you to the right tool.</p>
+  </div>
+
+  <div class="pg-num">— 8 —</div>
+</div>
+
+<!-- PAGE 9: QUICK DECISION TABLE -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 5</span>
+    <span>Decision Table</span>
+  </div>
+
+  <span class="sec-kicker">05 · Quick Decision Table</span>
+  <h2 class="sec-title">Is the tool right for your goal?</h2>
+
+  <p class="lead">
+    Find your goal in the table, and you'll get a direct answer plus the best alternative if the tool is not the right fit.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>If your goal is…</th>
+        <th>Suitable?</th>
+        <th>Better alternative</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Reels / TikTok / Shorts</td>
+        <td>✅ Ideal</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>Short product ad</td>
+        <td>✅ Ideal</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>News or trend summary</td>
+        <td>✅ Ideal</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>Quick tips / micro-learning</td>
+        <td>✅ Ideal</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>Occasion greetings</td>
+        <td>✅ Ideal</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>Linear video quiz for social media</td>
+        <td>✅ Ideal</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>Interactive graded quiz</td>
+        <td>❌ Unsuitable</td>
+        <td>Google Forms / Quizizz</td>
+      </tr>
+      <tr>
+        <td>Excellence report as display video</td>
+        <td>⚠️ Possible</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>Interactive excellence pulse measurement</td>
+        <td>❌ Unsuitable</td>
+        <td>Power BI / Looker</td>
+      </tr>
+      <tr>
+        <td>Lesson of 3–5 minutes</td>
+        <td>✅ Ideal</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>Lesson of 10+ minutes</td>
+        <td>⚠️ Possible</td>
+        <td>Split into chapters + merge</td>
+      </tr>
+      <tr>
+        <td>Documentary of 20+ minutes</td>
+        <td>❌ Unsuitable</td>
+        <td>Premiere / DaVinci</td>
+      </tr>
+      <tr>
+        <td>3D / motion graphics</td>
+        <td>❌ Unsuitable</td>
+        <td>After Effects / Blender</td>
+      </tr>
+      <tr>
+        <td>Live streaming</td>
+        <td>❌ Unsuitable</td>
+        <td>OBS Studio</td>
+      </tr>
+      <tr>
+        <td>Editing existing video</td>
+        <td>❌ Unsuitable</td>
+        <td>CapCut / Premiere</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pg-num">— 9 —</div>
+</div>
+
+<!-- PAGE 10: PRODUCTION RECOMMENDATIONS -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 6</span>
+    <span>Production Recommendations</span>
+  </div>
+
+  <span class="sec-kicker">06 · Recommendations</span>
+  <h2 class="sec-title">Production settings per field</h2>
+
+  <p class="lead">
+    One table gathering every production recommendation: duration, scene count, quality, and transition type per field.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Duration</th>
+        <th>Scenes</th>
+        <th>Quality</th>
+        <th>Transition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Quick ad Reel</td>
+        <td>15–25 s</td>
+        <td>2–3</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+      <tr>
+        <td>Daily trend Reel</td>
+        <td>20–40 s</td>
+        <td>3–5</td>
+        <td>1080p</td>
+        <td>slide</td>
+      </tr>
+      <tr>
+        <td>Product ad</td>
+        <td>25–45 s</td>
+        <td>3–4</td>
+        <td>1080p</td>
+        <td>zoom</td>
+      </tr>
+      <tr>
+        <td>News summary</td>
+        <td>40–90 s</td>
+        <td>5–8</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+      <tr>
+        <td>Quick tips</td>
+        <td>30–60 s</td>
+        <td>3–5</td>
+        <td>1080p</td>
+        <td>slideUp</td>
+      </tr>
+      <tr>
+        <td>Micro-lesson</td>
+        <td>45–90 s</td>
+        <td>4–6</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+      <tr>
+        <td>Medium lesson</td>
+        <td>3–5 min</td>
+        <td>10–20</td>
+        <td>1080p</td>
+        <td>wipe</td>
+      </tr>
+      <tr>
+        <td>Excellence report</td>
+        <td>60–120 s</td>
+        <td>5–10</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+      <tr>
+        <td>Quiz question/answer</td>
+        <td>10 s per question</td>
+        <td>2 per question</td>
+        <td>1080p</td>
+        <td>zoom</td>
+      </tr>
+      <tr>
+        <td>Occasion greeting</td>
+        <td>10–20 s</td>
+        <td>2–3</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+      <tr>
+        <td>Real estate listing</td>
+        <td>30–50 s</td>
+        <td>4–6</td>
+        <td>1080p</td>
+        <td>slide</td>
+      </tr>
+      <tr>
+        <td>Customer testimonial</td>
+        <td>20–30 s</td>
+        <td>2–3</td>
+        <td>1080p</td>
+        <td>fade</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box dark">
+    <strong>🏆 The universal rule</strong>
+    <p>Always start with 1080p. Step up to 4K only when you need to display on a large screen or at a festival. The ideal duration for any marketing video is <b>15 to 45 seconds</b> — anything longer needs a strong justification.</p>
+  </div>
+
+  <div class="pg-num">— 10 —</div>
+</div>
+
+<!-- PAGE 11: CLOSING -->
+<div class="page thanks">
+  <div class="thanks-inner">
+    <div class="thanks-icon">🎯</div>
+    <h2>Found your field?</h2>
+    <p>Open the tool and apply the recommendations for your field — and you'll produce your first professional video within minutes.</p>
+    <div class="contact">
+      For support and questions<br>
+      <b style="color:#ffd93d; font-size:14pt; letter-spacing:1px;">info@hero1.vip</b>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

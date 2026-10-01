@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Trend Studio — Product Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, "Segoe UI", Tahoma, sans-serif;
+  background: #d1d5db; color: #1a1c2b;
+  line-height: 1.75; font-size: 10.5pt;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.page {
+  width: 210mm; height: 297mm;
+  margin: 10px auto; padding: 20mm 18mm 18mm;
+  background: #fff; position: relative; overflow: hidden;
+  page-break-after: always;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.page:last-child { page-break-after: auto; }
+.print-bar {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  background: #1a1c2b; color: #fff;
+  padding: 12px 24px; border-radius: 12px;
+  display: flex; gap: 14px; align-items: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 999; font-size: 13px;
+}
+.print-bar button {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #fff; border: none; padding: 9px 20px;
+  border-radius: 8px; font-weight: 700; cursor: pointer;
+  font-family: inherit; font-size: 13px;
+}
+.print-bar button:hover { filter: brightness(1.15); }
+@media print {
+  body { background: #fff; }
+  .page { margin: 0; box-shadow: none; }
+  .print-bar { display: none !important; }
+}
+
+.cover {
+  padding: 0;
+  background: linear-gradient(160deg, #0f172a 0%, #7c2d12 40%, #f59e0b 75%, #ef4444 100%);
+  color: #fff; position: relative;
+}
+.cover::before {
+  content: ''; position: absolute; top: -50mm; right: -50mm;
+  width: 120mm; height: 120mm; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+}
+.cover::after {
+  content: ''; position: absolute; bottom: -30mm; left: -30mm;
+  width: 80mm; height: 80mm; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,217,61,0.25), transparent 70%);
+}
+.cover-inner {
+  position: relative; height: 100%; padding: 30mm 22mm;
+  display: flex; flex-direction: column; justify-content: space-between;
+  z-index: 1;
+}
+.cover-badge {
+  display: inline-block; padding: 8px 20px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 100px; font-size: 10pt; font-weight: 700;
+  letter-spacing: 0.5px; align-self: flex-start;
+}
+.cover-icon {
+  font-size: 80pt; line-height: 1; margin-bottom: 24px;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+}
+.cover h1 {
+  font-size: 50pt; font-weight: 900; line-height: 1.1;
+  margin-bottom: 20px; letter-spacing: -1.5px;
+}
+.cover .subtitle {
+  font-size: 16pt; font-weight: 400; line-height: 1.6;
+  color: rgba(255,255,255,0.95); max-width: 140mm;
+}
+.cover-footer {
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 18px; display: flex; justify-content: space-between;
+  align-items: center; font-size: 10pt; color: rgba(255,255,255,0.9);
+}
+
+.page-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 10px; border-bottom: 1px solid #e5e7ef;
+  margin-bottom: 18px; font-size: 9pt; color: #9ba0b8;
+  letter-spacing: 0.8px; font-weight: 600;
+}
+.page-head .brand { color: #f59e0b; font-weight: 700; }
+
+.sec-kicker {
+  font-size: 9.5pt; font-weight: 800; color: #ef4444;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 6px; display: block;
+}
+h2.sec-title {
+  font-size: 24pt; font-weight: 800; color: #1a1c2b;
+  line-height: 1.25; margin-bottom: 14px;
+  padding-bottom: 12px; border-bottom: 3px solid #f59e0b;
+  display: inline-block; padding-right: 40px;
+}
+h3.sub {
+  font-size: 14pt; font-weight: 700; color: #7c2d12;
+  margin: 18px 0 10px; padding-left: 14px;
+  border-left: 4px solid #f59e0b; line-height: 1.4;
+}
+
+p { margin-bottom: 10px; color: #3a3d52; }
+.lead {
+  font-size: 12pt; color: #4a4d63;
+  line-height: 1.85; margin-bottom: 16px;
+}
+b, strong { color: #1a1c2b; font-weight: 700; }
+
+.box {
+  padding: 14px 18px; border-radius: 10px; margin: 14px 0;
+  border-left: 4px solid #f59e0b;
+  background: #fff7ed; font-size: 10.5pt; line-height: 1.75;
+}
+.box.tip { background: #ecfdf5; border-left-color: #10b981; }
+.box.warn { background: #fef2f2; border-left-color: #ef4444; }
+.box.dark {
+  background: linear-gradient(135deg, #1e1b4b, #4c1d95);
+  color: #fff; border-left-color: #ffd93d;
+}
+.box.dark strong { color: #ffd93d; display: block; margin-bottom: 4px; }
+.box.dark p { color: rgba(255,255,255,0.9); margin: 0; }
+.box strong { display: block; margin-bottom: 4px; font-size: 11pt; }
+.box p { margin: 0; font-size: 10.5pt; }
+
+ul.dots { list-style: none; margin: 10px 0; }
+ul.dots > li {
+  position: relative; padding-left: 24px;
+  margin-bottom: 8px; font-size: 10.8pt;
+  line-height: 1.75; color: #3a3d52;
+}
+ul.dots > li::before {
+  content: ''; position: absolute;
+  left: 0; top: 9px; width: 8px; height: 8px;
+  border-radius: 50%; background: #f59e0b;
+}
+ul.check > li::before {
+  content: '✓'; background: none; color: #10b981;
+  font-weight: 900; font-size: 13pt;
+  top: -1px; width: auto; height: auto;
+}
+ul.x > li::before {
+  content: '✕'; background: none; color: #ef4444;
+  font-weight: 900; font-size: 12pt;
+  top: 0; width: auto; height: auto;
+}
+
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0;
+  font-size: 10.5pt; border-radius: 10px;
+  overflow: hidden; border: 1px solid #e5e7ef;
+}
+table th {
+  background: linear-gradient(135deg, #7c2d12, #f59e0b);
+  color: #fff; padding: 11px 14px;
+  text-align: left; font-weight: 700; font-size: 10.5pt;
+}
+table td {
+  padding: 10px 14px; border-bottom: 1px solid #e5e7ef;
+  color: #3a3d52; vertical-align: top;
+}
+table tr:last-child td { border-bottom: none; }
+table tr:nth-child(even) td { background: #fafafa; }
+
+.feature-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin: 14px 0;
+}
+.feature {
+  padding: 14px; background: #fafafa;
+  border-radius: 10px; border: 1px solid #e5e7ef;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.feature .ico {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  display: grid; place-items: center; font-size: 18pt;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(245,158,11,0.3);
+}
+.feature .txt { flex: 1; min-width: 0; }
+.feature b {
+  display: block; font-size: 11.5pt; color: #1a1c2b;
+  margin-bottom: 3px;
+}
+.feature p { font-size: 10pt; color: #5a5d73; margin: 0; line-height: 1.55; }
+
+.stats {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px; margin: 16px 0;
+}
+.stat {
+  text-align: center; padding: 14px 8px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fef3c7, #fed7aa);
+  border: 1px solid #fbbf24;
+}
+.stat .num {
+  font-size: 26pt; font-weight: 900;
+  color: #7c2d12; line-height: 1; margin-bottom: 4px;
+}
+.stat .lbl {
+  font-size: 9.5pt; color: #92400e;
+  font-weight: 700; line-height: 1.3;
+}
+
+.pricing-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px; margin: 16px 0;
+}
+.price-card {
+  border: 2px solid #e5e7ef; border-radius: 12px;
+  padding: 18px 14px; text-align: center;
+  position: relative; background: #fff;
+}
+.price-card.hot {
+  border-color: #f59e0b;
+  background: linear-gradient(180deg, #fffbeb, #fff);
+  box-shadow: 0 10px 30px rgba(245,158,11,0.2);
+  transform: scale(1.03);
+}
+.price-card.hot::before {
+  content: 'Most popular';
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #fff; font-size: 9pt; font-weight: 800;
+  padding: 4px 14px; border-radius: 100px; white-space: nowrap;
+}
+.price-card .plan {
+  font-size: 11pt; color: #7c2d12;
+  font-weight: 800; margin-bottom: 8px;
+}
+.price-card .amount {
+  font-size: 32pt; font-weight: 900;
+  color: #1a1c2b; line-height: 1; margin-bottom: 4px;
+}
+.price-card .amount small {
+  font-size: 10pt; color: #9ba0b8; font-weight: 500;
+}
+.price-card ul { list-style: none; margin-top: 12px; text-align: left; }
+.price-card ul li {
+  font-size: 9.5pt; color: #4a4d63;
+  margin-bottom: 6px; padding-left: 18px;
+  position: relative; line-height: 1.5;
+}
+.price-card ul li::before {
+  content: '✓'; position: absolute;
+  left: 0; top: 0; color: #10b981;
+  font-weight: 900; font-size: 10pt;
+}
+
+.thanks {
+  padding: 0;
+  background: linear-gradient(160deg, #0f172a 0%, #7c2d12 55%, #f59e0b 100%);
+  color: #fff;
+}
+.thanks-inner {
+  height: 100%; padding: 40mm 22mm;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+}
+.thanks-icon { font-size: 80pt; margin-bottom: 20px; line-height: 1; }
+.thanks h2 {
+  font-size: 34pt; font-weight: 900;
+  margin-bottom: 14px; line-height: 1.2;
+}
+.thanks p {
+  font-size: 14pt; color: rgba(255,255,255,0.9);
+  line-height: 1.7; max-width: 140mm; margin-bottom: 30px;
+}
+.thanks .contact {
+  padding: 20px 34px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 14px; font-size: 12pt; letter-spacing: 0.5px;
+}
+
+.pg-num {
+  position: absolute; bottom: 8mm; left: 50%;
+  transform: translateX(-50%); font-size: 9pt;
+  color: #9ba0b8; font-weight: 600; letter-spacing: 1px;
+}
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  💼 Press <b>Ctrl+P</b> then choose <b>Save as PDF</b> — with <b>Background graphics</b> enabled.
+  <button onclick="window.print()">🖨️ Print / Save PDF</button>
+</div>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover">
+  <div class="cover-inner">
+    <div>
+      <span class="cover-badge">Product Overview · 2025</span>
+    </div>
+    <div>
+      <div class="cover-icon">💼</div>
+      <h1>Trend<br>Studio</h1>
+      <p class="subtitle">
+        The complete solution for creating Reels, TikToks, and Shorts with professional quality —
+        no editing software, no sign-up, no file uploads.
+      </p>
+    </div>
+    <div class="cover-footer">
+      <span>Professional video maker in your browser</span>
+      <span>Version 1.0</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: THE PROBLEM -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">The Problem</span>
+    <span>Product Overview</span>
+  </div>
+
+  <span class="sec-kicker">01 · The Problem</span>
+  <h2 class="sec-title">Why content creators struggle</h2>
+
+  <p class="lead">
+    Producing a single professional Reel takes the average creator at least two hours: opening editing software,
+    adjusting the aspect ratio, adding text, mixing audio, exporting, then starting over because of a small mistake.
+    It is slow, costly, and requires technical skill.
+  </p>
+
+  <h3 class="sub">The real pain</h3>
+  <ul class="dots x">
+    <li>Editing software is complex and takes a long time to learn.</li>
+    <li>Ready-made templates are limited and hard to customize.</li>
+    <li>Slow production means less output and fewer chances to go viral.</li>
+    <li>Relying on external designers raises cost and slows the workflow.</li>
+    <li>Existing web tools upload your files to their servers — a privacy concern.</li>
+  </ul>
+
+  <div class="box warn">
+    <strong>💸 The cost of delay</strong>
+    <p>A serious creator needs to publish 5–10 Reels per week. With traditional tools, that means 15–20 hours of work per week — the equivalent of a part-time job, just for editing.</p>
+  </div>
+
+  <h3 class="sub">Market size</h3>
+  <div class="stats">
+    <div class="stat">
+      <div class="num">+50M</div>
+      <div class="lbl">Active content creators worldwide</div>
+    </div>
+    <div class="stat">
+      <div class="num">300%</div>
+      <div class="lbl">Growth of short-form video market in 3 years</div>
+    </div>
+    <div class="stat">
+      <div class="num">85%</div>
+      <div class="lbl">Of social media content is video</div>
+    </div>
+    <div class="stat">
+      <div class="num">2 hrs</div>
+      <div class="lbl">Average time to produce one Reel</div>
+    </div>
+  </div>
+
+  <div class="pg-num">— 2 —</div>
+</div>
+
+<!-- PAGE 3: THE SOLUTION -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">The Solution</span>
+    <span>Product Overview</span>
+  </div>
+
+  <span class="sec-kicker">02 · The Solution</span>
+  <h2 class="sec-title">What is Trend Studio?</h2>
+
+  <p class="lead">
+    <b>Trend Studio</b> is a web application that runs directly in your browser. You write the text,
+    choose a background and effect, add audio, and click export — and you get a professional video at
+    1080p or 4K quality within seconds.
+  </p>
+
+  <h3 class="sub">The core idea in one line</h3>
+  <div class="box dark">
+    <strong>🎯</strong>
+    <p>Every idea equals an independent scene with its own background, text, and audio. Chain the scenes together and you get a final video — as simple as stacking Lego bricks.</p>
+  </div>
+
+  <h3 class="sub">What actually happens?</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Step</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Minute 1</td>
+        <td>Open the tool in your browser — no download, no sign-up.</td>
+      </tr>
+      <tr>
+        <td>Minute 2</td>
+        <td>Write the text of your first scene (hook + title + description + CTA).</td>
+      </tr>
+      <tr>
+        <td>Minute 3</td>
+        <td>Choose the animated background and visual effect.</td>
+      </tr>
+      <tr>
+        <td>Minute 4</td>
+        <td>Add an image and audio, adjust timings.</td>
+      </tr>
+      <tr>
+        <td>Minute 5</td>
+        <td>Click export, then upload to TikTok or Instagram.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box tip">
+    <strong>✅ The result</strong>
+    <p>A professional-quality Reel with no editing software, and without uploading your files to any external server. Everything happens on your own device.</p>
+  </div>
+
+  <div class="pg-num">— 3 —</div>
+</div>
+
+<!-- PAGE 4: FEATURES -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Features</span>
+    <span>Product Overview</span>
+  </div>
+
+  <span class="sec-kicker">03 · Features</span>
+  <h2 class="sec-title">Eight reasons it stands out</h2>
+
+  <div class="feature-grid">
+    <div class="feature">
+      <div class="ico">🎬</div>
+      <div class="txt">
+        <b>1) Unlimited scenes</b>
+        <p>Add as many scenes as you need and drag them to reorder. Each scene is an independent idea with its own background, audio, and text.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">🖼</div>
+      <div class="txt">
+        <b>2) 12 animated backgrounds</b>
+        <p>Aurora, particles, neon, waves, grid, bokeh — all rendered programmatically with high performance, no heavy video files.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">✨</div>
+      <div class="txt">
+        <b>3) Cinematic effects</b>
+        <p>10 background effects + 6 scene transitions, all customizable for each scene individually.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">🖋️</div>
+      <div class="txt">
+        <b>4) Professional typography</b>
+        <p>Large, clear text with full control over start time, end time, and entrance animation for each of the four text layers.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">🎵</div>
+      <div class="txt">
+        <b>5) Per-scene audio + music</b>
+        <p>An audio file per scene (loops automatically to fill the duration), one background track, or both together.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">📐</div>
+      <div class="txt">
+        <b>6) Three aspect ratios</b>
+        <p>9:16 for Reels, 16:9 for YouTube, 1:1 for Instagram feed. Switch instantly without rebuilding your scenes.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">🚀</div>
+      <div class="txt">
+        <b>7) 1080p and 4K export</b>
+        <p>High-quality MP4 (or WebM) file ready to upload directly — with no uploads to external servers.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="ico">🔒</div>
+      <div class="txt">
+        <b>8) Complete privacy</b>
+        <p>Everything runs inside your browser. No file uploads, no account, no tracking. Your project is yours alone.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <strong>💎 One extra touch</strong>
+    <p>An intro image (channel logo) and an outro image ("Follow us") per project — with a toggle switch and adjustable duration.</p>
+  </div>
+
+  <div class="pg-num">— 4 —</div>
+</div>
+
+<!-- PAGE 5: TARGET AUDIENCE -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Audience</span>
+    <span>Product Overview</span>
+  </div>
+
+  <span class="sec-kicker">04 · Target Audience</span>
+  <h2 class="sec-title">Who is this tool for?</h2>
+
+  <h3 class="sub">1) Independent content creators</h3>
+  <p>
+    Need to produce 3–10 Reels per week quickly. The tool cuts production time from two hours to ten minutes per video.
+  </p>
+
+  <h3 class="sub">2) Small business owners</h3>
+  <p>
+    Do not have a budget for designers. They produce their own ads and content with professional quality that matches their products.
+  </p>
+
+  <h3 class="sub">3) Digital marketers</h3>
+  <p>
+    Run A/B campaigns with dozens of variations of the same video in different colors and texts — all in minutes of work.
+  </p>
+
+  <h3 class="sub">4) Marketing agencies</h3>
+  <p>
+    Produce content for clients quickly and deliver the final file. An opportunity to expand services without hiring additional designers.
+  </p>
+
+  <h3 class="sub">5) Teachers and trainers</h3>
+  <p>
+    Create micro-learning lessons or course summaries, 30–90 seconds per lesson.
+  </p>
+
+  <h3 class="sub">6) Internal marketing teams</h3>
+  <p>
+    Companies publish content regularly on social media without depending on the slow creative department.
+  </p>
+
+  <div class="box dark">
+    <strong>📊 The size of the opportunity</strong>
+    <p>The short-form video market grew by 300% in three years, and millions of Arabic-speaking creators are looking for tools that speed up production in their native language.</p>
+  </div>
+
+  <div class="pg-num">— 5 —</div>
+</div>
+
+<!-- PAGE 6: COMPARISON -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Comparison</span>
+    <span>Product Overview</span>
+  </div>
+
+  <span class="sec-kicker">05 · Why us?</span>
+  <h2 class="sec-title">How we compare</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Criterion</th>
+        <th>Trend Studio</th>
+        <th>Canva</th>
+        <th>CapCut</th>
+        <th>Premiere</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Requires download</td>
+        <td>❌ No</td>
+        <td>❌ No</td>
+        <td>✅ Yes</td>
+        <td>✅ Yes</td>
+      </tr>
+      <tr>
+        <td>Requires an account</td>
+        <td>❌ No</td>
+        <td>✅ Yes</td>
+        <td>✅ Yes</td>
+        <td>❌ No</td>
+      </tr>
+      <tr>
+        <td>Works offline</td>
+        <td>✅ Yes</td>
+        <td>❌ No</td>
+        <td>✅ Yes</td>
+        <td>✅ Yes</td>
+      </tr>
+      <tr>
+        <td>Built for RTL / Arabic</td>
+        <td>✅ Yes</td>
+        <td>⚠️ Partial</td>
+        <td>⚠️ Partial</td>
+        <td>❌ No</td>
+      </tr>
+      <tr>
+        <td>Customizable scenes</td>
+        <td>✅ Yes</td>
+        <td>❌ No</td>
+        <td>✅ Yes</td>
+        <td>✅ Yes</td>
+      </tr>
+      <tr>
+        <td>Learning time</td>
+        <td>10 minutes</td>
+        <td>1 hour</td>
+        <td>3 hours</td>
+        <td>20+ hours</td>
+      </tr>
+      <tr>
+        <td>Privacy (no uploads)</td>
+        <td>✅ 100%</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>Beginner-friendly</td>
+        <td>✅ Excellent</td>
+        <td>✅ Good</td>
+        <td>⚠️ Medium</td>
+        <td>❌ Hard</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">Our unique advantage</h3>
+  <ul class="dots check">
+    <li>No download and no account — open and use immediately.</li>
+    <li>Designed from the ground up for Arabic script and RTL.</li>
+    <li>Runs entirely inside the browser — absolute privacy.</li>
+    <li>Flat learning curve — 10 minutes is enough to master it.</li>
+    <li>Fully customizable scenes without editing complexity.</li>
+  </ul>
+
+  <div class="pg-num">— 6 —</div>
+</div>
+
+<!-- PAGE 7: PRICING -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Pricing</span>
+    <span>Product Overview</span>
+  </div>
+
+  <span class="sec-kicker">06 · Commercial Models</span>
+  <h2 class="sec-title">Three tiers for every need</h2>
+  <p class="lead">
+    You can adopt any of these tiers, or adapt them to fit your target audience.
+  </p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="plan">Free</div>
+      <div class="amount">$0</div>
+      <ul>
+        <li>1080p export</li>
+        <li>Small watermark</li>
+        <li>Unlimited scenes</li>
+        <li>12 ready backgrounds</li>
+      </ul>
+    </div>
+    <div class="price-card hot">
+      <div class="plan">Pro</div>
+      <div class="amount">$19<small>/mo</small></div>
+      <ul>
+        <li>4K export</li>
+        <li>No watermark</li>
+        <li>Extended background library</li>
+        <li>Priority support</li>
+        <li>Unlimited music</li>
+      </ul>
+    </div>
+    <div class="price-card">
+      <div class="plan">Team</div>
+      <div class="amount">$79<small>/mo</small></div>
+      <ul>
+        <li>5 users</li>
+        <li>Cloud project storage</li>
+        <li>Custom templates</li>
+        <li>Company logo</li>
+        <li>Dedicated account manager</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sub">Alternative: perpetual license</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>License</th>
+        <th>One-time price</th>
+        <th>Best suited for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Personal</td>
+        <td>$149</td>
+        <td>Independent content creator</td>
+      </tr>
+      <tr>
+        <td>Commercial</td>
+        <td>$499</td>
+        <td>Single commercial project</td>
+      </tr>
+      <tr>
+        <td>Enterprise</td>
+        <td>$1,999</td>
+        <td>Company or agency (multiple branches)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box tip">
+    <strong>💡 Suggested strategy</strong>
+    <p>Start with a free tier with a small watermark to attract the largest number of users, then Pro conversions rise naturally as usage grows and users need higher quality.</p>
+  </div>
+
+  <div class="pg-num">— 7 —</div>
+</div>
+
+<!-- PAGE 8: USE CASES -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Use Cases</span>
+    <span>Product Overview</span>
+  </div>
+
+  <span class="sec-kicker">07 · Real Use Cases</span>
+  <h2 class="sec-title">How customers actually use it</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Use case</th>
+        <th>Description</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Daily trend Reel</td>
+        <td>Trend summary with a strong hook + CTA</td>
+        <td>15–30 s</td>
+      </tr>
+      <tr>
+        <td>Product ad</td>
+        <td>Problem + solution + order call</td>
+        <td>20–40 s</td>
+      </tr>
+      <tr>
+        <td>Quick tip</td>
+        <td>One idea + proof + closing</td>
+        <td>15–25 s</td>
+      </tr>
+      <tr>
+        <td>Article / news summary</td>
+        <td>5–8 scenes covering different points</td>
+        <td>40–60 s</td>
+      </tr>
+      <tr>
+        <td>Real estate listing</td>
+        <td>Facade + rooms + price</td>
+        <td>30–50 s</td>
+      </tr>
+      <tr>
+        <td>Customer testimonial</td>
+        <td>Client photo + their quote + service</td>
+        <td>20–30 s</td>
+      </tr>
+      <tr>
+        <td>Micro-lesson</td>
+        <td>Question + steps + summary</td>
+        <td>45–90 s</td>
+      </tr>
+      <tr>
+        <td>Occasion greeting</td>
+        <td>Background + text + logo</td>
+        <td>10–20 s</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box dark">
+    <strong>📌 Real example</strong>
+    <p>A small restaurant uses the tool to make three Reels per week: a new dish, a special offer, and a testimonial. The result: a 40% increase in followers within one month.</p>
+  </div>
+
+  <div class="pg-num">— 8 —</div>
+</div>
+
+<!-- PAGE 9: FAQ -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Customer FAQ</span>
+    <span>Product Overview</span>
+  </div>
+
+  <span class="sec-kicker">08 · Frequently Asked Questions</span>
+  <h2 class="sec-title">Questions buyers ask</h2>
+
+  <h3 class="sub">Does it work on mobile?</h3>
+  <p>Yes, it works in mobile browsers, but performance is best on a desktop. For the fastest result, use Chrome on a laptop.</p>
+
+  <h3 class="sub">Do I need an internet connection?</h3>
+  <p>Only for the first load. After that, you can use the tool offline as long as you don't close the tab.</p>
+
+  <h3 class="sub">Is my data stored by you?</h3>
+  <p>We never see your data. Everything happens on your device. No uploads, no account, no tracking.</p>
+
+  <h3 class="sub">Can I sell the videos I make?</h3>
+  <p>Yes, without restrictions. The content you produce is entirely yours — you may use it commercially.</p>
+
+  <h3 class="sub">Can I add my channel logo?</h3>
+  <p>Yes, through the "Project" tab — you can place one image in the intro and another in the outro, with adjustable durations.</p>
+
+  <h3 class="sub">What is the final video format?</h3>
+  <p>MP4 in modern browsers, or WebM as a fallback. Both are accepted on all social media platforms.</p>
+
+  <h3 class="sub">Is there an enterprise plan?</h3>
+  <p>Yes, with volume discounts and the option to customize the interface with your company logo and integrate with internal systems.</p>
+
+  <h3 class="sub">Can I try the tool before buying?</h3>
+  <p>Yes, the free tier is always available — it produces 1080p video with a small watermark, so you can confirm the output quality before upgrading.</p>
+
+  <div class="pg-num">— 9 —</div>
+</div>
+
+<!-- PAGE 10: CLOSING -->
+<div class="page thanks">
+  <div class="thanks-inner">
+    <div class="thanks-icon">🚀</div>
+    <h2>Ready to grow?</h2>
+    <p>Join thousands of content creators using Trend Studio to produce professional Reels in minutes — instead of hours.</p>
+    <div class="contact">
+      For business and licensing inquiries<br>
+      <b style="color:#ffd93d; font-size:14pt; letter-spacing:1px;">info@hero1.vip</b>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

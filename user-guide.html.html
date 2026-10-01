@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Trend Studio — User Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, "Segoe UI", Tahoma, sans-serif;
+  background: #d1d5db;
+  color: #1a1c2b;
+  line-height: 1.75;
+  font-size: 10.5pt;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.page {
+  width: 210mm;
+  height: 297mm;
+  margin: 10px auto;
+  padding: 20mm 18mm 18mm;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.page:last-child { page-break-after: auto; }
+
+.print-bar {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  background: #1a1c2b; color: #fff;
+  padding: 12px 24px; border-radius: 12px;
+  display: flex; gap: 14px; align-items: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 999; font-size: 13px;
+}
+.print-bar button {
+  background: linear-gradient(135deg, #7c5cff, #a855f7);
+  color: #fff; border: none; padding: 9px 20px;
+  border-radius: 8px; font-weight: 700; cursor: pointer;
+  font-family: inherit; font-size: 13px;
+}
+.print-bar button:hover { filter: brightness(1.15); }
+@media print {
+  body { background: #fff; }
+  .page { margin: 0; box-shadow: none; }
+  .print-bar { display: none !important; }
+}
+
+.cover {
+  padding: 0;
+  background: linear-gradient(160deg, #1e1b4b 0%, #4c1d95 40%, #7c5cff 75%, #ec4899 100%);
+  color: #fff;
+}
+.cover-inner {
+  height: 100%; padding: 30mm 22mm;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.cover-badge {
+  display: inline-block; padding: 8px 18px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 100px; font-size: 10pt; font-weight: 600;
+  letter-spacing: 0.5px; align-self: flex-start;
+}
+.cover-icon { font-size: 72pt; line-height: 1; margin-bottom: 24px; }
+.cover h1 {
+  font-size: 46pt; font-weight: 900; line-height: 1.1;
+  margin-bottom: 18px; letter-spacing: -1.5px;
+}
+.cover .subtitle {
+  font-size: 15pt; font-weight: 400; line-height: 1.6;
+  color: rgba(255,255,255,0.92); max-width: 140mm;
+}
+.cover-footer {
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 18px; display: flex; justify-content: space-between;
+  align-items: center; font-size: 10pt; color: rgba(255,255,255,0.85);
+}
+.cover-footer .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #ffd93d; display: inline-block;
+  margin: 0 10px; vertical-align: middle;
+}
+
+.page-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 10px; border-bottom: 1px solid #e5e7ef;
+  margin-bottom: 18px; font-size: 9pt; color: #9ba0b8;
+  letter-spacing: 0.8px; font-weight: 600;
+}
+.page-head .brand { color: #7c5cff; font-weight: 700; }
+
+.sec-kicker {
+  font-size: 9.5pt; font-weight: 800; color: #7c5cff;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 6px; display: block;
+}
+h2.sec-title {
+  font-size: 24pt; font-weight: 800; color: #1a1c2b;
+  line-height: 1.25; margin-bottom: 14px;
+  padding-bottom: 12px; border-bottom: 3px solid #7c5cff;
+  display: inline-block; padding-right: 40px;
+}
+h3.sub {
+  font-size: 14pt; font-weight: 700; color: #4c1d95;
+  margin: 20px 0 10px; padding-left: 14px;
+  border-left: 4px solid #7c5cff; line-height: 1.4;
+}
+h3.sub:first-of-type { margin-top: 12px; }
+
+p { margin-bottom: 10px; color: #3a3d52; }
+.lead {
+  font-size: 12pt; color: #4a4d63;
+  line-height: 1.85; margin-bottom: 16px;
+}
+b, strong { color: #1a1c2b; font-weight: 700; }
+
+.toc { margin-top: 12px; }
+.toc-row {
+  display: flex; align-items: center;
+  padding: 11px 4px; border-bottom: 1px dashed #d0d4e0;
+  font-size: 11pt;
+}
+.toc-num {
+  width: 32px; height: 32px; border-radius: 9px;
+  background: linear-gradient(135deg, #7c5cff, #a855f7);
+  color: #fff; display: grid; place-items: center;
+  font-weight: 800; font-size: 11pt; flex-shrink: 0;
+  margin-right: 14px;
+  box-shadow: 0 4px 10px rgba(124,92,255,0.28);
+}
+.toc-title { flex: 1; font-weight: 600; color: #1a1c2b; }
+.toc-pg {
+  font-weight: 700; color: #7c5cff; font-size: 10pt;
+  background: #f3f0ff; padding: 3px 11px; border-radius: 6px;
+}
+
+.box {
+  padding: 14px 18px; border-radius: 10px; margin: 14px 0;
+  border-left: 4px solid #7c5cff;
+  background: #f5f3ff; font-size: 10.5pt; line-height: 1.75;
+}
+.box.tip { background: #ecfdf5; border-left-color: #10b981; }
+.box.warn { background: #fff7ed; border-left-color: #f59e0b; }
+.box.alert { background: #fef2f2; border-left-color: #ef4444; }
+.box strong { display: block; margin-bottom: 4px; font-size: 11pt; }
+.box p { margin: 0; font-size: 10.5pt; }
+
+ol.steps { list-style: none; counter-reset: s; margin: 12px 0; }
+ol.steps > li {
+  counter-increment: s; position: relative;
+  padding-left: 52px; margin-bottom: 16px;
+  min-height: 40px; font-size: 10.8pt; line-height: 1.8;
+}
+ol.steps > li::before {
+  content: counter(s); position: absolute;
+  left: 0; top: 0; width: 38px; height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c5cff, #a855f7);
+  color: #fff; font-weight: 800; font-size: 14pt;
+  display: grid; place-items: center;
+  box-shadow: 0 5px 14px rgba(124,92,255,0.3);
+}
+ol.steps > li strong {
+  display: block; font-size: 12pt; color: #4c1d95;
+  margin-bottom: 2px;
+}
+
+ul.dots { list-style: none; margin: 10px 0; }
+ul.dots > li {
+  position: relative; padding-left: 22px;
+  margin-bottom: 8px; font-size: 10.8pt;
+  line-height: 1.75; color: #3a3d52;
+}
+ul.dots > li::before {
+  content: ''; position: absolute;
+  left: 0; top: 9px; width: 8px; height: 8px;
+  border-radius: 50%; background: #7c5cff;
+}
+ul.check > li::before {
+  content: '✓'; background: none; color: #10b981;
+  font-weight: 900; font-size: 13pt;
+  top: -1px; width: auto; height: auto;
+}
+
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0;
+  font-size: 10.5pt; border-radius: 10px;
+  overflow: hidden; border: 1px solid #e5e7ef;
+}
+table th {
+  background: linear-gradient(135deg, #4c1d95, #7c5cff);
+  color: #fff; padding: 11px 14px;
+  text-align: left; font-weight: 700; font-size: 10.5pt;
+}
+table td {
+  padding: 10px 14px; border-bottom: 1px solid #e5e7ef;
+  color: #3a3d52; vertical-align: top;
+}
+table tr:last-child td { border-bottom: none; }
+table tr:nth-child(even) td { background: #f9fafc; }
+
+kbd {
+  display: inline-block; background: #1a1c2b;
+  color: #ffd93d; padding: 2px 9px; border-radius: 5px;
+  font-family: 'Inter', monospace; font-size: 9.5pt;
+  font-weight: 700; letter-spacing: 0.3px;
+}
+
+.thanks {
+  padding: 0;
+  background: linear-gradient(160deg, #1e1b4b 0%, #4c1d95 55%, #7c5cff 100%);
+  color: #fff;
+}
+.thanks-inner {
+  height: 100%; padding: 40mm 22mm;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+}
+.thanks-icon { font-size: 72pt; margin-bottom: 20px; line-height: 1; }
+.thanks h2 {
+  font-size: 32pt; font-weight: 900;
+  margin-bottom: 14px; line-height: 1.2;
+}
+.thanks p {
+  font-size: 14pt; color: rgba(255,255,255,0.9);
+  line-height: 1.7; max-width: 140mm; margin-bottom: 30px;
+}
+.thanks .contact {
+  padding: 20px 30px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 14px; font-size: 12pt; letter-spacing: 0.5px;
+}
+
+.pg-num {
+  position: absolute; bottom: 8mm; left: 50%;
+  transform: translateX(-50%); font-size: 9pt;
+  color: #9ba0b8; font-weight: 600; letter-spacing: 1px;
+}
+
+.diagram {
+  display: grid; grid-template-columns: 60mm 1fr;
+  gap: 16px; margin: 14px 0; align-items: start;
+}
+.diagram-visual {
+  background: #f5f3ff; border-radius: 12px;
+  padding: 16px; border: 1px solid #e0d8ff;
+}
+.diagram-visual .label {
+  display: block; padding: 8px 12px;
+  background: #fff; border: 1.5px solid #7c5cff;
+  border-radius: 8px; margin-bottom: 8px;
+  font-size: 9.5pt; font-weight: 700;
+  color: #4c1d95; text-align: center;
+}
+.diagram-visual .label.accent {
+  background: #7c5cff; color: #fff; border-color: #7c5cff;
+}
+.diagram-visual .label.muted {
+  border-color: #cbd5e1; color: #64748b; font-weight: 500;
+}
+.diagram-text { font-size: 10.5pt; }
+.diagram-text strong {
+  display: block; font-size: 12pt;
+  color: #4c1d95; margin-bottom: 6px;
+}
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  💡 Press <b>Ctrl+P</b> then choose <b>Save as PDF</b> — with <b>Background graphics</b> enabled.
+  <button onclick="window.print()">🖨️ Print / Save PDF</button>
+</div>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover">
+  <div class="cover-inner">
+    <div>
+      <span class="cover-badge">Official Guide · Version 1.0</span>
+    </div>
+    <div>
+      <div class="cover-icon">📘</div>
+      <h1>Trend Studio<br>User Guide</h1>
+      <p class="subtitle">
+        From idea to final video in five minutes — no editing software, no account, no file uploads.
+      </p>
+    </div>
+    <div class="cover-footer">
+      <span>Trend Studio · Professional video maker in your browser</span>
+      <span>2025<span class="dot"></span>v1.0</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: TABLE OF CONTENTS -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Trend Studio</span>
+    <span>User Guide</span>
+  </div>
+
+  <span class="sec-kicker">Contents</span>
+  <h2 class="sec-title">What's inside this guide</h2>
+  <p class="lead">
+    This guide walks you from the moment you first open the tool to producing a professional video ready for publishing.
+    Read it in order, or jump straight to the section you need from the list below.
+  </p>
+
+  <div class="toc">
+    <div class="toc-row">
+      <div class="toc-num">1</div>
+      <div class="toc-title">Introduction and system requirements</div>
+      <div class="toc-pg">p. 3</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">2</div>
+      <div class="toc-title">Quick start in 8 steps</div>
+      <div class="toc-pg">p. 4–5</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">3</div>
+      <div class="toc-title">A quick tour of the interface</div>
+      <div class="toc-pg">p. 6</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">4</div>
+      <div class="toc-title">The Scene and Project tabs</div>
+      <div class="toc-pg">p. 7</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">5</div>
+      <div class="toc-title">The Image and Background tabs</div>
+      <div class="toc-pg">p. 8</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">6</div>
+      <div class="toc-title">Effects, Text, and Audio</div>
+      <div class="toc-pg">p. 9</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">7</div>
+      <div class="toc-title">Ready-made recipes for viral reels</div>
+      <div class="toc-pg">p. 10</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">8</div>
+      <div class="toc-title">Troubleshooting common issues</div>
+      <div class="toc-pg">p. 11</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-num">9</div>
+      <div class="toc-title">FAQ and closing notes</div>
+      <div class="toc-pg">p. 12</div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <strong>💡 Tip before you begin</strong>
+    <p>Prepare your materials in advance — images, audio clips, and hook sentences — and keep them in a single folder. This saves you from switching windows while designing and speeds up production significantly.</p>
+  </div>
+
+  <div class="pg-num">— 2 —</div>
+</div>
+
+<!-- PAGE 3: INTRODUCTION -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 1</span>
+    <span>Introduction</span>
+  </div>
+
+  <span class="sec-kicker">01 · Introduction</span>
+  <h2 class="sec-title">What is this tool?</h2>
+
+  <p class="lead">
+    Trend Studio is a web application that runs directly in your browser. It lets you produce Reels, TikToks, and Shorts
+    with professional quality — by assembling short scenes supported by images, text, audio, and visual effects — then
+    exporting the final video with one click.
+  </p>
+
+  <h3 class="sub">The core idea</h3>
+  <p>
+    Every idea or trend equals one <b>independent scene</b> with its own background, text, and audio.
+    You chain several scenes together, and they produce a complete final video. No editing experience is required —
+    everything happens through a simple visual interface.
+  </p>
+
+  <h3 class="sub">System requirements</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Requirement</th>
+        <th>Minimum</th>
+        <th>Recommended</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Browser</td>
+        <td>Recent Chrome / Edge / Firefox</td>
+        <td>Chrome 110+ or Edge 110+</td>
+      </tr>
+      <tr>
+        <td>Memory</td>
+        <td>4 GB</td>
+        <td>8 GB or more</td>
+      </tr>
+      <tr>
+        <td>Processor</td>
+        <td>Dual-core</td>
+        <td>Quad-core or better</td>
+      </tr>
+      <tr>
+        <td>Display</td>
+        <td>1280 × 720</td>
+        <td>1920 × 1080 or higher</td>
+      </tr>
+      <tr>
+        <td>Connection</td>
+        <td>None required after loading</td>
+        <td>Stable for the first load</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box alert">
+    <strong>⚠️ Important note</strong>
+    <p>Preview and export both depend on your device's capability. When exporting a long video or a 4K file, keep the tab active and avoid switching to other tabs until export finishes.</p>
+  </div>
+
+  <h3 class="sub">What you do NOT need</h3>
+  <ul class="dots check">
+    <li>No account and no email address.</li>
+    <li>No editing software installed (Premiere, CapCut, etc.).</li>
+    <li>No file uploads to any external server.</li>
+    <li>No monthly subscription for basic use.</li>
+  </ul>
+
+  <div class="pg-num">— 3 —</div>
+</div>
+
+<!-- PAGE 4: QUICK START 1 -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 2</span>
+    <span>Quick Start</span>
+  </div>
+
+  <span class="sec-kicker">02 · Quick Start</span>
+  <h2 class="sec-title">8 steps to your first video</h2>
+  <p class="lead">
+    This is the fastest way to get started. You will produce a 15-second Reel within five minutes.
+  </p>
+
+  <ol class="steps">
+    <li>
+      <strong>Choose an aspect ratio</strong>
+      From the top bar, pick <kbd>9:16 Reels</kbd> for Reels, TikTok, and Shorts,
+      or <kbd>16:9</kbd> for YouTube, or <kbd>1:1</kbd> for Instagram feed posts.
+    </li>
+    <li>
+      <strong>Choose export quality</strong>
+      From the adjacent list, pick <kbd>1080p</kbd> (always recommended),
+      or <kbd>4K</kbd> if your device is powerful and you want the highest quality.
+    </li>
+    <li>
+      <strong>Name your project</strong>
+      Type the project name into the "My First Project" field. This name will be used as the final video's filename.
+    </li>
+    <li>
+      <strong>Set up your scenes</strong>
+      The tool starts with three ready scenes. Click <kbd>+ Add</kbd> to add more,
+      or drag any scene in the left list to reorder it. Each scene equals one idea.
+    </li>
+  </ol>
+
+  <div class="box tip">
+    <strong>💡 When should I add a new scene?</strong>
+    <p>Add a new scene for every distinct idea: a separate trend, a separate question, a separate product, or an independent main point. Never mix two ideas into one scene.</p>
+  </div>
+
+  <div class="pg-num">— 4 —</div>
+</div>
+
+<!-- PAGE 5: QUICK START 2 -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 2</span>
+    <span>Quick Start</span>
+  </div>
+
+  <ol class="steps" style="counter-reset: s 4">
+    <li>
+      <strong>Write your scene content</strong>
+      From the <kbd>Scene</kbd> tab, write: the Hook (a line that grabs attention),
+      the Title, the Description, and the Call to Action (CTA). These four elements appear in a
+      predetermined chronological order inside the scene.
+    </li>
+    <li>
+      <strong>Choose background and effect</strong>
+      From the <kbd>Background</kbd> tab, pick one of 12 ready-made animated backgrounds
+      (Aurora, Particles, Neon, and more). From the <kbd>Effects</kbd> tab, choose a motion
+      (slow zoom, gentle shake, glitch, etc.).
+    </li>
+    <li>
+      <strong>Add an image and audio (optional)</strong>
+      From the <kbd>Image</kbd> tab, import a supporting image and choose its position.
+      From the <kbd>Audio</kbd> tab, import an audio clip — it will loop automatically to fill the scene duration.
+    </li>
+    <li>
+      <strong>Preview and export</strong>
+      Press the play button <kbd>▶</kbd> at the bottom to watch the real preview.
+      When satisfied, click <kbd>⬇ Export Video</kbd> at the top right, and wait for the progress bar to finish.
+    </li>
+  </ol>
+
+  <div class="box tip">
+    <strong>🎬 What you get</strong>
+    <p>An MP4 file (or WebM depending on your browser) at 1080p quality, ready to upload directly to TikTok, Instagram, or YouTube Shorts.</p>
+  </div>
+
+  <div class="box warn">
+    <strong>⏱️ How long does export take?</strong>
+    <p>As a rule of thumb, each second of video requires one to two seconds of export time. A 15-second video takes 15 to 30 seconds. A one-minute video takes about a minute.</p>
+  </div>
+
+  <div class="pg-num">— 5 —</div>
+</div>
+
+<!-- PAGE 6: INTERFACE TOUR -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 3</span>
+    <span>The Interface</span>
+  </div>
+
+  <span class="sec-kicker">03 · The Interface</span>
+  <h2 class="sec-title">A quick tour of the layout</h2>
+  <p class="lead">
+    The interface is divided into four clear regions. Learn them once, and you will navigate quickly from then on.
+  </p>
+
+  <div class="diagram">
+    <div class="diagram-visual">
+      <span class="label accent">Top bar</span>
+      <span class="label">Scene list (left)</span>
+      <span class="label muted">Preview (center)</span>
+      <span class="label">Settings panel (right)</span>
+      <span class="label muted">Timeline (bottom)</span>
+    </div>
+    <div class="diagram-text">
+      <strong>1) Top bar</strong>
+      <p style="margin-bottom:12px">Contains: project name, aspect ratio selector, export quality, and the main export button.</p>
+
+      <strong>2) Scene list (left)</strong>
+      <p style="margin-bottom:12px">All scenes in a list. Click any scene to jump to it, drag it to reorder, or delete it with the ✕ button.</p>
+
+      <strong>3) Preview (center)</strong>
+      <p style="margin-bottom:12px">The screen that renders your video live. It updates instantly with any change. Below it are the playback controls and timeline.</p>
+
+      <strong>4) Settings panel (right)</strong>
+      <p style="margin-bottom:12px">Seven tabs: Scene, Project, Image, Background, Effects, Text, Audio.</p>
+
+      <strong>5) Timeline (bottom)</strong>
+      <p>Shows the sequence of scenes in relative lengths. Click any part to jump to it instantly.</p>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <strong>⌨️ Keyboard shortcuts</strong>
+    <p>Press <kbd>Space</kbd> to play or pause the video. Click <kbd>+ Add</kbd> to add a new scene. Drag any scene in the list to reorder it.</p>
+  </div>
+
+  <div class="pg-num">— 6 —</div>
+</div>
+
+<!-- PAGE 7: SCENE AND PROJECT -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 4</span>
+    <span>The Tabs</span>
+  </div>
+
+  <span class="sec-kicker">04 · The Tabs</span>
+  <h2 class="sec-title">The Scene and Project tabs</h2>
+
+  <h3 class="sub">The Scene tab — the heart of everything</h3>
+  <p>
+    This is where you write the textual content of the current scene. The four fields appear on screen in a predetermined chronological order:
+  </p>
+  <ul class="dots">
+    <li><b>Hook:</b> The first line that stops the scroll — appears during roughly the first two seconds.</li>
+    <li><b>Title:</b> The main heading that clarifies the idea — appears right after the hook.</li>
+    <li><b>Description:</b> A supporting line that expands on the title — appears in the middle of the scene.</li>
+    <li><b>Call to Action (CTA):</b> "Follow us" or "Discover more" — appears at the end of the scene.</li>
+  </ul>
+  <p>
+    From this tab you also adjust the <b>scene duration</b> in seconds (from 1 to 60 seconds)
+    and the <b>scene name</b> displayed in the side list.
+  </p>
+
+  <h3 class="sub">The Project tab — a professional touch</h3>
+  <p>This tab adds two independent images that appear full-screen:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Timing</th>
+        <th>Best used for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Intro image</td>
+        <td>First seconds of the video</td>
+        <td>Channel logo or brand identity</td>
+      </tr>
+      <tr>
+        <td>Outro image</td>
+        <td>Last seconds of the video</td>
+        <td>Channel logo, link, or follow invitation</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>You can set the display duration of each image (0.5 – 8 seconds) and enable or disable it with a toggle switch.</p>
+
+  <div class="box tip">
+    <strong>💡 Practical example</strong>
+    <p>Place your channel logo as an intro for 1.5 seconds, then the scenes, then a "Follow now" image as an outro for 2.5 seconds. This gives your video a distinctive visual identity.</p>
+  </div>
+
+  <div class="pg-num">— 7 —</div>
+</div>
+
+<!-- PAGE 8: IMAGE AND BACKGROUND -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 5</span>
+    <span>The Tabs</span>
+  </div>
+
+  <span class="sec-kicker">05 · The Tabs</span>
+  <h2 class="sec-title">The Image and Background tabs</h2>
+
+  <h3 class="sub">The Image tab — a supporting image in the scene</h3>
+  <p>This allows you to show an image inside the scene above the background and below the text. Ideal for:</p>
+  <ul class="dots">
+    <li>A product photo alongside a title and description.</li>
+    <li>A screenshot or chart supporting the idea.</li>
+    <li>A portrait or logo when mentioning a name.</li>
+  </ul>
+
+  <p><b>Image options:</b></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Function</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Position</td>
+        <td>Top / Below hook / Below description / Bottom / Full screen</td>
+      </tr>
+      <tr>
+        <td>Image size</td>
+        <td>Slider from 15% to 100% — each position has a slot the image cannot exceed</td>
+      </tr>
+      <tr>
+        <td>Timing mode</td>
+        <td>Whole scene / Start of scene / End of scene / After hook / Custom</td>
+      </tr>
+      <tr>
+        <td>Replace text</td>
+        <td>The image appears in place of a chosen text after that text ends</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box warn">
+    <strong>📐 Overlap prevention rule</strong>
+    <p>The tool automatically calculates the maximum height for each position so the image never overlaps with the text. The actual image size adapts to the selected slot.</p>
+  </div>
+
+  <h3 class="sub">The Background tab — 12 ready backgrounds + import</h3>
+  <p>Backgrounds come in two categories:</p>
+  <ul class="dots">
+    <li><b>Programmatic animated (12):</b> Aurora, Particles, Grid, Waves, Bokeh, Neon, Noise, and four gradient options.</li>
+    <li><b>Imported:</b> An image or video from your device.</li>
+  </ul>
+  <p>You can also choose a solid color for any scene, or apply the current scene's background to all scenes with a single button.</p>
+
+  <div class="pg-num">— 8 —</div>
+</div>
+
+<!-- PAGE 9: EFFECTS, TEXT, AUDIO -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 6</span>
+    <span>The Tabs</span>
+  </div>
+
+  <span class="sec-kicker">06 · The Tabs</span>
+  <h2 class="sec-title">Effects, Text, and Audio</h2>
+
+  <h3 class="sub">The Effects tab</h3>
+  <p>Two independent effects per scene:</p>
+  <ul class="dots">
+    <li><b>Background effect:</b> Zoom in, zoom out, pan left/right/up, shake, glitch, flash, blur.</li>
+    <li><b>Transition from the previous scene:</b> Fade, slide, wipe, zoom — appears during the first 0.6 seconds of the scene.</li>
+  </ul>
+
+  <h3 class="sub">The Text tab — fine control</h3>
+  <p>For each of the four texts (hook, title, description, CTA):</p>
+  <ul class="dots">
+    <li>Enable or hide with a toggle switch.</li>
+    <li>Start and end time in seconds (decimals supported).</li>
+    <li>Entrance animation: fade in, slide up/down, pop, zoom in, typewriter.</li>
+  </ul>
+
+  <h3 class="sub">The Audio tab</h3>
+  <p>Two independent options:</p>
+  <ul class="dots">
+    <li><b>Scene audio:</b> A separate file per scene. <b>Loops automatically</b> if shorter than the scene.</li>
+    <li><b>Background music for the video:</b> One file extending across all scenes.</li>
+  </ul>
+  <p>For each: volume, fade in, fade out, and mute.</p>
+
+  <div class="box tip">
+    <strong>🎵 Audio tip for marketing content</strong>
+    <p>For the most professional mix: background music at 25% + voice-over per scene at 100%. This gives your video a professional rhythm without the music overpowering the voice.</p>
+  </div>
+
+  <div class="pg-num">— 9 —</div>
+</div>
+
+<!-- PAGE 10: RECIPES -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 7</span>
+    <span>Recipes</span>
+  </div>
+
+  <span class="sec-kicker">07 · Recipes</span>
+  <h2 class="sec-title">Ready-made recipes for viral reels</h2>
+  <p class="lead">
+    Three ready-made structures you can copy directly. Each recipe is designed for a different goal.
+  </p>
+
+  <h3 class="sub">Recipe 1 — "Trend of the Day"</h3>
+  <ul class="dots">
+    <li><b>Scene 1:</b> Hook "This trend went insanely viral!" + Neon background + energetic audio.</li>
+    <li><b>Scene 2:</b> Title "The real reason" + supporting image + zoom effect.</li>
+    <li><b>Scene 3:</b> Description "3 reasons nobody talks about" + Zoom transition.</li>
+    <li><b>Scene 4:</b> CTA "Follow us for the next trend" + outro with your logo.</li>
+  </ul>
+
+  <h3 class="sub">Recipe 2 — "Quick Tip"</h3>
+  <ul class="dots">
+    <li><b>Scene 1:</b> Direct question "Are you making this mistake?" + dark background + calm audio.</li>
+    <li><b>Scene 2:</b> First tip with a supporting image.</li>
+    <li><b>Scene 3:</b> Second tip with another image.</li>
+    <li><b>Scene 4:</b> CTA "Save the video to come back to it" + golden background.</li>
+  </ul>
+
+  <h3 class="sub">Recipe 3 — "Product Ad"</h3>
+  <ul class="dots">
+    <li><b>Scene 1:</b> The problem + a supporting image of the pain point.</li>
+    <li><b>Scene 2:</b> The solution (your product) + product image in the center.</li>
+    <li><b>Scene 3:</b> Brief features + CTA "Order now".</li>
+  </ul>
+
+  <div class="box tip">
+    <strong>🎯 The golden hook rule</strong>
+    <p>You have only the first two seconds. A successful hook is either a direct question, a surprising number, a warning, or curiosity. Never start with "Hello" or "Today we'll talk about."</p>
+  </div>
+
+  <div class="pg-num">— 10 —</div>
+</div>
+
+<!-- PAGE 11: TROUBLESHOOTING -->
+<div class="page">
+  <div class="page-head">
+    <span class="brand">Section 8</span>
+    <span>Troubleshooting</span>
+  </div>
+
+  <span class="sec-kicker">08 · Troubleshooting</span>
+  <h2 class="sec-title">Fixing common issues</h2>
+
+  <h3 class="sub">Preview is not working</h3>
+  <ul class="dots">
+    <li>Click anywhere on the page first (to grant the browser permission for audio playback).</li>
+    <li>Reload the page if you notice the video freezing.</li>
+    <li>Make sure you are not on another tab — rendering pauses when you switch tabs.</li>
+  </ul>
+
+  <h3 class="sub">The image does not appear</h3>
+  <ul class="dots">
+    <li>Make sure the "Scene image" toggle is enabled and a position is selected.</li>
+    <li>Check the "Timing mode" — the image may appear at a time you have not yet reached.</li>
+    <li>If you chose "Replace text," the image only appears after that text ends.</li>
+  </ul>
+
+  <h3 class="sub">Audio is not heard</h3>
+  <ul class="dots">
+    <li>Make sure the volume is raised in the "Audio" tab and "Mute" is not enabled.</li>
+    <li>Click on the page before playing (browser policy requirement).</li>
+    <li>During export, audio is not audible in the preview — but it is fully merged into the final video.</li>
+  </ul>
+
+  <h3 class="sub">Export does not complete</h3>
+  <ul class="dots">
+    <li>Keep the tab active — rendering pauses when the window is minimized.</li>
+    <li>Reduce the duration or choose 1080p instead of 4K.</li>
+    <li>Reload the page if the issue persists, then try again.</li>
+  </ul>
+
+  <h3 class="sub">Exported file is WebM instead of MP4</h3>
+  <p>This means your browser does not support MP4 recording via MediaRecorder. Solution: use a recent version of Chrome or Edge. You can also convert WebM to MP4 using any free online converter.</p>
+
+  <div class="pg-num">— 11 —</div>
+</div>
+
+<!-- PAGE 12: CLOSING -->
+<div class="page thanks">
+  <div class="thanks-inner">
+    <div class="thanks-icon">🎬</div>
+    <h2>Ready to start?</h2>
+    <p>Open the tool, choose your first scene, and produce a professional reel in five minutes — with no prior editing experience.</p>
+    <div class="contact">
+      For support and questions<br>
+      <b style="color:#ffd93d; font-size:14pt; letter-spacing:1px;">info@hero1.vip</b>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

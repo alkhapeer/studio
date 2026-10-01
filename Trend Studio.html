@@ -1,0 +1,2237 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trend Studio — Professional Video Maker</title>
+<style>
+:root{
+  --bg:#0b0c14; --bg2:#12131f; --bg3:#1a1c2b; --line:#252840;
+  --txt:#e8e9f3; --dim:#8b8fa8; --acc:#7c5cff; --acc2:#ffd93d;
+  --ok:#22c55e; --danger:#ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg); color:var(--txt);
+  font-family:"Segoe UI",Tahoma,system-ui,-apple-system,"Noto Sans Arabic",sans-serif;
+  overflow:hidden; font-size:14px;
+}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:#2e3150;border-radius:8px}
+::-webkit-scrollbar-track{background:transparent}
+
+.app{display:flex;flex-direction:column;height:100vh}
+.topbar{
+  display:flex;align-items:center;gap:12px;padding:10px 16px;
+  background:linear-gradient(180deg,#151726,#101120);
+  border-bottom:1px solid var(--line);flex-shrink:0;flex-wrap:wrap;
+}
+.brand{font-weight:800;font-size:16px;white-space:nowrap;
+  background:linear-gradient(90deg,#a78bfa,#ffd93d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.proj-name{
+  background:var(--bg3);border:1px solid var(--line);border-radius:8px;
+  padding:7px 12px;width:180px;outline:none;transition:.2s;
+}
+.proj-name:focus{border-color:var(--acc)}
+.seg{display:flex;background:var(--bg3);border:1px solid var(--line);border-radius:9px;padding:3px;gap:2px}
+.seg button{padding:6px 11px;border-radius:7px;color:var(--dim);font-size:12.5px;transition:.15s;white-space:nowrap}
+.seg button.active{background:var(--acc);color:#fff;font-weight:600}
+.seg button:hover:not(.active){color:var(--txt);background:#22253a}
+select.sel{
+  background:var(--bg3);border:1px solid var(--line);border-radius:8px;
+  padding:7px 10px;outline:none;cursor:pointer;
+}
+.spacer{flex:1}
+.btn{
+  padding:8px 16px;border-radius:9px;background:var(--bg3);
+  border:1px solid var(--line);transition:.15s;font-weight:600;font-size:13px;
+}
+.btn:hover{background:#242840;border-color:#3a3f60}
+.btn.primary{background:linear-gradient(135deg,#7c5cff,#a855f7);border:none;color:#fff}
+.btn.primary:hover{filter:brightness(1.15)}
+.btn.small{padding:5px 10px;font-size:12px}
+.btn.danger{background:#3a1520;border-color:#5c2130;color:#ff8a9b}
+.btn.full{width:100%}
+
+main{display:flex;flex:1;min-height:0}
+aside{background:var(--bg2);display:flex;flex-direction:column;min-height:0}
+aside.left{width:250px;border-right:1px solid var(--line);flex-shrink:0}
+aside.right{width:370px;border-left:1px solid var(--line);flex-shrink:0}
+.center{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0;background:#07080e}
+
+.panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;border-bottom:1px solid var(--line);font-weight:700;font-size:13px;
+}
+.panel-head .btn{padding:4px 10px;font-size:12px}
+
+.scene-list{flex:1;overflow-y:auto;padding:8px}
+.scene-item{
+  display:flex;gap:10px;padding:9px 10px;border-radius:10px;margin-bottom:6px;
+  background:var(--bg3);border:1px solid transparent;cursor:pointer;transition:.15s;
+  align-items:center;
+}
+.scene-item:hover{background:#22253a}
+.scene-item.sel{border-color:var(--acc);background:#1e1a3a}
+.scene-item.over{border-color:var(--acc2);border-style:dashed}
+.scene-item .num{
+  width:24px;height:24px;border-radius:6px;background:#2b2f4a;display:grid;place-items:center;
+  font-size:11px;font-weight:800;flex-shrink:0;
+}
+.scene-item.sel .num{background:var(--acc)}
+.scene-item .meta{flex:1;min-width:0}
+.scene-item .meta b{display:block;font-size:12.5px;font-weight:700;margin-bottom:2px}
+.scene-item .meta span{display:block;font-size:11px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scene-item .del{opacity:0;color:var(--danger);font-size:16px;padding:2px 5px;border-radius:5px}
+.scene-item:hover .del{opacity:1}
+.scene-item .del:hover{background:#3a1520}
+.drag-handle{color:#4a4f70;cursor:grab;font-size:14px}
+
+.stage{
+  flex:1;display:grid;place-items:center;padding:14px;min-height:0;position:relative;
+}
+#canvas{
+  max-width:100%;max-height:100%;border-radius:10px;
+  box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px #232640;
+  background:#000;
+}
+.transport{
+  display:flex;align-items:center;gap:12px;padding:8px 18px;
+  border-top:1px solid var(--line);background:var(--bg2);flex-shrink:0;
+}
+#playBtn{
+  width:40px;height:40px;border-radius:50%;background:var(--acc);color:#fff;
+  display:grid;place-items:center;font-size:15px;flex-shrink:0;transition:.15s;
+}
+#playBtn:hover{filter:brightness(1.15);transform:scale(1.05)}
+#timeLabel{font-variant-numeric:tabular-nums;font-size:12px;color:var(--dim);min-width:90px;text-align:center}
+#scrub{flex:1;accent-color:var(--acc);cursor:pointer}
+
+.timeline-wrap{padding:8px 18px 14px;background:var(--bg2);border-top:1px solid var(--line);flex-shrink:0}
+.timeline{
+  position:relative;display:flex;height:52px;border-radius:9px;overflow:hidden;
+  background:#0d0e18;border:1px solid var(--line);
+}
+.tl-scene{
+  position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;
+  align-items:center;border-right:1px solid #1c1f30;cursor:pointer;transition:.15s;
+  background:linear-gradient(180deg,#1d2036,#161827);overflow:hidden;min-width:24px;
+}
+.tl-scene:hover{background:linear-gradient(180deg,#252945,#1b1e30)}
+.tl-scene.sel{background:linear-gradient(180deg,#332a6b,#241d4d);box-shadow:inset 0 0 0 1px var(--acc)}
+.tl-scene span{font-size:11px;font-weight:700;white-space:nowrap;padding:0 6px}
+.tl-scene small{font-size:10px;color:var(--dim)}
+.tl-playhead{
+  position:absolute;top:0;bottom:0;width:2px;background:var(--acc2);
+  pointer-events:none;box-shadow:0 0 8px var(--acc2);z-index:5;
+}
+.tl-playhead::before{
+  content:'';position:absolute;top:-3px;left:-4px;width:10px;height:10px;
+  background:var(--acc2);border-radius:50%;
+}
+
+.tabs{display:flex;border-bottom:1px solid var(--line);overflow-x:auto;flex-shrink:0}
+.tabs button{
+  padding:11px 8px;font-size:11.5px;color:var(--dim);font-weight:600;
+  border-bottom:2px solid transparent;white-space:nowrap;transition:.15s;
+}
+.tabs button.active{color:var(--txt);border-bottom-color:var(--acc)}
+.tabs button:hover{color:var(--txt)}
+#tabContent{flex:1;overflow-y:auto;padding:14px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:11.5px;color:var(--dim);margin-bottom:5px;font-weight:600}
+.field input[type=text],.field input[type=number],.field textarea,.field select{
+  width:100%;background:var(--bg3);border:1px solid var(--line);border-radius:8px;
+  padding:8px 10px;outline:none;transition:.15s;resize:vertical;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--acc)}
+.field textarea{min-height:56px;line-height:1.5}
+.row{display:flex;gap:9px}
+.row>*{flex:1;min-width:0}
+.range-row{display:flex;align-items:center;gap:9px}
+.range-row input[type=range]{flex:1;accent-color:var(--acc);cursor:pointer}
+.range-row .val{font-size:11px;color:var(--dim);min-width:42px;text-align:right;font-variant-numeric:tabular-nums}
+input[type=color]{
+  width:100%;height:36px;border:1px solid var(--line);border-radius:8px;
+  background:var(--bg3);cursor:pointer;padding:2px;
+}
+.section-title{
+  font-size:11px;font-weight:800;color:var(--dim);text-transform:uppercase;
+  letter-spacing:.6px;margin:16px 0 9px;padding-bottom:6px;border-bottom:1px solid var(--line);
+}
+.section-title:first-child{margin-top:0}
+
+.preset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.preset{
+  aspect-ratio:9/13;border-radius:9px;border:2px solid transparent;cursor:pointer;
+  position:relative;overflow:hidden;transition:.15s;
+}
+.preset:hover{transform:scale(1.04)}
+.preset.active{border-color:var(--acc);box-shadow:0 0 0 3px rgba(124,92,255,.25)}
+.preset span{
+  position:absolute;bottom:0;left:0;right:0;font-size:9.5px;text-align:center;
+  padding:4px 2px;background:rgba(0,0,0,.65);font-weight:700;
+}
+.anim-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.anim-btn{
+  padding:8px 6px;border-radius:8px;background:var(--bg3);border:1px solid var(--line);
+  font-size:11.5px;font-weight:600;text-align:center;transition:.15s;
+}
+.anim-btn:hover{background:#242840}
+.anim-btn.active{background:var(--acc);border-color:var(--acc);color:#fff}
+
+.card{
+  background:var(--bg3);border:1px solid var(--line);border-radius:10px;
+  padding:11px;margin-bottom:10px;
+}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.card-head b{font-size:12.5px}
+.switch{position:relative;width:36px;height:20px;flex-shrink:0}
+.switch input{opacity:0;width:0;height:0;position:absolute}
+.switch .slider{
+  position:absolute;inset:0;background:#2b2f4a;border-radius:20px;transition:.2s;cursor:pointer;
+}
+.switch .slider::before{
+  content:'';position:absolute;width:14px;height:14px;left:3px;top:3px;
+  background:#fff;border-radius:50%;transition:.2s;
+}
+.switch input:checked+.slider{background:var(--acc)}
+.switch input:checked+.slider::before{transform:translateX(16px)}
+.hint{font-size:11px;color:var(--dim);line-height:1.6;margin-top:6px}
+.empty{color:var(--dim);text-align:center;padding:40px 10px;font-size:13px}
+
+.img-preview{
+  width:100%;aspect-ratio:16/9;background:#0d0e18;border-radius:8px;
+  display:grid;place-items:center;overflow:hidden;margin-bottom:9px;
+  border:1px solid var(--line);
+}
+.img-preview img{max-width:100%;max-height:100%;object-fit:contain}
+.img-preview .ph{color:var(--dim);font-size:12px}
+
+.slot-diagram{
+  display:grid;gap:3px;margin:8px 0 12px;font-size:10.5px;
+}
+.slot-row{
+  display:flex;align-items:center;gap:6px;padding:4px 7px;border-radius:5px;
+  background:#14162a;border:1px solid #232640;cursor:pointer;
+}
+.slot-row.active{background:#2b2352;border-color:var(--acc)}
+.slot-row b{flex:1;font-weight:600}
+.slot-row em{color:var(--dim);font-style:normal;font-size:10px}
+
+.overlay{
+  position:fixed;inset:0;background:rgba(5,6,12,.88);backdrop-filter:blur(8px);
+  display:none;place-items:center;z-index:999;
+}
+.overlay.show{display:grid}
+.export-box{
+  width:400px;background:var(--bg2);border:1px solid var(--line);border-radius:18px;
+  padding:28px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.8);
+}
+.export-box h3{font-size:17px;margin-bottom:8px}
+.export-box p{font-size:12.5px;color:var(--dim);margin-bottom:20px;line-height:1.6}
+.progress{height:8px;background:#1c1f30;border-radius:8px;overflow:hidden;margin-bottom:10px}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7c5cff,#ffd93d);transition:width .2s;border-radius:8px}
+.pct{font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums;margin-bottom:18px}
+.spinner{
+  width:44px;height:44px;border:3px solid #252840;border-top-color:var(--acc);
+  border-radius:50%;margin:0 auto 16px;animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.toast{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:#1e2136;border:1px solid var(--line);padding:11px 20px;border-radius:11px;
+  font-size:13px;font-weight:600;z-index:1000;transition:.3s;box-shadow:0 10px 40px rgba(0,0,0,.6);
+  opacity:0;pointer-events:none;
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+@media(max-width:1200px){
+  aside.left{width:200px}
+  aside.right{width:330px}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand">🎬 Trend Studio</div>
+    <input id="projectName" class="proj-name" value="My First Project" placeholder="Project name">
+    <div class="seg" id="ratioGroup">
+      <button data-ratio="9:16" class="active">9:16 Reels</button>
+      <button data-ratio="16:9">16:9 Landscape</button>
+      <button data-ratio="1:1">1:1 Square</button>
+    </div>
+    <select class="sel" id="quality">
+      <option value="1080">1080p</option>
+      <option value="4K">4K</option>
+    </select>
+    <div class="spacer"></div>
+    <button class="btn primary" id="exportBtn">⬇ Export Video</button>
+  </header>
+
+  <main>
+    <aside class="left">
+      <div class="panel-head">
+        <span>Scenes</span>
+        <button class="btn small" id="addSceneBtn">+ Add</button>
+      </div>
+      <div class="scene-list" id="sceneList"></div>
+    </aside>
+
+    <section class="center">
+      <div class="stage"><canvas id="canvas"></canvas></div>
+      <div class="transport">
+        <button id="playBtn">▶</button>
+        <span id="timeLabel">0:00 / 0:00</span>
+        <input type="range" id="scrub" min="0" max="1000" value="0">
+      </div>
+      <div class="timeline-wrap">
+        <div class="timeline" id="timeline"></div>
+      </div>
+    </section>
+
+    <aside class="right">
+      <div class="tabs" id="tabs">
+        <button data-tab="content" class="active">Scene</button>
+        <button data-tab="project">Project</button>
+        <button data-tab="image">Image</button>
+        <button data-tab="bg">Background</button>
+        <button data-tab="fx">Effects</button>
+        <button data-tab="text">Text</button>
+        <button data-tab="audio">Audio</button>
+      </div>
+      <div id="tabContent"></div>
+    </aside>
+  </main>
+</div>
+
+<div class="overlay" id="exportOverlay">
+  <div class="export-box">
+    <div class="spinner" id="expSpinner"></div>
+    <h3 id="expTitle">Exporting video…</h3>
+    <p id="expMsg">Composing scenes, backgrounds, text, effects and audio…<br>Please do not close this page.</p>
+    <div class="progress"><i id="expBar"></i></div>
+    <div class="pct" id="expPct">0%</div>
+    <button class="btn danger" id="cancelExport">Cancel</button>
+  </div>
+</div>
+
+<input type="file" id="fileImage" accept="image/*" hidden>
+<input type="file" id="fileVideo" accept="video/*" hidden>
+<input type="file" id="fileAudio" accept="audio/*" hidden>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   Helpers
+   ========================================================= */
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const uid = () => Math.random().toString(36).slice(2,9);
+const fmt = t => {
+  t = Math.max(0, t||0);
+  const m = Math.floor(t/60), s = Math.floor(t%60);
+  return m + ':' + String(s).padStart(2,'0');
+};
+const easeOutCubic = p => 1 - Math.pow(1-p, 3);
+const easeInOut    = p => p<0.5 ? 2*p*p : 1-Math.pow(-2*p+2,2)/2;
+const easeOutBack  = p => { const c1=1.70158, c3=c1+1; return 1 + c3*Math.pow(p-1,3) + c1*Math.pow(p-1,2); };
+const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function toast(msg, ms=2400){
+  const t = $('#toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('show'), ms);
+}
+
+/* =========================================================
+   State
+   ========================================================= */
+const state = {
+  project: {
+    name:'My First Project', ratio:'9:16', quality:'1080',
+    intro: { enabled:false, mediaId:null, name:'', duration:1.8 },
+    outro: { enabled:false, mediaId:null, name:'', duration:2.5 }
+  },
+  scenes: [],
+  music: { mediaId:null, name:'', volume:0.35, fadeIn:0.5, fadeOut:1.5, mute:false },
+  selected: 0
+};
+
+let curTime = 0;
+let playing = false;
+let needsRender = true;
+let exporting = false;
+let currentTab = 'content';
+let dragIndex = -1;
+
+const media = {};
+const audioBuffers = {};
+
+/* =========================================================
+   Audio context
+   ========================================================= */
+let AC = null;
+function getAudioCtx(){
+  if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+  return AC;
+}
+
+/* =========================================================
+   Scenes
+   ========================================================= */
+function defaultTexts(d){
+  return {
+    hook:  { on:true, start:0,        end:Math.min(2.2, d*0.40), anim:'pop' },
+    title: { on:true, start:d*0.28,   end:d*0.68, anim:'slideUp' },
+    desc:  { on:true, start:d*0.50,   end:d*0.86, anim:'slideUp' },
+    cta:   { on:true, start:d*0.80,   end:d,      anim:'fade' }
+  };
+}
+
+function newScene(i){
+  const d = 5;
+  return {
+    id: uid(),
+    name: 'Scene ' + (i+1),
+    hook:  i===0 ? 'This trend went insanely viral!' : 'Trend #' + (i+1),
+    title: 'Today\'s Top Trends',
+    desc:  'Here is what everyone is talking about right now…',
+    cta:   'Follow us for the next trend',
+    duration: d,
+    bg: { type:'preset', value: ['aurora','particles','waves','bokeh','grid','neon'][i%6], color:'#12131f', mediaId:null, mediaName:'' },
+    effect: 'zoomIn',
+    transition: i===0 ? 'none' : 'fade',
+    texts: defaultTexts(d),
+    image: {
+      mediaId:null, name:'',
+      slot:'belowHook',        // top | belowHook | belowText | bottom | fullscreen
+      size:0.70,               // 0.15..1 relative to slot size
+      mode:'whole',            // whole | start | end | afterHook | custom
+      start:0, end:0,          // used when mode=custom
+      replaceTextKey:'none'
+    },
+    audio: { mediaId:null, name:'', volume:1, fadeIn:0, fadeOut:0.4, mute:false }
+  };
+}
+
+/* =========================================================
+   Image slots — max height pre-calculated to avoid text overlap
+   ========================================================= */
+const IMG_SLOTS = {
+  top:        { y:0.075, maxH:0.16, label:'Top of screen' },
+  belowHook:  { y:0.325, maxH:0.15, label:'Below hook' },
+  belowText:  { y:0.760, maxH:0.15, label:'Below description' },
+  bottom:     { y:0.935, maxH:0.10, label:'Bottom of screen' },
+  fullscreen: { y:0.500, maxH:1.00, label:'Full screen' }
+};
+
+/* =========================================================
+   Ready-made backgrounds
+   ========================================================= */
+let noiseCanvas = null;
+function getNoise(){
+  if (noiseCanvas) return noiseCanvas;
+  const c = document.createElement('canvas'); c.width = c.height = 220;
+  const cx = c.getContext('2d');
+  const img = cx.createImageData(220,220);
+  for (let i=0;i<img.data.length;i+=4){
+    const v = Math.random()*255;
+    img.data[i]=img.data[i+1]=img.data[i+2]=v; img.data[i+3]=255;
+  }
+  cx.putImageData(img,0,0);
+  noiseCanvas = c; return c;
+}
+const rnd = i => { const s = Math.sin(i*12.9898)*43758.5453; return s - Math.floor(s); };
+
+const BG_PRESETS = {
+  aurora: { name:'Aurora', thumb:'linear-gradient(135deg,#7c3aed,#06b6d4,#ec4899)',
+    draw(ctx,x,y,w,h,t){
+      ctx.fillStyle='#05060f'; ctx.fillRect(x,y,w,h);
+      ctx.globalCompositeOperation='lighter';
+      const blobs=[['#7c3aed',0.3,0.3,0.62],['#06b6d4',0.72,0.6,0.55],['#ec4899',0.5,0.82,0.5]];
+      blobs.forEach((b,i)=>{
+        const cx = x + w*(b[1] + 0.18*Math.sin(t*0.5 + i*2.1));
+        const cy = y + h*(b[2] + 0.14*Math.cos(t*0.4 + i*1.7));
+        const r  = Math.min(w,h)*b[3];
+        const g  = ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+        g.addColorStop(0, b[0]+'cc'); g.addColorStop(1, b[0]+'00');
+        ctx.fillStyle=g; ctx.fillRect(x,y,w,h);
+      });
+      ctx.globalCompositeOperation='source-over';
+    }},
+  particles: { name:'Particles', thumb:'radial-gradient(circle at 30% 30%,#0ea5e9,#0b1020)',
+    draw(ctx,x,y,w,h,t){
+      ctx.fillStyle='#070a18'; ctx.fillRect(x,y,w,h);
+      for (let i=0;i<80;i++){
+        const rx=rnd(i+1), ry=rnd(i+91), sp=0.3+rnd(i+7)*1.2;
+        const px = x + (((rx*w + t*45*sp) % w) + w) % w;
+        const py = y + (((ry*h - t*30*sp) % h) + h) % h;
+        const r  = (1.5 + rnd(i+5)*5) * (Math.min(w,h)/900);
+        ctx.beginPath(); ctx.arc(px,py,Math.max(1,r),0,6.284);
+        ctx.fillStyle = `rgba(130,200,255,${0.15+0.55*rnd(i+3)})`;
+        ctx.fill();
+      }
+    }},
+  grid: { name:'Grid', thumb:'linear-gradient(#0b1020,#0b1020), repeating-linear-gradient(#1b2a5a 0 1px,transparent 1px 20px)',
+    draw(ctx,x,y,w,h,t){
+      const g = ctx.createLinearGradient(0,y,0,y+h);
+      g.addColorStop(0,'#0a0f22'); g.addColorStop(1,'#131a3a');
+      ctx.fillStyle=g; ctx.fillRect(x,y,w,h);
+      ctx.strokeStyle='rgba(90,160,255,0.35)'; ctx.lineWidth=1.4;
+      const step = Math.min(w,h)/14;
+      const off = (t*40) % step;
+      for (let i=-1;i<w/step+2;i++){
+        ctx.beginPath(); ctx.moveTo(x+i*step+off, y); ctx.lineTo(x+i*step+off, y+h); ctx.stroke();
+      }
+      for (let j=-1;j<h/step+2;j++){
+        ctx.beginPath(); ctx.moveTo(x, y+j*step+off); ctx.lineTo(x+w, y+j*step+off); ctx.stroke();
+      }
+      const rg = ctx.createRadialGradient(x+w/2,y+h/2,0,x+w/2,y+h/2,Math.max(w,h)*0.6);
+      rg.addColorStop(0,'rgba(124,92,255,0.28)'); rg.addColorStop(1,'rgba(0,0,0,0.75)');
+      ctx.fillStyle=rg; ctx.fillRect(x,y,w,h);
+    }},
+  waves: { name:'Waves', thumb:'linear-gradient(180deg,#1e1b4b,#0891b2)',
+    draw(ctx,x,y,w,h,t){
+      const g = ctx.createLinearGradient(0,y,0,y+h);
+      g.addColorStop(0,'#141033'); g.addColorStop(1,'#06263a');
+      ctx.fillStyle=g; ctx.fillRect(x,y,w,h);
+      const cols=['rgba(124,92,255,0.55)','rgba(6,182,212,0.5)','rgba(236,72,153,0.4)','rgba(255,217,61,0.22)'];
+      cols.forEach((c,i)=>{
+        ctx.beginPath();
+        const amp = h*(0.05 + i*0.012), base = y + h*(0.35 + i*0.16);
+        ctx.moveTo(x, base);
+        for (let px=0; px<=w; px+=12){
+          const yy = base + Math.sin((px/w)*7 + t*(1.1+i*0.35) + i)*amp;
+          ctx.lineTo(x+px, yy);
+        }
+        ctx.lineTo(x+w, y+h); ctx.lineTo(x, y+h); ctx.closePath();
+        ctx.fillStyle=c; ctx.fill();
+      });
+    }},
+  bokeh: { name:'Bokeh', thumb:'radial-gradient(circle at 50% 50%,#f59e0b,#7c2d12)',
+    draw(ctx,x,y,w,h,t){
+      ctx.fillStyle='#180d06'; ctx.fillRect(x,y,w,h);
+      ctx.globalCompositeOperation='lighter';
+      for (let i=0;i<26;i++){
+        const rx=rnd(i+11), ry=rnd(i+41);
+        const cx = x + (((rx*w + t*18*(0.4+rnd(i+2))) % w)+w)%w;
+        const cy = y + (((ry*h - t*12*(0.4+rnd(i+3))) % h)+h)%h;
+        const r  = Math.min(w,h)*(0.05 + rnd(i+9)*0.14);
+        const hue = 20 + rnd(i+13)*50;
+        const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+        g.addColorStop(0, `hsla(${hue},95%,65%,0.5)`);
+        g.addColorStop(1, `hsla(${hue},95%,45%,0)`);
+        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r,0,6.284); ctx.fill();
+      }
+      ctx.globalCompositeOperation='source-over';
+    }},
+  neon: { name:'Neon', thumb:'linear-gradient(90deg,#ec4899,#06b6d4)',
+    draw(ctx,x,y,w,h,t){
+      ctx.fillStyle='#07060f'; ctx.fillRect(x,y,w,h);
+      ctx.globalCompositeOperation='lighter';
+      const cols=['#ff2d95','#00e5ff','#a855f7'];
+      cols.forEach((c,i)=>{
+        const yy = y + h*(0.3 + i*0.22) + Math.sin(t*1.3 + i*1.9)*h*0.05;
+        ctx.beginPath();
+        for (let px=0; px<=w; px+=10){
+          const py = yy + Math.sin((px/w)*5 + t*2 + i)*h*0.025;
+          px===0 ? ctx.moveTo(x+px,py) : ctx.lineTo(x+px,py);
+        }
+        ctx.strokeStyle=c; ctx.lineWidth=Math.min(w,h)*0.012;
+        ctx.shadowColor=c; ctx.shadowBlur=Math.min(w,h)*0.05;
+        ctx.stroke();
+        ctx.shadowBlur=0;
+      });
+      ctx.globalCompositeOperation='source-over';
+    }},
+  noise: { name:'Noise', thumb:'repeating-conic-gradient(#222 0 25%,#111 0 50%)',
+    draw(ctx,x,y,w,h,t){
+      ctx.fillStyle='#08080e'; ctx.fillRect(x,y,w,h);
+      ctx.save();
+      ctx.globalAlpha=0.16;
+      ctx.translate(x - (t*420)%220, y - (t*260)%220);
+      ctx.fillStyle = ctx.createPattern(getNoise(),'repeat');
+      ctx.fillRect(0,0,w+240,h+240);
+      ctx.restore();
+    }},
+  gradient1: { name:'Purple', thumb:'linear-gradient(135deg,#4c1d95,#7c3aed,#c026d3)',
+    draw(ctx,x,y,w,h,t){
+      const sh = Math.sin(t*0.4)*0.2;
+      const g = ctx.createLinearGradient(x, y, x+w, y+h);
+      g.addColorStop(0,'#4c1d95'); g.addColorStop(clamp(0.5+sh,0,1),'#7c3aed'); g.addColorStop(1,'#c026d3');
+      ctx.fillStyle=g; ctx.fillRect(x,y,w,h);
+    }},
+  gradient2: { name:'Sunset', thumb:'linear-gradient(180deg,#f97316,#be123c,#1e1b4b)',
+    draw(ctx,x,y,w,h,t){
+      const g = ctx.createLinearGradient(0,y,0,y+h);
+      g.addColorStop(0,'#fb923c'); g.addColorStop(0.45,'#be123c'); g.addColorStop(1,'#1e1b4b');
+      ctx.fillStyle=g; ctx.fillRect(x,y,w,h);
+    }},
+  gradient3: { name:'Ocean', thumb:'linear-gradient(135deg,#0f766e,#0369a1,#1e3a8a)',
+    draw(ctx,x,y,w,h,t){
+      const g = ctx.createLinearGradient(x,y,x+w,y+h);
+      g.addColorStop(0,'#0f766e'); g.addColorStop(0.5,'#0369a1'); g.addColorStop(1,'#1e3a8a');
+      ctx.fillStyle=g; ctx.fillRect(x,y,w,h);
+    }},
+  gradient4: { name:'Dark', thumb:'linear-gradient(135deg,#111827,#1f2937,#0b0f19)',
+    draw(ctx,x,y,w,h,t){
+      const g = ctx.createLinearGradient(x,y,x+w,y+h);
+      g.addColorStop(0,'#111827'); g.addColorStop(0.5,'#1f2937'); g.addColorStop(1,'#0b0f19');
+      ctx.fillStyle=g; ctx.fillRect(x,y,w,h);
+    }}
+};
+
+/* =========================================================
+   Rendering
+   ========================================================= */
+const canvas = $('#canvas');
+const ctx = canvas.getContext('2d', { alpha:false });
+
+function computeSize(){
+  const [rw,rh] = state.project.ratio.split(':').map(Number);
+  const short = state.project.quality === '4K' ? 2160 : 1080;
+  const r = rw/rh;
+  let W,H;
+  if (r >= 1){ H = short; W = Math.round(short*r); }
+  else { W = short; H = Math.round(short/r); }
+  return [W,H];
+}
+function resizeCanvas(){
+  const [W,H] = computeSize();
+  canvas.width = W; canvas.height = H;
+  const r = W/H;
+  const stage = canvas.parentElement;
+  const maxH = stage.clientHeight - 28;
+  const maxW = stage.clientWidth - 28;
+  let ch = maxH, cw = ch*r;
+  if (cw > maxW){ cw = maxW; ch = cw/r; }
+  canvas.style.width  = Math.max(120, cw) + 'px';
+  canvas.style.height = Math.max(120, ch) + 'px';
+  needsRender = true;
+}
+
+function sceneStart(i){ let s=0; for(let k=0;k<i;k++) s += state.scenes[k].duration; return s; }
+function totalDuration(){ return state.scenes.reduce((a,s)=>a+s.duration, 0); }
+function sceneAtTime(T){
+  let acc = 0;
+  for (let i=0;i<state.scenes.length;i++){
+    if (T < acc + state.scenes[i].duration) return i;
+    acc += state.scenes[i].duration;
+  }
+  return state.scenes.length - 1;
+}
+
+function applyBgEffect(c, eff, p, W, H, t){
+  const cx=W/2, cy=H/2;
+  switch(eff){
+    case 'zoomIn':  c.translate(cx,cy); c.scale(1+0.20*p,1+0.20*p); c.translate(-cx,-cy); break;
+    case 'zoomOut': c.translate(cx,cy); c.scale(1.20-0.20*p,1.20-0.20*p); c.translate(-cx,-cy); break;
+    case 'panRight':c.translate(-W*0.07 + W*0.14*p, 0); break;
+    case 'panLeft': c.translate( W*0.07 - W*0.14*p, 0); break;
+    case 'panUp':   c.translate(0, H*0.06 - H*0.12*p); break;
+    case 'shake':   c.translate(Math.sin(t*37)*W*0.007, Math.cos(t*29)*H*0.007); break;
+    case 'glitch': {
+      const amt = (Math.sin(t*19) > 0.55) ? W*0.014 : W*0.002;
+      c.translate((Math.random()-0.5)*amt, (Math.random()-0.5)*amt*0.5);
+      break;
+    }
+  }
+}
+
+function drawCover(c, el, x, y, w, h){
+  const iw = el.videoWidth || el.naturalWidth || el.width;
+  const ih = el.videoHeight || el.naturalHeight || el.height;
+  if (!iw || !ih) return;
+  const s = Math.max(w/iw, h/ih);
+  const dw = iw*s, dh = ih*s;
+  c.drawImage(el, x + (w-dw)/2, y + (h-dh)/2, dw, dh);
+}
+
+function drawBackground(c, sc, t, W, H){
+  const M = 0.20;
+  const x = -W*M, y = -H*M, w = W*(1+2*M), h = H*(1+2*M);
+  const bg = sc.bg;
+  if (bg.type === 'preset'){
+    const p = BG_PRESETS[bg.value];
+    if (p) p.draw(c, x, y, w, h, t);
+    else { c.fillStyle = '#12131f'; c.fillRect(x,y,w,h); }
+  } else if (bg.type === 'color'){
+    c.fillStyle = bg.color || '#12131f'; c.fillRect(x,y,w,h);
+  } else if (bg.type === 'media'){
+    const m = media[bg.mediaId];
+    if (m && m.type === 'image' && m.el.complete && m.el.naturalWidth){
+      drawCover(c, m.el, x, y, w, h);
+    } else if (m && m.type === 'video' && m.el.readyState >= 2){
+      drawCover(c, m.el, x, y, w, h);
+    } else {
+      c.fillStyle = '#0e0f1a'; c.fillRect(x,y,w,h);
+    }
+  }
+}
+
+function drawOverlay(c, W, H){
+  const g = c.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,   'rgba(0,0,0,0.55)');
+  g.addColorStop(0.30,'rgba(0,0,0,0.12)');
+  g.addColorStop(0.65,'rgba(0,0,0,0.18)');
+  g.addColorStop(1,   'rgba(0,0,0,0.72)');
+  c.fillStyle = g; c.fillRect(0,0,W,H);
+}
+
+function wrapText(c, text, maxW){
+  const words = String(text).split(/\s+/).filter(Boolean);
+  const lines = []; let cur = '';
+  for (const w of words){
+    const test = cur ? cur + ' ' + w : w;
+    if (c.measureText(test).width > maxW && cur){ lines.push(cur); cur = w; }
+    else cur = test;
+  }
+  if (cur) lines.push(cur);
+  return lines.length ? lines : [''];
+}
+
+function textAlpha(t, start, end, fadeIn=0.35, fadeOut=0.35){
+  if (t < start || t > end) return 0;
+  let a = 1;
+  if (t < start + fadeIn) a = (t - start) / fadeIn;
+  if (t > end - fadeOut)  a = Math.min(a, (end - t) / fadeOut);
+  return clamp(a, 0, 1);
+}
+
+function applyTextAnim(c, anim, p, S){
+  const e = easeOutCubic(p);
+  switch(anim){
+    case 'slideUp':   c.translate(0, (1-e)*85*S); c.globalAlpha *= e; break;
+    case 'slideDown': c.translate(0, -(1-e)*85*S); c.globalAlpha *= e; break;
+    case 'pop': {
+      const s = 0.62 + 0.38*easeOutBack(clamp(p,0,1));
+      c.scale(s,s); c.globalAlpha *= clamp(p*2, 0, 1);
+      break;
+    }
+    case 'zoomIn': { const s = 1.45 - 0.45*e; c.scale(s,s); c.globalAlpha *= e; break; }
+    case 'fade':   c.globalAlpha *= e; break;
+  }
+}
+
+function roundRect(c, x, y, w, h, r){
+  r = Math.min(r, h/2, w/2);
+  c.beginPath();
+  c.moveTo(x+r, y);
+  c.arcTo(x+w, y,   x+w, y+h, r);
+  c.arcTo(x+w, y+h, x,   y+h, r);
+  c.arcTo(x,   y+h, x,   y,   r);
+  c.arcTo(x,   y,   x+w, y,   r);
+  c.closePath();
+}
+
+const FONT_STACK = 'system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Sans Arabic", sans-serif';
+
+const TEXT_DEFS = {
+  hook:  { y:0.19, size:112, weight:900, color:'#ffffff', maxw:0.90, stroke:true, lineHeight:1.22 },
+  title: { y:0.44, size:84,  weight:800, color:'#ffffff', maxw:0.90, stroke:true, lineHeight:1.22 },
+  desc:  { y:0.62, size:58,  weight:600, color:'#e6e6f5', maxw:0.88, stroke:true, lineHeight:1.30 },
+  cta:   { y:0.88, size:64,  weight:800, color:'#0b0b12', maxw:0.82, pill:'#ffd93d', lineHeight:1.22 }
+};
+
+function drawTexts(c, sc, t, W, H){
+  const S = Math.min(W,H) / 1080;
+  c.textAlign = 'center';
+  c.textBaseline = 'middle';
+  c.direction = 'ltr';
+
+  for (const k of ['hook','title','desc','cta']){
+    const cfg = TEXT_DEFS[k], tm = sc.texts[k];
+    if (!tm || !tm.on) continue;
+    let text = (sc[k] || '').trim();
+    if (!text) continue;
+
+    const alpha = textAlpha(t, tm.start, tm.end);
+    if (alpha <= 0.001) continue;
+
+    const inP = clamp((t - tm.start) / 0.45, 0, 1);
+
+    c.save();
+    c.globalAlpha *= alpha;
+    c.font = `${cfg.weight} ${cfg.size*S}px ${FONT_STACK}`;
+
+    if (tm.anim === 'typewriter'){
+      const n = Math.ceil(text.length * clamp(inP, 0, 1));
+      text = text.slice(0, n);
+      if (!text) { c.restore(); continue; }
+    }
+
+    const lines = wrapText(c, text, W*cfg.maxw);
+    const lh = cfg.size * S * (cfg.lineHeight || 1.22);
+    const cy = H * cfg.y;
+
+    c.translate(W/2, cy);
+    applyTextAnim(c, tm.anim, inP, S);
+
+    lines.forEach((line, i) => {
+      const ly = (i - (lines.length-1)/2) * lh;
+      const tw = c.measureText(line).width;
+
+      if (cfg.pill){
+        const padX = 48*S, ph = cfg.size*S*1.55;
+        c.save();
+        c.shadowColor = 'rgba(0,0,0,0.45)'; c.shadowBlur = 24*S; c.shadowOffsetY = 6*S;
+        c.fillStyle = cfg.pill;
+        roundRect(c, -tw/2 - padX, ly - ph/2, tw + padX*2, ph, ph/2);
+        c.fill();
+        c.restore();
+      }
+
+      if (cfg.stroke){
+        c.lineWidth = cfg.size*S*0.14;
+        c.strokeStyle = 'rgba(0,0,0,0.78)';
+        c.lineJoin = 'round';
+        c.shadowColor = 'rgba(0,0,0,0.55)';
+        c.shadowBlur = 18*S;
+        c.shadowOffsetY = 5*S;
+        c.strokeText(line, 0, ly);
+        c.shadowBlur = 0; c.shadowOffsetY = 0;
+      }
+
+      c.fillStyle = cfg.color;
+      c.fillText(line, 0, ly);
+    });
+
+    c.restore();
+  }
+}
+
+/* =========================================================
+   Scene image — time range calculation based on mode
+   ========================================================= */
+function imageTimeRange(sc){
+  const img = sc.image;
+  const d = sc.duration;
+  let start = 0, end = d;
+
+  switch(img.mode){
+    case 'whole':     start = 0;        end = d;           break;
+    case 'start':     start = 0;        end = d * 0.55;    break;
+    case 'end':       start = d * 0.45; end = d;           break;
+    case 'afterHook': {
+      const hookEnd = (sc.texts.hook && sc.texts.hook.end) || d * 0.40;
+      start = hookEnd;
+      end = d;
+      break;
+    }
+    case 'custom': {
+      start = clamp(img.start || 0, 0, d);
+      end   = img.end && img.end > 0 ? clamp(img.end, 0, d) : d;
+      break;
+    }
+    default: start = 0; end = d;
+  }
+
+  // If user picked "replace text", this overrides the mode
+  if (img.replaceTextKey && img.replaceTextKey !== 'none'){
+    const tm = sc.texts[img.replaceTextKey];
+    if (tm){ start = tm.end; end = d; }
+  }
+
+  if (end <= start) end = Math.min(d, start + 0.5);
+  return [start, end];
+}
+
+function drawSceneImage(c, sc, t, W, H){
+  const img = sc.image;
+  if (!img || !img.mediaId) return;
+  const m = media[img.mediaId];
+  if (!m || m.type !== 'image' || !m.el.complete || !m.el.naturalWidth) return;
+
+  const [start, end] = imageTimeRange(sc);
+  if (t < start || t > end) return;
+
+  const alpha = textAlpha(t, start, end, 0.35, 0.35);
+  if (alpha <= 0.001) return;
+
+  c.save();
+  c.globalAlpha *= alpha;
+
+  const iw = m.el.naturalWidth, ih = m.el.naturalHeight;
+
+  if (img.slot === 'fullscreen'){
+    drawCover(c, m.el, 0, 0, W, H);
+    c.fillStyle = 'rgba(0,0,0,0.30)';
+    c.fillRect(0,0,W,H);
+  } else {
+    const slotCfg = IMG_SLOTS[img.slot] || IMG_SLOTS.belowHook;
+    const sz     = clamp(img.size || 0.7, 0.15, 1);
+    const maxH   = H * slotCfg.maxH * sz;
+    const maxW   = W * 0.85 * sz;
+    const s      = Math.min(maxW/iw, maxH/ih);
+    const dw     = iw * s, dh = ih * s;
+
+    const cx = W / 2;
+    const cy = H * slotCfg.y;
+
+    c.shadowColor = 'rgba(0,0,0,0.55)';
+    c.shadowBlur  = 26 * (Math.min(W,H)/1080);
+    c.shadowOffsetY = 10 * (Math.min(W,H)/1080);
+
+    c.drawImage(m.el, cx - dw/2, cy - dh/2, dw, dh);
+  }
+
+  c.restore();
+}
+
+/* Intro / Outro overlays (project-level) */
+function drawProjectOverlay(c, item, elapsed, dur, W, H){
+  const m = media[item.mediaId];
+  if (!m || m.type !== 'image' || !m.el.complete || !m.el.naturalWidth) return;
+
+  const fi = 0.45, fo = 0.45;
+  let alpha = 1;
+  if (elapsed < fi) alpha = elapsed / fi;
+  if (elapsed > dur - fo) alpha = Math.min(alpha, (dur - elapsed) / fo);
+  alpha = clamp(alpha, 0, 1);
+  if (alpha <= 0.001) return;
+
+  c.save();
+  c.globalAlpha *= alpha;
+
+  c.fillStyle = 'rgba(5,6,14,0.92)';
+  c.fillRect(0,0,W,H);
+
+  const iw = m.el.naturalWidth, ih = m.el.naturalHeight;
+  const maxW = W * 0.80, maxH = H * 0.80;
+  const s = Math.min(maxW/iw, maxH/ih);
+  const dw = iw*s, dh = ih*s;
+
+  c.shadowColor = 'rgba(0,0,0,0.6)';
+  c.shadowBlur = 40 * (Math.min(W,H)/1080);
+
+  c.drawImage(m.el, (W-dw)/2, (H-dh)/2, dw, dh);
+  c.restore();
+}
+
+function drawScene(c, i, t, W, H, alpha){
+  const sc = state.scenes[i];
+  if (!sc){ return; }
+  c.save();
+  c.globalAlpha *= alpha;
+
+  const p = clamp(t / sc.duration, 0, 1);
+
+  c.save();
+  applyBgEffect(c, sc.effect, p, W, H, t);
+  if (sc.effect === 'blur') c.filter = `blur(${Math.min(W,H)*0.014}px)`;
+  drawBackground(c, sc, t, W, H);
+  c.restore();
+
+  drawOverlay(c, W, H);
+
+  if (sc.effect === 'flash'){
+    const a = Math.max(0, 1 - t/0.35) * 0.85;
+    if (a > 0){ c.fillStyle = `rgba(255,255,255,${a})`; c.fillRect(0,0,W,H); }
+  }
+
+  // Correct order: image first (background), then text on top
+  drawSceneImage(c, sc, t, W, H);
+  drawTexts(c, sc, t, W, H);
+
+  c.restore();
+}
+
+function drawTransition(c, pi, pt, ci, ct, prog, type, W, H){
+  const e = easeInOut(prog);
+  if (type === 'fade'){
+    drawScene(c, pi, pt, W, H, 1-e);
+    drawScene(c, ci, ct, W, H, e);
+  } else if (type === 'slide'){
+    c.save(); c.translate(-W*e, 0);       drawScene(c, pi, pt, W, H, 1); c.restore();
+    c.save(); c.translate(W*(1-e), 0);    drawScene(c, ci, ct, W, H, 1); c.restore();
+  } else if (type === 'slideUp'){
+    c.save(); c.translate(0, H*e);        drawScene(c, pi, pt, W, H, 1); c.restore();
+    c.save(); c.translate(0, -H*(1-e));   drawScene(c, ci, ct, W, H, 1); c.restore();
+  } else if (type === 'wipe'){
+    drawScene(c, pi, pt, W, H, 1);
+    c.save(); c.beginPath(); c.rect(0,0,W*e,H); c.clip();
+    drawScene(c, ci, ct, W, H, 1); c.restore();
+  } else if (type === 'zoom'){
+    c.save();
+    c.translate(W/2,H/2); c.scale(1+0.35*e, 1+0.35*e); c.translate(-W/2,-H/2);
+    c.globalAlpha = 1-e; drawScene(c, pi, pt, W, H, 1);
+    c.restore();
+    c.save();
+    c.translate(W/2,H/2); c.scale(0.65+0.35*e, 0.65+0.35*e); c.translate(-W/2,-H/2);
+    c.globalAlpha = e; drawScene(c, ci, ct, W, H, 1);
+    c.restore();
+  } else {
+    drawScene(c, ci, ct, W, H, 1);
+  }
+}
+
+const TRANS_DUR = 0.6;
+
+function renderFrame(T){
+  const W = canvas.width, H = canvas.height;
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.globalAlpha = 1;
+  ctx.filter = 'none';
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0,0,W,H);
+
+  if (!state.scenes.length) return;
+
+  const total = totalDuration();
+  T = clamp(T, 0, Math.max(0, total - 0.0001));
+
+  const idx  = sceneAtTime(T);
+  const sc   = state.scenes[idx];
+  const start= sceneStart(idx);
+  const local= T - start;
+
+  syncVideoBg(idx, local);
+
+  const trans = sc.transition || 'fade';
+  if (idx > 0 && local < TRANS_DUR && trans !== 'none'){
+    const prev = state.scenes[idx-1];
+    drawTransition(ctx, idx-1, prev.duration, idx, local, local/TRANS_DUR, trans, W, H);
+  } else {
+    drawScene(ctx, idx, local, W, H, 1);
+  }
+
+  // Intro overlay
+  if (state.project.intro.enabled && state.project.intro.mediaId
+      && T < state.project.intro.duration){
+    drawProjectOverlay(ctx, state.project.intro, T, state.project.intro.duration, W, H);
+  }
+  // Outro overlay
+  if (state.project.outro.enabled && state.project.outro.mediaId){
+    const outroStart = total - state.project.outro.duration;
+    if (T >= outroStart){
+      drawProjectOverlay(ctx, state.project.outro, T - outroStart, state.project.outro.duration, W, H);
+    }
+  }
+}
+
+function syncVideoBg(idx, local){
+  state.scenes.forEach((s, i) => {
+    if (s.bg.type !== 'media') return;
+    const m = media[s.bg.mediaId];
+    if (!m || m.type !== 'video') return;
+    const v = m.el;
+    if (i === idx){
+      if (playing && !exporting){
+        if (v.paused) v.play().catch(()=>{});
+      } else {
+        if (!v.paused) v.pause();
+        if (v.duration && Math.abs(v.currentTime - (local % v.duration)) > 0.15){
+          try { v.currentTime = local % v.duration; } catch(e){}
+        }
+      }
+    } else {
+      if (!v.paused) v.pause();
+    }
+  });
+}
+
+/* =========================================================
+   Render loop
+   ========================================================= */
+let lastTs = performance.now();
+function loop(ts){
+  const dt = Math.min((ts - lastTs)/1000, 0.1);
+  lastTs = ts;
+
+  if (playing && !exporting){
+    curTime += dt;
+    const total = totalDuration();
+    if (curTime >= total){
+      curTime = total;
+      stopPlayback();
+    }
+    needsRender = true;
+  }
+
+  if (needsRender){
+    renderFrame(curTime);
+    needsRender = false;
+    updateTransport();
+  }
+  requestAnimationFrame(loop);
+}
+
+function updateTransport(){
+  const total = totalDuration() || 1;
+  $('#scrub').value = String((curTime/total)*1000);
+  $('#timeLabel').textContent = fmt(curTime) + ' / ' + fmt(total);
+  const ph = $('#playhead');
+  if (ph) ph.style.left = (clamp(curTime/total,0,1)*100) + '%';
+}
+
+/* =========================================================
+   Preview audio
+   ========================================================= */
+let previewNodes = [];
+function stopPreviewAudio(){
+  previewNodes.forEach(n => { try { n.stop(); } catch(e){} });
+  previewNodes = [];
+}
+
+async function startPreviewAudio(fromTime){
+  stopPreviewAudio();
+  const hasAny = state.scenes.some(s => s.audio.mediaId && !s.audio.mute)
+              || (state.music.mediaId && !state.music.mute);
+  if (!hasAny) return;
+
+  const ac = getAudioCtx();
+  try { await ac.resume(); } catch(e){}
+
+  const t0 = ac.currentTime + 0.08;
+
+  state.scenes.forEach((sc, i) => {
+    if (!sc.audio.mediaId || sc.audio.mute) return;
+    const buf = audioBuffers[sc.audio.mediaId];
+    if (!buf) return;
+
+    const st  = sceneStart(i);
+    const dur = sc.duration;
+    if (st + dur <= fromTime) return;
+
+    const sceneOffset = Math.max(0, fromTime - st);
+    const playDur     = dur - sceneOffset;
+    if (playDur <= 0.02) return;
+
+    const when = t0 + Math.max(0, st - fromTime);
+    const vol  = sc.audio.volume;
+
+    const src = ac.createBufferSource();
+    src.buffer = buf;
+    src.loop = true;
+    const g = ac.createGain();
+
+    const fi = Math.min(sc.audio.fadeIn || 0, playDur/2);
+    if (fi > 0.01){
+      g.gain.setValueAtTime(0.0001, when);
+      g.gain.linearRampToValueAtTime(vol, when + fi);
+    } else {
+      g.gain.setValueAtTime(vol, when);
+    }
+    const fo = Math.min(sc.audio.fadeOut || 0, playDur/2);
+    if (fo > 0.01){
+      g.gain.setValueAtTime(vol, when + playDur - fo);
+      g.gain.linearRampToValueAtTime(0.0001, when + playDur);
+    }
+
+    src.connect(g); g.connect(ac.destination);
+
+    const startOffset = sceneOffset % buf.duration;
+    src.start(when, startOffset);
+    src.stop(when + playDur + 0.02);
+    previewNodes.push(src);
+  });
+
+  if (state.music.mediaId && !state.music.mute){
+    const buf = audioBuffers[state.music.mediaId];
+    if (buf){
+      const total = totalDuration();
+      if (fromTime < total){
+        const src = ac.createBufferSource(); src.buffer = buf; src.loop = true;
+        const g = ac.createGain();
+        const vol = state.music.volume;
+        const remaining = total - fromTime;
+
+        g.gain.setValueAtTime(vol, t0);
+        const fo = Math.min(state.music.fadeOut || 0, remaining/2);
+        if (fo > 0.01){
+          g.gain.setValueAtTime(vol, t0 + remaining - fo);
+          g.gain.linearRampToValueAtTime(0.0001, t0 + remaining);
+        }
+
+        src.connect(g); g.connect(ac.destination);
+        src.start(t0, fromTime % buf.duration);
+        src.stop(t0 + remaining + 0.05);
+        previewNodes.push(src);
+      }
+    }
+  }
+}
+
+/* =========================================================
+   Playback
+   ========================================================= */
+function startPlayback(){
+  if (playing) return;
+  if (curTime >= totalDuration() - 0.01) curTime = 0;
+  playing = true;
+  $('#playBtn').textContent = '❚❚';
+  needsRender = true;
+  startPreviewAudio(curTime);
+}
+
+function stopPlayback(){
+  playing = false;
+  $('#playBtn').textContent = '▶';
+  stopPreviewAudio();
+  needsRender = true;
+}
+
+$('#playBtn').addEventListener('click', () => playing ? stopPlayback() : startPlayback());
+
+$('#scrub').addEventListener('input', e => {
+  const total = totalDuration() || 1;
+  curTime = (Number(e.target.value)/1000) * total;
+  needsRender = true;
+  if (playing){ stopPlayback(); startPlayback(); }
+});
+
+/* =========================================================
+   Media
+   ========================================================= */
+let pendingTarget = null;
+
+function handleImageFile(file, cb){
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onload = () => {
+    const id = uid();
+    media[id] = { type:'image', el:img, url, name:file.name };
+    cb(id, file.name);
+  };
+  img.onerror = () => toast('Failed to load image');
+  img.src = url;
+}
+
+function handleVideoFile(file, cb){
+  const url = URL.createObjectURL(file);
+  const v = document.createElement('video');
+  v.src = url; v.muted = true; v.loop = true; v.playsInline = true;
+  v.crossOrigin = 'anonymous';
+  v.onloadeddata = () => {
+    const id = uid();
+    media[id] = { type:'video', el:v, url, name:file.name };
+    cb(id, file.name);
+  };
+  v.onerror = () => toast('Failed to load video');
+}
+
+async function handleAudioFile(file, cb){
+  try{
+    const ab = await file.arrayBuffer();
+    const ac = getAudioCtx();
+    try { await ac.resume(); } catch(e){}
+    const buf = await ac.decodeAudioData(ab.slice(0));
+    const id = uid();
+    audioBuffers[id] = buf;
+    media[id] = { type:'audio', name:file.name, duration: buf.duration };
+    cb(id, file.name);
+  } catch(e){
+    console.error(e);
+    toast('Could not read the audio file');
+  }
+}
+
+function pickFile(kind, target){
+  pendingTarget = target;
+  const map = { image:'#fileImage', video:'#fileVideo', audio:'#fileAudio' };
+  const input = $(map[kind]);
+  input.value = '';
+  input.click();
+}
+
+function bindFileInputs(){
+  $('#fileImage').addEventListener('change', e => {
+    const f = e.target.files[0]; if (!f) return;
+    const tgt = pendingTarget;
+    handleImageFile(f, (id, name) => {
+      if (tgt === 'scene-bg'){
+        const sc = state.scenes[state.selected];
+        sc.bg = { type:'media', mediaId:id, mediaName:name, value:'', color:sc.bg.color };
+        refreshAll();
+        toast('Image imported as background');
+      } else if (tgt === 'scene-image'){
+        const sc = state.scenes[state.selected];
+        sc.image.mediaId = id; sc.image.name = name;
+        renderRight(); needsRender = true;
+        toast('✅ Image added to scene');
+      } else if (tgt === 'project-intro'){
+        state.project.intro.mediaId = id;
+        state.project.intro.name = name;
+        state.project.intro.enabled = true;
+        renderRight(); needsRender = true;
+        toast('✅ Intro image set');
+      } else if (tgt === 'project-outro'){
+        state.project.outro.mediaId = id;
+        state.project.outro.name = name;
+        state.project.outro.enabled = true;
+        renderRight(); needsRender = true;
+        toast('✅ Outro image set');
+      }
+    });
+  });
+  $('#fileVideo').addEventListener('change', e => {
+    const f = e.target.files[0]; if (!f) return;
+    const tgt = pendingTarget;
+    handleVideoFile(f, (id, name) => {
+      if (tgt === 'scene-bg'){
+        const sc = state.scenes[state.selected];
+        sc.bg = { type:'media', mediaId:id, mediaName:name, value:'', color:sc.bg.color };
+        refreshAll();
+        toast('Video imported as background');
+      }
+    });
+  });
+  $('#fileAudio').addEventListener('change', e => {
+    const f = e.target.files[0]; if (!f) return;
+    const tgt = pendingTarget;
+    handleAudioFile(f, (id, name) => {
+      if (tgt === 'scene-audio'){
+        const sc = state.scenes[state.selected];
+        sc.audio.mediaId = id; sc.audio.name = name;
+        renderRight();
+        toast('Scene audio added (will loop to fill duration)');
+      } else if (tgt === 'music'){
+        state.music.mediaId = id; state.music.name = name;
+        renderRight();
+        toast('Background music added');
+      }
+    });
+  });
+}
+
+/* =========================================================
+   Scene list
+   ========================================================= */
+function renderSceneList(){
+  const el = $('#sceneList');
+  if (!state.scenes.length){
+    el.innerHTML = '<p class="empty">No scenes yet.<br>Click “+ Add” to begin.</p>';
+    return;
+  }
+  el.innerHTML = state.scenes.map((s, i) => `
+    <div class="scene-item ${i===state.selected?'sel':''}" data-i="${i}" draggable="true">
+      <span class="drag-handle">⣿</span>
+      <div class="num">${i+1}</div>
+      <div class="meta">
+        <b>${esc(s.name)}</b>
+        <span>${esc((s.hook||'').slice(0,26))}${(s.hook||'').length>26?'…':''}</span>
+      </div>
+      <span style="font-size:10px;color:#8b8fa8">${s.duration}s</span>
+      ${state.scenes.length>1 ? `<button class="del" data-del="${i}" title="Delete">✕</button>` : ''}
+    </div>
+  `).join('');
+
+  el.querySelectorAll('.scene-item').forEach(item => {
+    const i = Number(item.dataset.i);
+    item.addEventListener('click', e => {
+      if (e.target.dataset.del !== undefined) return;
+      state.selected = i;
+      curTime = sceneStart(i);
+      renderSceneList(); renderRight(); renderTimeline();
+      needsRender = true;
+    });
+    item.addEventListener('dragstart', e => {
+      dragIndex = i;
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    item.addEventListener('dragover', e => { e.preventDefault(); item.classList.add('over'); });
+    item.addEventListener('dragleave', () => item.classList.remove('over'));
+    item.addEventListener('drop', e => {
+      e.preventDefault();
+      item.classList.remove('over');
+      if (dragIndex < 0 || dragIndex === i) return;
+      const [moved] = state.scenes.splice(dragIndex, 1);
+      state.scenes.splice(i, 0, moved);
+      if (state.selected === dragIndex) state.selected = i;
+      dragIndex = -1;
+      refreshAll();
+      toast('Scenes reordered');
+    });
+  });
+
+  el.querySelectorAll('[data-del]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const i = Number(btn.dataset.del);
+      state.scenes.splice(i,1);
+      state.selected = clamp(state.selected, 0, state.scenes.length-1);
+      refreshAll();
+    });
+  });
+}
+
+/* =========================================================
+   Timeline
+   ========================================================= */
+function renderTimeline(){
+  const total = totalDuration() || 1;
+  const el = $('#timeline');
+  el.innerHTML = state.scenes.map((s,i) => {
+    const w = (s.duration/total)*100;
+    return `<div class="tl-scene ${i===state.selected?'sel':''}" data-i="${i}" style="width:${w}%">
+      <span>${esc(s.name)}</span><small>${s.duration}s</small>
+    </div>`;
+  }).join('') + '<div class="tl-playhead" id="playhead"></div>';
+
+  el.querySelectorAll('.tl-scene').forEach(b => {
+    b.addEventListener('click', () => {
+      const i = Number(b.dataset.i);
+      state.selected = i;
+      curTime = sceneStart(i);
+      renderSceneList(); renderRight(); renderTimeline();
+      needsRender = true;
+    });
+  });
+  updateTransport();
+}
+
+/* =========================================================
+   Right panel
+   ========================================================= */
+function renderRight(){
+  const box = $('#tabContent');
+  let html = '';
+  if (currentTab === 'project'){
+    html = tabProject();
+  } else {
+    const sc = state.scenes[state.selected];
+    if (!sc){ box.innerHTML = '<p class="empty">Add a scene to begin</p>'; return; }
+    if (currentTab === 'content') html = tabContent(sc);
+    if (currentTab === 'image')   html = tabImage(sc);
+    if (currentTab === 'bg')      html = tabBg(sc);
+    if (currentTab === 'fx')      html = tabFx(sc);
+    if (currentTab === 'text')    html = tabText(sc);
+    if (currentTab === 'audio')   html = tabAudio(sc);
+  }
+  box.innerHTML = html;
+  bindRight();
+}
+
+function tabContent(sc){
+  return `
+    <div class="field">
+      <label>Hook (first line)</label>
+      <textarea data-k="hook" placeholder="A sentence that stops the scroll">${esc(sc.hook)}</textarea>
+    </div>
+    <div class="field">
+      <label>Title</label>
+      <input type="text" data-k="title" value="${esc(sc.title)}">
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <textarea data-k="desc">${esc(sc.desc)}</textarea>
+    </div>
+    <div class="field">
+      <label>Call to Action (CTA)</label>
+      <input type="text" data-k="cta" value="${esc(sc.cta)}">
+    </div>
+    <div class="section-title">Scene settings</div>
+    <div class="row">
+      <div class="field">
+        <label>Duration (seconds)</label>
+        <input type="number" data-k="duration" min="1" max="60" step="0.5" value="${sc.duration}">
+      </div>
+      <div class="field">
+        <label>Scene name</label>
+        <input type="text" data-k="name" value="${esc(sc.name)}">
+      </div>
+    </div>
+  `;
+}
+
+/* ===== Project tab: intro + outro ===== */
+function tabProject(){
+  const p = state.project;
+  const introM = p.intro.mediaId ? media[p.intro.mediaId] : null;
+  const outroM = p.outro.mediaId ? media[p.outro.mediaId] : null;
+  return `
+    <div class="section-title">Intro image (start of video)</div>
+    <div class="card">
+      <div class="card-head">
+        <b>${p.intro.name ? esc(p.intro.name) : 'No image'}</b>
+        <label class="switch">
+          <input type="checkbox" data-p="intro-enabled" ${p.intro.enabled?'checked':''}>
+          <span class="slider"></span>
+        </label>
+      </div>
+      ${introM && introM.type==='image'
+        ? `<div class="img-preview"><img src="${introM.url}" alt=""></div>` : ''}
+      <button class="btn small full" style="margin-bottom:10px" data-action="pick-intro">
+        🖼 ${p.intro.name ? 'Change image' : 'Import intro image'}
+      </button>
+      <div class="field" style="margin-bottom:0">
+        <label>Display duration (seconds)</label>
+        <input type="number" data-p="intro-duration" min="0.5" max="6" step="0.1" value="${p.intro.duration}">
+      </div>
+    </div>
+
+    <div class="section-title">Outro image (end of video)</div>
+    <div class="card">
+      <div class="card-head">
+        <b>${p.outro.name ? esc(p.outro.name) : 'No image'}</b>
+        <label class="switch">
+          <input type="checkbox" data-p="outro-enabled" ${p.outro.enabled?'checked':''}>
+          <span class="slider"></span>
+        </label>
+      </div>
+      ${outroM && outroM.type==='image'
+        ? `<div class="img-preview"><img src="${outroM.url}" alt=""></div>` : ''}
+      <button class="btn small full" style="margin-bottom:10px" data-action="pick-outro">
+        🖼 ${p.outro.name ? 'Change image' : 'Import outro image'}
+      </button>
+      <div class="field" style="margin-bottom:0">
+        <label>Display duration (seconds)</label>
+        <input type="number" data-p="outro-duration" min="0.5" max="8" step="0.1" value="${p.outro.duration}">
+      </div>
+    </div>
+
+    <div class="hint">
+      The intro appears over the first scene during the first few seconds of the video.<br>
+      The outro appears over the last scene during the last few seconds of the video.
+    </div>
+  `;
+}
+
+function tabImage(sc){
+  const m = sc.image.mediaId ? media[sc.image.mediaId] : null;
+  const showPreview = m && m.type === 'image';
+  const endVal = sc.image.end && sc.image.end > 0 ? sc.image.end : '';
+  const slots = Object.entries(IMG_SLOTS);
+
+  return `
+    <div class="section-title">Scene image</div>
+    <div class="img-preview">
+      ${showPreview
+        ? `<img src="${m.url}" alt="">`
+        : `<span class="ph">No image</span>`}
+    </div>
+    <button class="btn small full" style="margin-bottom:10px" data-action="pick-scene-image">
+      🖼 ${sc.image.name ? 'Change image' : 'Import image'}
+    </button>
+    ${sc.image.name ? `<div class="hint" style="margin-bottom:10px">📎 ${esc(sc.image.name)}</div>` : ''}
+
+    <div class="section-title">Position (slots that do not overlap text)</div>
+    <div class="slot-diagram">
+      ${slots.map(([k,s]) => `
+        <div class="slot-row ${sc.image.slot===k?'active':''}" data-slot="${k}">
+          <b>${s.label}</b>
+          <em>y ${Math.round(s.y*100)}% · max height ${Math.round(s.maxH*100)}%</em>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="field">
+      <label>Image size within the slot</label>
+      <div class="range-row">
+        <input type="range" data-img="size" min="0.15" max="1" step="0.01" value="${sc.image.size}">
+        <span class="val">${Math.round(sc.image.size*100)}%</span>
+      </div>
+    </div>
+
+    <div class="section-title">Image timing</div>
+    <div class="field">
+      <label>Timing mode</label>
+      <select data-img="mode">
+        <option value="whole"     ${sc.image.mode==='whole'?'selected':''}>Whole scene (start to end)</option>
+        <option value="start"     ${sc.image.mode==='start'?'selected':''}>Start of scene (first half)</option>
+        <option value="end"       ${sc.image.mode==='end'?'selected':''}>End of scene (second half)</option>
+        <option value="afterHook" ${sc.image.mode==='afterHook'?'selected':''}>After hook only</option>
+        <option value="custom"    ${sc.image.mode==='custom'?'selected':''}>Custom (manual)</option>
+      </select>
+    </div>
+
+    ${sc.image.mode === 'custom' ? `
+      <div class="row">
+        <div class="field">
+          <label>Start (s)</label>
+          <input type="number" data-img="start" min="0" max="60" step="0.1" value="${sc.image.start}">
+        </div>
+        <div class="field">
+          <label>End (0 = scene end)</label>
+          <input type="number" data-img="end" min="0" max="60" step="0.1" value="${endVal}">
+        </div>
+      </div>
+    ` : ''}
+
+    <div class="section-title">Replace a text with the image</div>
+    <div class="field">
+      <label>Show the image in place of a text after it ends</label>
+      <select data-img="replaceTextKey">
+        <option value="none"  ${sc.image.replaceTextKey==='none'?'selected':''}>Nothing</option>
+        <option value="hook"  ${sc.image.replaceTextKey==='hook'?'selected':''}>Hook</option>
+        <option value="title" ${sc.image.replaceTextKey==='title'?'selected':''}>Title</option>
+        <option value="desc"  ${sc.image.replaceTextKey==='desc'?'selected':''}>Description</option>
+        <option value="cta"   ${sc.image.replaceTextKey==='cta'?'selected':''}>Call to Action (CTA)</option>
+      </select>
+    </div>
+    <div class="hint">
+      💡 The image is always drawn <b>under the text</b> — text sits on top and never overlaps it visually.<br>
+      Want an image at the very start of the video? Pick Scene 1 → mode <b>“Start of scene”</b>.<br>
+      Want an image at the very end? Pick the last scene → mode <b>“End of scene”</b>.<br>
+      Or use the <b>Project</b> tab for dedicated intro/outro images.
+    </div>
+  `;
+}
+
+function tabBg(sc){
+  const presets = Object.entries(BG_PRESETS).map(([k,p]) => `
+    <div class="preset ${sc.bg.type==='preset' && sc.bg.value===k ? 'active':''}"
+         data-preset="${k}" style="background:${p.thumb}">
+      <span>${p.name}</span>
+    </div>`).join('');
+
+  return `
+    <div class="section-title">Ready-made animated backgrounds</div>
+    <div class="preset-grid">${presets}</div>
+
+    <div class="section-title">Solid color</div>
+    <div class="field">
+      <input type="color" data-bgcolor value="${sc.bg.color || '#12131f'}">
+    </div>
+
+    <div class="section-title">Import a background</div>
+    <div class="row" style="margin-bottom:10px">
+      <button class="btn small" data-action="pick-image">🖼 Image</button>
+      <button class="btn small" data-action="pick-video">🎞 Video</button>
+    </div>
+    ${sc.bg.type==='media' && sc.bg.mediaName
+      ? `<div class="hint">Current background: <b>${esc(sc.bg.mediaName)}</b></div>` : ''}
+
+    <div class="section-title">Apply globally</div>
+    <button class="btn small full" data-action="apply-bg-all">Apply this background to all scenes</button>
+  `;
+}
+
+function tabFx(sc){
+  const effects = [
+    ['none','None'], ['zoomIn','Zoom in slowly'], ['zoomOut','Zoom out slowly'],
+    ['panRight','Pan right'], ['panLeft','Pan left'], ['panUp','Pan up'],
+    ['shake','Gentle shake'], ['glitch','Glitch'], ['flash','Flash'], ['blur','Blur']
+  ];
+  const transitions = [
+    ['none','None'], ['fade','Fade'], ['slide','Slide horizontally'],
+    ['slideUp','Slide vertically'], ['wipe','Wipe'], ['zoom','Zoom']
+  ];
+  return `
+    <div class="section-title">Background visual effect</div>
+    <div class="anim-grid">
+      ${effects.map(([v,n]) => `<button class="anim-btn ${sc.effect===v?'active':''}" data-effect="${v}">${n}</button>`).join('')}
+    </div>
+
+    <div class="section-title">Transition from the previous scene</div>
+    <div class="anim-grid">
+      ${transitions.map(([v,n]) => `<button class="anim-btn ${sc.transition===v?'active':''}" data-transition="${v}">${n}</button>`).join('')}
+    </div>
+    <div class="hint">The transition plays during the first 0.6 seconds of the current scene.</div>
+  `;
+}
+
+function tabText(sc){
+  const names = { hook:'Hook', title:'Title', desc:'Description', cta:'Call to Action (CTA)' };
+  const anims = [
+    ['none','No animation'], ['fade','Fade in'], ['slideUp','Slide up'],
+    ['slideDown','Slide down'], ['pop','Pop'], ['zoomIn','Zoom in'], ['typewriter','Typewriter']
+  ];
+  return Object.keys(names).map(k => {
+    const tm = sc.texts[k];
+    return `
+      <div class="card">
+        <div class="card-head">
+          <b>${names[k]}</b>
+          <label class="switch">
+            <input type="checkbox" data-t-on="${k}" ${tm.on?'checked':''}>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="field">
+          <label>Start — End (seconds)</label>
+          <div class="row">
+            <input type="number" data-t-start="${k}" min="0" max="60" step="0.1" value="${tm.start.toFixed(1)}">
+            <input type="number" data-t-end="${k}" min="0" max="60" step="0.1" value="${tm.end.toFixed(1)}">
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Text animation</label>
+          <select data-t-anim="${k}">
+            ${anims.map(([v,n]) => `<option value="${v}" ${tm.anim===v?'selected':''}>${n}</option>`).join('')}
+          </select>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function tabAudio(sc){
+  const dur = sc.audio.mediaId && media[sc.audio.mediaId]
+    ? ` (${media[sc.audio.mediaId].duration?.toFixed(1)}s)` : '';
+  return `
+    <div class="section-title">Scene audio</div>
+    <div class="card">
+      <div class="card-head">
+        <b>${sc.audio.name ? esc(sc.audio.name) + dur : 'No audio'}</b>
+        <label class="switch" title="Mute">
+          <input type="checkbox" data-a-mute ${sc.audio.mute?'checked':''}>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <button class="btn small full" style="margin-bottom:10px" data-action="pick-scene-audio">
+        🎵 ${sc.audio.name ? 'Change audio' : 'Import audio file'}
+      </button>
+      <div class="field" style="margin-bottom:9px">
+        <label>Volume</label>
+        <div class="range-row">
+          <input type="range" data-a="volume" min="0" max="2" step="0.01" value="${sc.audio.volume}">
+          <span class="val">${Math.round(sc.audio.volume*100)}%</span>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:9px">
+        <label>Fade In (seconds)</label>
+        <div class="range-row">
+          <input type="range" data-a="fadeIn" min="0" max="3" step="0.1" value="${sc.audio.fadeIn}">
+          <span class="val">${sc.audio.fadeIn.toFixed(1)}</span>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>Fade Out (seconds)</label>
+        <div class="range-row">
+          <input type="range" data-a="fadeOut" min="0" max="3" step="0.1" value="${sc.audio.fadeOut}">
+          <span class="val">${sc.audio.fadeOut.toFixed(1)}</span>
+        </div>
+      </div>
+      <div class="hint">🔁 If the clip is shorter than the scene, it will loop automatically until the scene ends.</div>
+    </div>
+
+    <div class="section-title">Background music for the entire video</div>
+    <div class="card">
+      <div class="card-head">
+        <b>${state.music.name ? esc(state.music.name) : 'No music'}</b>
+        <label class="switch" title="Mute">
+          <input type="checkbox" data-m-mute ${state.music.mute?'checked':''}>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <button class="btn small full" style="margin-bottom:10px" data-action="pick-music">
+        🎵 ${state.music.name ? 'Change music' : 'Import music'}
+      </button>
+      <div class="field" style="margin-bottom:9px">
+        <label>Music volume</label>
+        <div class="range-row">
+          <input type="range" data-m="volume" min="0" max="1.5" step="0.01" value="${state.music.volume}">
+          <span class="val">${Math.round(state.music.volume*100)}%</span>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>Fade Out (seconds)</label>
+        <div class="range-row">
+          <input type="range" data-m="fadeOut" min="0" max="5" step="0.1" value="${state.music.fadeOut}">
+          <span class="val">${state.music.fadeOut.toFixed(1)}</span>
+        </div>
+      </div>
+    </div>
+    <div class="hint">You can set a different audio file for each scene, one music track for the whole video, or both together.</div>
+  `;
+}
+
+function bindRight(){
+  const box = $('#tabContent');
+  const sc = () => state.scenes[state.selected];
+
+  box.querySelectorAll('[data-k]').forEach(el => {
+    el.addEventListener('input', () => {
+      const k = el.dataset.k;
+      const s = sc(); if (!s) return;
+      if (k === 'duration'){
+        const v = clamp(parseFloat(el.value) || 1, 1, 60);
+        resizeTexts(s, v);
+        renderTimeline();
+      } else {
+        s[k] = el.value;
+      }
+      needsRender = true;
+      if (k === 'name' || k === 'hook') renderSceneList();
+    });
+  });
+
+  // Project fields
+  box.querySelectorAll('[data-p]').forEach(el => {
+    const key = el.dataset.p;
+    const isCheck = el.type === 'checkbox';
+    el.addEventListener('input', () => {
+      const p = state.project;
+      if (key === 'intro-enabled')   p.intro.enabled = el.checked;
+      if (key === 'outro-enabled')   p.outro.enabled = el.checked;
+      if (key === 'intro-duration')  p.intro.duration = clamp(parseFloat(el.value)||1.8, 0.5, 6);
+      if (key === 'outro-duration')  p.outro.duration = clamp(parseFloat(el.value)||2.5, 0.5, 8);
+      needsRender = true;
+    });
+    if (isCheck){
+      el.addEventListener('change', () => {
+        const p = state.project;
+        if (key === 'intro-enabled') p.intro.enabled = el.checked;
+        if (key === 'outro-enabled') p.outro.enabled = el.checked;
+        needsRender = true;
+      });
+    }
+  });
+
+  // Image slots
+  box.querySelectorAll('[data-slot]').forEach(el => {
+    el.addEventListener('click', () => {
+      const s = sc(); if (!s) return;
+      s.image.slot = el.dataset.slot;
+      renderRight(); needsRender = true;
+    });
+  });
+
+  // Backgrounds
+  box.querySelectorAll('[data-preset]').forEach(el => {
+    el.addEventListener('click', () => {
+      const s = sc(); if (!s) return;
+      s.bg = { type:'preset', value: el.dataset.preset, mediaId:null, mediaName:'', color:s.bg.color };
+      renderRight(); needsRender = true;
+    });
+  });
+  const colorInput = box.querySelector('[data-bgcolor]');
+  if (colorInput){
+    colorInput.addEventListener('input', () => {
+      const s = sc(); if (!s) return;
+      s.bg = { type:'color', value: colorInput.value, color: colorInput.value, mediaId:null, mediaName:'' };
+      needsRender = true;
+    });
+  }
+
+  // Effects
+  box.querySelectorAll('[data-effect]').forEach(el => {
+    el.addEventListener('click', () => {
+      sc().effect = el.dataset.effect;
+      renderRight(); needsRender = true;
+    });
+  });
+  box.querySelectorAll('[data-transition]').forEach(el => {
+    el.addEventListener('click', () => {
+      sc().transition = el.dataset.transition;
+      renderRight(); needsRender = true;
+    });
+  });
+
+  // Text
+  box.querySelectorAll('[data-t-on]').forEach(el => {
+    el.addEventListener('change', () => {
+      sc().texts[el.dataset.tOn].on = el.checked; needsRender = true;
+    });
+  });
+  box.querySelectorAll('[data-t-start]').forEach(el => {
+    el.addEventListener('input', () => {
+      const k = el.dataset.tStart, v = parseFloat(el.value) || 0;
+      const tm = sc().texts[k];
+      tm.start = clamp(v, 0, sc().duration);
+      if (tm.end < tm.start) tm.end = tm.start + 0.5;
+      needsRender = true;
+    });
+  });
+  box.querySelectorAll('[data-t-end]').forEach(el => {
+    el.addEventListener('input', () => {
+      const k = el.dataset.tEnd, v = parseFloat(el.value) || 0;
+      const tm = sc().texts[k];
+      tm.end = clamp(v, 0.1, sc().duration);
+      if (tm.end < tm.start) tm.start = Math.max(0, tm.end - 0.5);
+      needsRender = true;
+    });
+  });
+  box.querySelectorAll('[data-t-anim]').forEach(el => {
+    el.addEventListener('change', () => {
+      sc().texts[el.dataset.tAnim].anim = el.value; needsRender = true;
+    });
+  });
+
+  // Image
+  box.querySelectorAll('[data-img]').forEach(el => {
+    const handler = () => {
+      const k = el.dataset.img;
+      const s = sc(); if (!s) return;
+      if (k === 'size'){
+        s.image.size = parseFloat(el.value);
+        const v = el.parentElement.querySelector('.val');
+        if (v) v.textContent = Math.round(el.value*100)+'%';
+      } else if (k === 'start'){
+        s.image.start = clamp(parseFloat(el.value) || 0, 0, s.duration);
+      } else if (k === 'end'){
+        const v = parseFloat(el.value) || 0;
+        s.image.end = v > 0 ? clamp(v, 0, s.duration) : 0;
+      } else if (k === 'mode'){
+        s.image.mode = el.value;
+        renderRight();
+      } else if (k === 'replaceTextKey'){
+        s.image.replaceTextKey = el.value;
+        needsRender = true;
+      }
+      needsRender = true;
+    };
+    el.addEventListener('input', handler);
+    if (el.tagName === 'SELECT') el.addEventListener('change', handler);
+  });
+
+  // Audio
+  box.querySelectorAll('[data-a]').forEach(el => {
+    el.addEventListener('input', () => {
+      const k = el.dataset.a;
+      const s = sc(); if (!s) return;
+      s.audio[k] = parseFloat(el.value);
+      el.parentElement.querySelector('.val').textContent =
+        k === 'volume' ? Math.round(el.value*100)+'%' : parseFloat(el.value).toFixed(1);
+      if (playing && k === 'volume'){
+        stopPreviewAudio();
+        startPreviewAudio(curTime);
+      }
+    });
+  });
+  const aMute = box.querySelector('[data-a-mute]');
+  if (aMute) aMute.addEventListener('change', () => { sc().audio.mute = aMute.checked; });
+
+  box.querySelectorAll('[data-m]').forEach(el => {
+    el.addEventListener('input', () => {
+      const k = el.dataset.m;
+      state.music[k] = parseFloat(el.value);
+      el.parentElement.querySelector('.val').textContent =
+        k === 'volume' ? Math.round(el.value*100)+'%' : parseFloat(el.value).toFixed(1);
+      if (playing && k === 'volume'){
+        stopPreviewAudio();
+        startPreviewAudio(curTime);
+      }
+    });
+  });
+  const mMute = box.querySelector('[data-m-mute]');
+  if (mMute) mMute.addEventListener('change', () => { state.music.mute = mMute.checked; });
+
+  // Action buttons
+  box.querySelectorAll('[data-action]').forEach(el => {
+    el.addEventListener('click', () => {
+      const a = el.dataset.action;
+      if (a === 'pick-image')          pickFile('image','scene-bg');
+      if (a === 'pick-video')          pickFile('video','scene-bg');
+      if (a === 'pick-scene-image')    pickFile('image','scene-image');
+      if (a === 'pick-scene-audio')    pickFile('audio','scene-audio');
+      if (a === 'pick-music')          pickFile('audio','music');
+      if (a === 'pick-intro')          pickFile('image','project-intro');
+      if (a === 'pick-outro')          pickFile('image','project-outro');
+      if (a === 'apply-bg-all'){
+        const s = sc();
+        state.scenes.forEach(x => { x.bg = { ...s.bg }; });
+        needsRender = true;
+        toast('Background applied to all scenes');
+      }
+    });
+  });
+}
+
+function resizeTexts(sc, newD){
+  const oldD = sc.duration;
+  if (oldD > 0 && newD !== oldD){
+    const k = newD / oldD;
+    for (const key in sc.texts){
+      sc.texts[key].start = Math.min(sc.texts[key].start * k, newD);
+      sc.texts[key].end   = Math.min(sc.texts[key].end   * k, newD);
+    }
+    if (sc.image.start > 0) sc.image.start = Math.min(sc.image.start * k, newD);
+    if (sc.image.end   > 0) sc.image.end   = Math.min(sc.image.end   * k, newD);
+  }
+  sc.duration = newD;
+}
+
+/* =========================================================
+   Full refresh
+   ========================================================= */
+function refreshAll(){
+  renderSceneList();
+  renderTimeline();
+  renderRight();
+  needsRender = true;
+}
+
+/* =========================================================
+   Global events
+   ========================================================= */
+$('#addSceneBtn').addEventListener('click', () => {
+  const s = newScene(state.scenes.length);
+  if (state.scenes.length){
+    const last = state.scenes[state.scenes.length-1];
+    s.bg = { ...last.bg };
+    s.effect = last.effect;
+    s.transition = 'fade';
+  }
+  state.scenes.push(s);
+  state.selected = state.scenes.length - 1;
+  curTime = sceneStart(state.selected);
+  refreshAll();
+});
+
+$('#projectName').addEventListener('input', e => state.project.name = e.target.value);
+
+$('#ratioGroup').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  $$('#ratioGroup button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.project.ratio = btn.dataset.ratio;
+  resizeCanvas();
+  needsRender = true;
+});
+
+$('#quality').addEventListener('change', e => {
+  state.project.quality = e.target.value;
+  resizeCanvas();
+  needsRender = true;
+});
+
+$('#tabs').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  $$('#tabs button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentTab = btn.dataset.tab;
+  renderRight();
+});
+
+window.addEventListener('resize', () => { resizeCanvas(); needsRender = true; });
+
+window.addEventListener('keydown', e => {
+  if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'SELECT'){
+    e.preventDefault();
+    playing ? stopPlayback() : startPlayback();
+  }
+});
+
+/* =========================================================
+   Export — unchanged from the previous version
+   ========================================================= */
+function pickMime(){
+  const cands = [
+    'video/mp4;codecs=avc1.42E01E,mp4a.40.2',
+    'video/mp4;codecs=h264,aac',
+    'video/mp4',
+    'video/webm;codecs=vp9,opus',
+    'video/webm;codecs=vp8,opus',
+    'video/webm'
+  ];
+  for (const c of cands){
+    if (window.MediaRecorder && MediaRecorder.isTypeSupported(c)) return c;
+  }
+  return '';
+}
+
+function setProgress(p, msg){
+  $('#expBar').style.width = Math.round(p*100) + '%';
+  $('#expPct').textContent = Math.round(p*100) + '%';
+  if (msg) $('#expMsg').innerHTML = msg;
+}
+
+async function exportVideo(){
+  if (exporting) return;
+  if (!state.scenes.length){ toast('Add at least one scene'); return; }
+
+  const mime = pickMime();
+  if (!mime){ toast('Your browser does not support video recording'); return; }
+
+  exporting = true;
+  stopPlayback();
+
+  $('#exportOverlay').classList.add('show');
+  $('#expSpinner').style.display = 'block';
+  $('#expTitle').textContent = 'Exporting video…';
+  $('#cancelExport').textContent = 'Cancel';
+  $('#cancelExport').dataset.close = '';
+  setProgress(0, 'Composing scenes, backgrounds, text, effects and audio…<br>Please do not close this page.');
+
+  const total = totalDuration();
+
+  try{
+    const ac = getAudioCtx();
+    try { await ac.resume(); } catch(e){}
+
+    const dest = ac.createMediaStreamDestination();
+    const DELAY = 0.5;
+    const audioStart = ac.currentTime + DELAY;
+
+    state.scenes.forEach((sc, i) => {
+      if (!sc.audio.mediaId || sc.audio.mute) return;
+      const buf = audioBuffers[sc.audio.mediaId];
+      if (!buf) return;
+
+      const st  = audioStart + sceneStart(i);
+      const dur = sc.duration;
+      const vol = sc.audio.volume;
+
+      const src = ac.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      const g = ac.createGain();
+
+      const fi = Math.min(sc.audio.fadeIn || 0, dur/2);
+      const fo = Math.min(sc.audio.fadeOut || 0, dur/2);
+
+      if (fi > 0.01){
+        g.gain.setValueAtTime(0.0001, st);
+        g.gain.linearRampToValueAtTime(vol, st + fi);
+      } else {
+        g.gain.setValueAtTime(vol, st);
+      }
+      if (fo > 0.01){
+        g.gain.setValueAtTime(vol, st + dur - fo);
+        g.gain.linearRampToValueAtTime(0.0001, st + dur);
+      }
+
+      src.connect(g); g.connect(dest);
+      src.start(st, 0);
+      src.stop(st + dur + 0.05);
+    });
+
+    if (state.music.mediaId && !state.music.mute){
+      const buf = audioBuffers[state.music.mediaId];
+      if (buf){
+        const src = ac.createBufferSource(); src.buffer = buf; src.loop = true;
+        const g   = ac.createGain();
+        const vol = state.music.volume;
+        const fi  = state.music.fadeIn;
+        const fo  = Math.min(state.music.fadeOut, total/2);
+
+        if (fi > 0.01){
+          g.gain.setValueAtTime(0.0001, audioStart);
+          g.gain.linearRampToValueAtTime(vol, audioStart + fi);
+        } else {
+          g.gain.setValueAtTime(vol, audioStart);
+        }
+        if (fo > 0.01){
+          g.gain.setValueAtTime(vol, audioStart + total - fo);
+          g.gain.linearRampToValueAtTime(0.0001, audioStart + total);
+        }
+        src.connect(g); g.connect(dest);
+        src.start(audioStart);
+        src.stop(audioStart + total + 0.05);
+      }
+    }
+
+    const fps = 30;
+    const stream = canvas.captureStream(fps);
+    dest.stream.getAudioTracks().forEach(t => stream.addTrack(t));
+
+    const bitrate = state.project.quality === '4K' ? 26000000 : 10000000;
+    const recorder = new MediaRecorder(stream, {
+      mimeType: mime,
+      videoBitsPerSecond: bitrate,
+      audioBitsPerSecond: 192000
+    });
+
+    const chunks = [];
+    recorder.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+    const stopped = new Promise(res => recorder.onstop = res);
+
+    recorder.start(120);
+
+    const perfStart = performance.now() + DELAY*1000;
+    await new Promise(resolve => {
+      function step(){
+        if (!exporting){ resolve(); return; }
+        const t = (performance.now() - perfStart) / 1000;
+        if (t >= total){
+          curTime = total;
+          renderFrame(total - 0.0005);
+          setProgress(1, 'Finalizing file…');
+          resolve();
+          return;
+        }
+        if (t >= 0){
+          curTime = t;
+          renderFrame(t);
+          setProgress(clamp(t/total, 0, 0.99), null);
+        }
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+
+    await new Promise(r => setTimeout(r, 350));
+    recorder.stop();
+    await stopped;
+
+    if (!exporting){
+      $('#exportOverlay').classList.remove('show');
+      return;
+    }
+
+    const blob = new Blob(chunks, { type: mime.split(';')[0] });
+    const ext  = mime.includes('mp4') ? 'mp4' : 'webm';
+    const name = (state.project.name || 'video').replace(/[\\/:*?"<>|]/g,'_');
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${name}.${ext}`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+
+    exporting = false;
+
+    $('#expSpinner').style.display = 'none';
+    $('#expTitle').textContent = '✅ Export complete';
+    setProgress(1, `Video created as <b>${ext.toUpperCase()}</b>.<br>You can export again now.`);
+    $('#cancelExport').textContent = 'Close';
+    $('#cancelExport').dataset.close = '1';
+
+    toast('✅ Video exported successfully');
+
+  } catch(err){
+    console.error(err);
+    exporting = false;
+    $('#expSpinner').style.display = 'none';
+    $('#expTitle').textContent = '⚠️ An error occurred';
+    setProgress(0, 'Export failed. Please try again.');
+    $('#cancelExport').textContent = 'Close';
+    $('#cancelExport').dataset.close = '1';
+  }
+}
+
+$('#exportBtn').addEventListener('click', exportVideo);
+
+$('#cancelExport').addEventListener('click', () => {
+  const btn = $('#cancelExport');
+  if (btn.dataset.close === '1'){
+    btn.dataset.close = '';
+    btn.textContent = 'Cancel';
+    $('#exportOverlay').classList.remove('show');
+    $('#expSpinner').style.display = 'block';
+    $('#expTitle').textContent = 'Exporting video…';
+    setProgress(0, 'Composing scenes, backgrounds, text, effects and audio…');
+    return;
+  }
+  exporting = false;
+  stopPlayback();
+  $('#exportOverlay').classList.remove('show');
+  $('#cancelExport').textContent = 'Cancel';
+  toast('Export cancelled');
+});
+
+/* =========================================================
+   Init
+   ========================================================= */
+function init(){
+  state.scenes = [newScene(0), newScene(1), newScene(2)];
+  state.scenes[1].bg = { type:'preset', value:'particles', color:'#12131f', mediaId:null, mediaName:'' };
+  state.scenes[2].bg = { type:'preset', value:'waves', color:'#12131f', mediaId:null, mediaName:'' };
+
+  bindFileInputs();
+  resizeCanvas();
+  refreshAll();
+  curTime = 0;
+  needsRender = true;
+  requestAnimationFrame(loop);
+}
+
+init();
+</script>
+</body>
+</html>
