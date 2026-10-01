@@ -1,0 +1,72 @@
+{
+  "name": "Trend Studio — Professional Video Maker",
+  "short_name": "Trend Studio",
+  "description": "Create Reels, TikToks and Shorts in minutes. No editing software, no sign-up, no uploads.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "id": "/trend-studio",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#0b0c14",
+  "theme_color": "#0b0c14",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["video", "productivity", "entertainment", "photo"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Video Maker (English)",
+      "short_name": "English",
+      "description": "Open Trend Studio in English",
+      "url": "./Trend%20Studio.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "صانع الفيديو (عربي)",
+      "short_name": "العربية",
+      "description": "افتح استوديو التريندات بالعربية",
+      "url": "./trends_maker.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "User Guide",
+      "short_name": "Guide",
+      "description": "Open the user guide",
+      "url": "./#guides",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}
