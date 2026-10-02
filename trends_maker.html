@@ -2673,7 +2673,10 @@ function applyStatus(data) {
   if (data.status === 'needs_purchase') {
   window.CURRENT_GOOGLE_EMAIL = data.email || '';
   _releaseDOM();
-  showClaimScreen();
+  showClaimScreen({
+    title: '🔓 فعّل الدورة',
+    msg: 'سجّل دخولك واشترِ من Gumroad لتفعيل الترخيص.'
+  });
   return;
   }
   if (data.status === 'trial_expired') {
